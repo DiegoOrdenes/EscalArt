@@ -105,7 +105,25 @@ class publicacionForm( ModelForm):
     class Meta:
         model=Publicacion
         fields = ['descripcion','titulo','imagen','cantLikes']
-        exclude = ['idUser']
+        exclude = ['idUser','imagen']
+        widgets = {
+            'titulo':forms.TextInput(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingrese un titulo',
+                    'id':'titulo-post'
+                
+                }
+            ),
+            'descripcion':forms.Textarea(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingresa una descripcion',
+                    'id':'descripcion-post',
+                    
+                }
+            )
+        }
 
 
 class perfilForm(ModelForm):
