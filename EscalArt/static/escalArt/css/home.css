@@ -1,0 +1,163 @@
+/* Configuracion style general */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+
+/* Fin config genereal */
+
+
+/* style titulo */
+
+.titulo {
+    text-align: center;
+}
+
+
+/* fin titulo */
+
+
+/* Inicio Chips/categorias */
+
+.section-chips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    border-top: 1px solid #86C332;
+    border-bottom: 1px solid #86C332;
+}
+
+.chips-container {
+    width: 500px;
+}
+
+.chips {
+    background-color: #f3f6f7;
+    border-radius: 50px;
+    padding: 5px 15px;
+    color: #86C332;
+}
+
+.chips:hover {
+    background-color: #86C332;
+    color: #f3f6f7;
+}
+
+.scrol {
+    height: 25px;
+}
+
+
+/* Fin chips/categorias */
+
+
+/* Inicio style galeria/publicaciones */
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    width: 95%;
+    margin: auto;
+    gap: 15px;
+    overflow: hidden;
+    padding: 40px 0;
+}
+
+.galeria img {
+    width: 100%;
+    vertical-align: top;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.5s;
+    border-radius: 15px;
+}
+
+.galeria>img {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 6px rgba(0, 0, 0, .5);
+}
+
+
+/* .galeria img:hover {
+    animation: pulsate 1s ease-in-out;
+    top: -10px;
+    filter: blur(px);
+} */
+
+@keyframes pulsate {
+    0% {
+        box-shadow: 0 0 25px #475f25, 0 0 50px #86C332;
+    }
+}
+
+#foto-perfil {
+    width: 55px;
+    height: 55px;
+    border-radius: 50px;
+}
+
+.column {
+    float: left;
+}
+
+.username {
+    padding: 20px 10px;
+}
+
+#descripcion-post {
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
+.titulo-post {
+    font-size: 1.5em;
+    width: 100%;
+    align-self: flex-end;
+    text-align: end;
+}
+
+.post-container {
+    display: flex;
+}
+
+.post-likes {
+    font-size: 0.9em;
+    text-align: start;
+}
+
+.corazon {
+    color: red;
+}
+
+#cant-likes {
+    padding-left: 5px;
+}
+
+#idPost {
+    height: inherit;
+    display: flex;
+}
+
+#post-imagen {
+    align-self: center;
+    height: inherit;
+}
+
+
+/* Fin galeria/publicaciones */
