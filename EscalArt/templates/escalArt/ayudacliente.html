@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda Cliente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Ayuda-Cliente.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!--Iconos-->
+    <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+<body>
+    {% include 'escalArt/includes/menu.html' %}
+
+    <div class="scrol"></div>
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+
+    <div class="contenedor">
+        <figure>
+            <img src="{% static 'EscalArt/img/foro.png' %}" alt="">
+            <div class="capa">
+                <h3>¿Como podemos ayudarte?</h3>
+                <p>Aqui podra resolver algunas dudas que tendra en nuestra pagina web, ademas nos podra escribir alguna consulta si usted desea...</p>
+            </div>
+        </figure>
+    </div>
+    <section class="post-list">
+        <div class="content">
+
+            <article class="post 1-">
+                <div class="post-header ">
+                    <img class="post-img-1" src="{% static 'EscalArt/img/artistas.jpg' %}" alt="">
+                </div>
+                <div class="post-body ">
+                    <h2>¿Quienes somos?</h2>
+                    <span class="linea_2"></span>
+                    <P class="descripcion ">Somos un sisema web que tiene como funcionalidad facilitar la comunicacion del trabajo de artistas que busquen emprender en nuesto sitio web.</P>
+                    <span> 3 de Mazo, 2022 | Ayuda a Usuario</span>
+                    <span class="linea_2"></span>
+                </div>
+            </article>
+
+            <article class="post 2-">
+                <div class="post-body ">
+                    <h2>¿Tienes alguna consulta?</h2>
+                    <span class="linea_2"></span>
+                    <div class="input-cont">
+                        <div class="input">
+                            <input type="text" required>
+                            <label for="">Escribe tu consulta...</label>
+                        </div>
+                    </div>
+                    <br><br><br><br><br>
+                    <a href="# " class="post-link " onclick="mostrar()">Enviar...</a>
+                    <br><br><br><br><br>
+                    <p>Su consulta sera respondida dentro de 48Hrs Aprox...</p>
+                    <span class="linea_2"></span>
+                </div>
+            </article>
+            <article class="post 3-">
+                <div class="post-header ">
+                    <img class="post-img-1" src="{% static 'EscalArt/img/Artista.jpg' %}" alt="">
+                </div>
+                <div class="post-body ">
+
+                    <h2>¿Que es una cuenta profesional?</h2>
+                    <span class="linea_2"></span>
+                    <P class="descripcion ">Es una cuenta especialmente para los artistas, en donde podran publicar todos sus diseños para que puedan ser visualizados</P>
+                    <span> 3 de Mazo, 2022 | Ayuda a Usuario</span>
+                    <span class="linea_2"></span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    {% include 'escalArt/includes/footer.html' %}
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>

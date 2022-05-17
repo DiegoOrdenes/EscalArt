@@ -1,0 +1,203 @@
+{% load static%} {% load shuffle %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <title>EscalArt</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Ayuda-Cliente.css' %}">
+    <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Slider.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/home.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Perfil.css' %}">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+    <!--Iconos-->
+    <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+<body>
+    {% include 'escalArt/includes/menu.html' %}
+
+
+    <!-- slider -->
+    <section class="seccion-slider">
+        <div id="contenedor-slider" class="contenedor-slider">
+            <div id="slider" class="slider">
+                <section class="slider__section"><img class="Slide" src="{% static 'escalArt/img/1.jpg' %}"></section>
+                <section class="slider__section"><img class="Slide" src="{% static 'escalArt/img/2.jpg' %}"></section>
+                <section class="slider__section"><img class="Slide" src="{% static 'escalArt/img/3.jpg' %}"></section>
+                <section class="slider__section"><img class="Slide" src="{% static 'escalArt/img/Artista.jpg' %}"></section>
+            </div>
+            <div id="btn-prev" class="btn-prev">&#60;</div>
+            <div id="btn-next" class="btn-next">&#62;</div>
+        </div>
+    </section>
+
+    <div class="scrol"></div>
+
+
+    <h1 class="titulo">Lo mas visto!</h1>
+    <section class="section-chips">
+        <div class="chips-container">
+            <span class="chips">Categoria 1</span>
+            <span class="chips">Categoria 2</span>
+            <span class="chips">Categoria 3</span>
+            <span class="chips">Categoria </span>
+        </div>
+    </section>
+
+    <section class="galeria">
+        {% for p in posts|shuffle %}
+        <!--  -->
+        <article class="post ">
+
+            <div class="post-body ">
+                <div class="post-container">
+                    <a class="column" href="{% url 'perfil' p.idUser.username %}">
+                        {% if p.idUser.imagen %}
+                        <img id="foto-perfil" src="/{{ p.idUser.imagen}}" alt="Galeria de imagenes">
+                            {%else%}
+                            <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                        {% endif %}
+                    </a>
+                    <a class="column" href="{% url 'perfil' p.idUser.username %}">
+                        <h3 class="username">{{p.idUser.username}}</h3>
+                    </a>
+                    <h2 class="titulo-post column">{{p.titulo}}</h2>
+
+                </div>
+                <span class="linea_2"></span>
+                <P class="descripcion-post " id="descripcion-post">{{p.descripcion}}</P>
+                <div>
+                    <span class="post-likes column"><i class="fa-solid fa-heart corazon"></i></span>
+                    <span class="post-likes column" id="cant-likes">{{p.cantLikes}}</span>
+
+                </div>
+            </div>
+            <div class="post-header ">
+                <a href="#" name="idPost" id="idPost">
+                    <img id="post-imagen" src="/{{ p.imagen }}" alt="Galeria de imagenes">
+                </a>
+            </div>
+        </article>
+
+
+
+
+        <!--  -->
+        {% endfor %}
+
+
+
+
+
+    </section>
+
+    <!--Ver Publicacion-->
+
+    <div id="contenedor-principal" style="display: flex;">
+
+        <div class="contenedor-interno">
+            <div class="ver-publi_1">
+
+                <h2 class="ver-publi-titulo"> {{publi.titulo}} </h2>
+
+                <!-- <img id="img-activa" src="{% static 'EscalArt/img/foto_1.jpg' %}" alt="Galeria de imagenes"> -->
+                <img src="/{{publi.imagen}}" alt="Galeria de imagenes">
+
+
+            </div>
+            <div class="ver-publi_2">
+                <a href="{% url 'home' %}"><button type="button" class="button-cierra" >X</button></a>
+                <div class="ver-publi-superior">
+                    {% for la in listArt %}
+                    <!-- 16 Inicio if para verificar user conectado -->
+                    {% if list.username == la.username %} {% if la.imagen %}
+                    <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {%endif%} {%endif%} {%endfor%}
+
+                    <h1>{{list.username}}</h1>
+                    <p>{{publi.descripcion}}</p>
+                    <span></span>
+                    <div class="ver-publi-lista">
+                        <ul>
+                            <li><i class="fa-solid fa-heart corazon"></i>{{publi.cantLikes}}</li>
+                            <li><i class="fa-solid fa-comment-dots comentar"></i>Comentar</li>
+                            <li><i class="fa-solid fa-share compartir"></i>Compartir</li>
+                        </ul>
+                    </div>
+                    <span></span>
+                </div>
+                <div class="ver-comentarios">
+                    <div class="ver-boxcontainer">
+                        <div class="ver-testimonials-box">
+                            <div class="ver-box-top">
+                                <div class="ver-profile">
+                                    <div class="ver-profile-img">
+                                        <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+                                    </div>
+                                    <div class="ver-name-user">
+                                        <strong>Touseed</strong>
+                                        <span>@ksadjasdkaksa</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ver-client-comment">
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div class="ver-client-responder">
+                                <ul>
+                                    <li class="ver-li">35</li>
+                                    <li class="ver-li-2">Min</li>
+                                    <li class="ver-li-3"><input type="submit" value="Responder"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="ver-crear-comentario">
+                            <i class="fa-solid fa-face-grin"></i>
+                            <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario...">
+                            <input class="ver-comentario-btn" type="submit" value="Enviar">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--  -->
+
+
+    <a href="{% url 'ayudacliente' %}">Ayuda Cliente</a> {% if user.is_authenticated %}
+    <h1>Username: {{user.username}}</h1>
+    <h1>Tipo Usuario: {{user.tipoCuenta.tipoCuenta}}</h1>
+
+
+
+
+
+
+
+
+    <a href="{% url 'logout' %}">Cerrar sesion</a> {% else %}
+    <a href="{% url 'login' %}">Inicia sesion</a> |
+    <a href="{% url 'registro' %}">Registrate</a> {% endif %} {% include 'escalArt/includes/footer.html' %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js "></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js "></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
+    <script src="{% static 'escalArt/js/Slider.js' %}"></script>
+</body>
+
+</html>

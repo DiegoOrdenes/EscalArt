@@ -1,0 +1,475 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Artista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&family=Roboto+Condensed:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <!--Iconos-->
+    <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+<body>
+    {% include 'escalArt/includes/menu.html' %}
+
+    <div class="scrol"></div>
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+    <!--<script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>-->
+
+    <!--Diseño Perfi-->
+    <section class="seccion-perfil-usuario">
+        <div class="perfil-usuario-header">
+            <div class="perfil-usuario-portada">
+                <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
+                {% for perfil in perfil %}
+                <!-- 6 inicio if para identificar perfil segun user -->
+                {% if list.idUser == perfil.idUser.idUser %}
+
+                <!-- header -->
+
+                {% if perfil.img_header %}<img class="perfil-usuario-portada_2" src="/{{ perfil.img_header }}"> {% else %}
+                <img class="perfil-usuario-portada_2" src="{% static 'EscalArt/img/banner.jpg' %}" alt=""> {% endif %}
+
+
+                <!-- 6 FIN if para identificar perfil segun user -->
+                {% endif %}
+                <!-- 5 FIN ciclo for que lista los perfiles -->
+                {% endfor %}
+                <div class="perfil-usuario-avatar">
+
+                    {% for la in listArt %}
+                    <!-- 16 Inicio if para verificar user conectado -->
+                    {% if list.username == la.username %} {% if la.imagen %}
+                    <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {% else %}
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt=""> {% endif %}
+
+                    <!-- formulario para editar foto de perfil -->
+
+                    <!-- 16 Fin if para verificar user conectado -->
+                    {% endif %}
+                    <!-- 15 Fin for para cambiar foto perfil -->
+                    {% endfor %}
+
+                    <!-- <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""> -->
+                    {% if list.idUser == user.idUser %}
+
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %} {{foto.as_hidden}} <input type="file" id="real-file2" name="pfp" hidden="hidden">
+                        <button type="button" class="boton-avatar" id="custom-button2" onclick="MostrarAlerta();">
+                            <i class="far fa-image"></i>
+                        </button>
+
+                        <!-- <div style="width: 100%;height:50px;background-color:white;position:absolute;left:5%;display: none;" id="AlertaOk">
+                            <button onclick="OcultarAlerta();" class="btn-Editar-Bio btnPfp" type="submit" name="fotoPerfil">Aceptar</button>
+                            <button onclick="OcultarAlerta();" class="btnPfp" style="margin-left: 5%;">Cancelar </button>
+
+                        </div> -->
+                    </form>
+                    {%endif%}
+                </div>
+                {% if list.idUser == user.idUser %}
+                <form action="" method="POST" enctype='multipart/form-data'>
+                    {% csrf_token %} {{edit.img_header.as_hidden}}
+                    <input type="file" id="real-file3" name="header" hidden="hidden">
+                    <button type="button" class="boton-portada" id="custom-button3" onclick="MostrarAlerta2();">
+                        <i class="far fa-image"></i> Cambiar fondo
+                    </button>
+
+                    <!-- <div id="AlertaOk2">
+                        <button onclick="OcultarAlerta2();" class="btn-Editar-Bio btnHeader" type="submit" name="EditHeader">Aceptar</button>
+                        <button onclick="OcultarAlerta2();" class="btnHeader" style="margin-left: 5%;">Cancelar </button>
+
+                    </div> -->
+
+                </form>
+                {%endif%}
+            </div>
+        </div>
+        <div class="perfil-usuario-body">
+            <div class="perfil-usuario-bio">
+                {% if list.username == user.username %}
+                <button onclick="MostrarPublicacion();" class="btn-Crear-Publicacion"><i class="fa-solid fa-paint-roller"></i>Crear Publicacion</button> {%endif%}
+                <h3 class="titulo">{{list.username}}</h3>
+                {% if list.username == user.username %}
+
+                <button onclick="MostrarConfi_bio();" class="btn-Editar-Bio"><i class="fa-solid fa-user-pen"></i>Editar Biografia</button> {%endif%}
+                <div class="texto-bio">
+                    <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
+                    {% for perfil in perfil %}
+                    <!-- 6 inicio if para identificar perfil segun user -->
+                    {% if list.idUser == perfil.idUser.idUser %}
+
+                    <!-- biografia y header -->
+                    <p class="texto">{{perfil.biografia}}</p>
+                    <!-- 6 FIN if para identificar perfil segun user -->
+                    {% endif %}
+                    <!-- 5 FIN ciclo for que lista los perfiles -->
+                    {% endfor %}
+
+                </div>
+                <span class="linea_2"></span>
+                <ul class="lista-info">
+                    <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
+                    {% for perfil in perfil %}
+                    <!-- 6 inicio if para identificar perfil segun user -->
+
+
+                    {% if list.idUser == perfil.idUser.idUser %}
+                    <li class="lista-li">{{perfil.seguidos}} Siguiendo</li>
+                    <li class="lista-li">{{perfil.seguidores}} Seguidores</li>
+                    <button id="Boton" onclick="mostrar();"><li  class="lista-li" >{{perfil.calificacion}}</li></button>
+                    <!-- 6 FIN if para identificar perfil segun user -->
+                    {% endif %}
+
+
+
+                    <!-- 5 FIN ciclo for que lista los perfiles -->
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--Configurar Biografia-->
+
+    <section id="config-fondo">
+        <div class="config-fondo-bio">
+            <button type="button" class="button-cierra" onclick="OcultarConfi_bio();">X</button>
+            <div class="config-bio-top">
+                <h1>Configurar Biografia</h1>
+            </div>
+            <div class="config-bio-centro">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %} {% for la in listArt %}
+                    <!-- 16 Inicio if para verificar user conectado -->
+                    {% if user.username == la.username %} {% if la.imagen %}
+                    <input type="file" id="real-file" name="pfp" hidden="hidden">
+                    <button type="button" id="custom-button"><img src="/{{la.imagen}}" class="foto_perfil" alt=""></button> {% else %}
+                    <input type="file" id="real-file" name="pfp" hidden="hidden">
+                    <button type="button" id="custom-button"><img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""></button> {% endif %}
+
+                    <!-- formulario para editar foto de perfil -->
+
+                    <!-- 16 Fin if para verificar user conectado -->
+                    {% endif %}
+                    <!-- 15 Fin for para cambiar foto perfil -->
+                    {% endfor %} {{form.as_hidden}}
+
+                    <!-- <span id="custom-text"></span> -->
+
+                    <!-- <a href="" id="browse"><img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""></a> -->
+                    <!-- <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""> -->
+                    <input class="bio-centro" type="submit" name="fotoPerfil" value="Editar Foto"><br><br><br>
+                    <div class="form-group">
+
+                        <label>Biografia: </label> {{edit.biografia}}
+                        <!-- <textarea placeholder="Editar..." required type=""></textarea> -->
+                    </div>
+                    <div class="bio-bottom">
+                        <input type="submit" name="editar" value="Enviar">
+                        <input type="reset" value="Limpiar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!--Caja de Comentarios Calificaciones-->
+    <section id="testimonials" class="calificacion-principal">
+        <div class="testimonials-background">
+            <div class="testimonial-heading">
+                <div class="color-testi">
+                    <button id="btn-calif-cierra" type="button" onclick="ocultar();">X</button>
+                    <h1>Calificaciones <i class="fas fa-star reviews"></i></h1>
+                </div>
+                <span>General</span>
+                <div class="reviews">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="testimonial-box-container">
+                <div class="testimonials-box">
+                    <div class="box-top">
+                        <div class="profile">
+                            <div class="profile-img">
+                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+                            </div>
+                            <div class="name-user">
+                                <strong>Touseed</strong>
+                                <span>@ksadjasdkaksa</span>
+                            </div>
+                        </div>
+                        <div class="reviews">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-comment">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-box-container">
+                <div class="testimonials-box">
+                    <div class="box-top">
+                        <div class="profile">
+                            <div class="profile-img">
+                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+                            </div>
+                            <div class="name-user">
+                                <strong>Touseed</strong>
+                                <span>@ksadjasdkaksa</span>
+                            </div>
+                        </div>
+                        <div class="reviews">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-comment">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-box-container">
+                <div class="testimonials-box">
+                    <div class="box-top">
+                        <div class="profile">
+                            <div class="profile-img">
+                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+                            </div>
+                            <div class="name-user">
+                                <strong>Touseed</strong>
+                                <span>@ksadjasdkaksa</span>
+                            </div>
+                        </div>
+                        <div class="reviews">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-comment">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-box-container">
+                <div class="testimonials-box">
+                    <div class="box-top">
+                        <div class="profile">
+                            <div class="profile-img">
+                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+                            </div>
+                            <div class="name-user">
+                                <strong>Touseed</strong>
+                                <span>@ksadjasdkaksa</span>
+                            </div>
+                        </div>
+                        <div class="reviews">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-comment">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="Comentar-Usuarios">
+                <div class="Comentar-calificacion">
+                    <span>Calificar</span>
+                    <div class="Comentar-iconos">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <i class="fa-solid fa-face-smile"></i>
+                <input type="text" placeholder="Escriba su comentario...">
+                <div class="button-comentar">
+                    <button><a href="">Comentar...</a></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Crear Publicacion Artista-->
+    <section id="section-publicacion" class="section-publicacion">
+        <div class="publicacion-fondo">
+            <div class="publicacion-top">
+                <h1>Crear nueva publicacion</h1>
+                <button onclick="OcultarPublicacion();" class="btn-publicacion-cerrar">X</button>
+            </div>
+            <form action="" method="POST" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <div class="publicacion-centro">
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
+                    <i class="fa-solid fa-face-smile"></i> {{ form.titulo }} {{form.descripcion}}{{form.cantLikes.as_hidden}}
+                </div>
+                <div class="publicacion-bottom">
+                    <!-- <img src="{% static 'EscalArt/img/fondo-ayuda.jpg' %}" alt=""> -->
+                    <!-- send help -->
+                    {{form.imagen.as_hidden}}
+                    <input type="file" id="real-file2" name="pfp" hidden="hidden">
+                    <button type="button" class="boton-avatar" id="custom-button2" onclick="MostrarAlerta();">
+                        <img src="{% static 'escalArt/img/uploadImage.svg' %}" alt="">
+                    </button>
+                    <div class="publicacion-bottom_2">
+                        <input type="submit" name="publicar" value="Publicar...">
+                        <input type="reset" value="Limpiar">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!--Galeria de fotos-->
+    <span class="linea"></span>
+
+    <main>
+
+        <!--  -->
+
+
+        <section id="galeria">
+            {% for p in posts %} {% if list.idUser == p.idUser.idUser %}
+            <!-- <form action="" id="post-form" method="POST">
+                {% csrf_token %}
+                <input style="display: none;" type="text" name="idPost" id="idPost" value="{{p.idPublicacion}}">
+                <button type="submit" name="publicacion" id="publicacion">
+
+                <img src="{{ p.imagen }}" alt="Galeria de imagenes" >
+                </button>
+
+
+            </form> -->
+            <a href="#" name="idPost" id="idPost"><img src="/{{ p.imagen }}" alt="Galeria de imagenes" onclick="AbrirPubli();"></a> {% endif %} {% endfor %}
+
+
+            <!-- {{p.titulo}} {{p.descripcion}} -->
+            <!-- <img src="{% static 'EscalArt/img/foto_2.jpg' %}" alt="Galeria de imagenes">
+            <img src="{% static 'EscalArt/img/foto_3.jpg' %}" alt="Galeria de imagenes">
+            <img src="{% static 'EscalArt/img/foto_4.jpg' %}" alt="Galeria de imagenes">
+            <img src="{% static 'EscalArt/img/foto_5.jpg' %}" alt="Galeria de imagenes">
+            <img src="{% static 'EscalArt/img/foto_6.jpg' %}" alt="Galeria de imagenes"> -->
+
+
+        </section>
+
+        <!--Ver Publicacion-->
+
+        <div id="contenedor-principal" style="display: flex;">
+
+            <div class="contenedor-interno">
+                <div class="ver-publi_1">
+
+                    <h2 class="ver-publi-titulo"> {{publi.titulo}} </h2>
+
+                    <!-- <img id="img-activa" src="{% static 'EscalArt/img/foto_1.jpg' %}" alt="Galeria de imagenes"> -->
+                    <img src="/{{publi.imagen}}" alt="Galeria de imagenes">
+
+
+                </div>
+                <div class="ver-publi_2">
+                    <a href="{% url 'perfil' list.username %}"><button type="button" class="button-cierra" >X</button></a>
+                    <div class="ver-publi-superior">
+                        {% for la in listArt %}
+                        <!-- 16 Inicio if para verificar user conectado -->
+                        {% if list.username == la.username %} {% if la.imagen %}
+                        <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {%endif%} {%endif%} {%endfor%}
+
+                        <h1>{{list.username}}</h1>
+                        <p>{{publi.descripcion}}</p>
+                        <span></span>
+                        <div class="ver-publi-lista">
+                            <ul>
+                                <li><i class="fa-solid fa-heart corazon"></i>{{publi.cantLikes}}</li>
+                                <li><i class="fa-solid fa-comment-dots comentar"></i>Comentar</li>
+                                <li><i class="fa-solid fa-share compartir"></i>Compartir</li>
+                            </ul>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="ver-comentarios">
+                        <div class="ver-boxcontainer">
+                            <div class="ver-testimonials-box">
+                                <div class="ver-box-top">
+                                    <div class="ver-profile">
+                                        <div class="ver-profile-img">
+                                            <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+                                        </div>
+                                        <div class="ver-name-user">
+                                            <strong>Touseed</strong>
+                                            <span>@ksadjasdkaksa</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ver-client-comment">
+                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
+                                    <i class="fa-solid fa-heart"></i>
+                                </div>
+                                <div class="ver-client-responder">
+                                    <ul>
+                                        <li class="ver-li">35</li>
+                                        <li class="ver-li-2">Min</li>
+                                        <li class="ver-li-3"><input type="submit" value="Responder"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="ver-crear-comentario">
+                                <i class="fa-solid fa-face-grin"></i>
+                                <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario...">
+                                <input class="ver-comentario-btn" type="submit" value="Enviar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--  -->
+    </main>
+
+
+    <script src="{% static 'EscalArt/js/Galeria.js' %}"></script>
+    {% include 'escalArt/includes/footer.html' %}
+
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>
