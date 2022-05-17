@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda Cliente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Ayuda-Cliente.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!--Iconos-->
+    <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <nav class="nav">
+            <div class="logo">EscalArt</div>
+            <div class="search-box">
+                <input type="text" placeholder="Buscando...">
+                <a href="##" class="icon">
+                    <i class="fas fa-search"></i>
+                </a>
+            </div>
+            <ul class="menu">
+                <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
+                <li><a href="#"><i class="fa-solid fa-comment-dots"></i></a></li>
+                <li>
+                    <a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a>
+                </li>
+                <li onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li>
+            </ul>
+        </nav>
+        <div id="Configuracion">
+            <ul class="Configuracion-menu">
+                <button onclick="ocultarConfig();" id="btn-cierra" type="button">X</button>
+                <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' %}">Perfil</a></li>
+                <li><i class="fa-solid fa-gear"></i><a href="#">Configuracion</a></li>
+                <span class="linea_2"></span>
+                <li class="Cerrar-Sesion"><a href="">Cerrar Sesion</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="scrol"></div>
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+
+    <div class="contenedor">
+        <figure>
+            <img src="{% static 'EscalArt/img/foro.png' %}" alt="">
+            <div class="capa">
+                <h3>¿Como podemos ayudarte?</h3>
+                <p>Aqui podra resolver algunas dudas que tendra en nuestra pagina web, ademas nos podra escribir alguna consulta si usted desea...</p>
+            </div>
+        </figure>
+    </div>
+    <section class="post-list">
+        <div class="content">
+
+            <article class="post 1-">
+                <div class="post-header ">
+                    <img class="post-img-1" src="{% static 'EscalArt/img/artistas.jpg' %}" alt="">
+                </div>
+                <div class="post-body ">
+                    <h2>¿Quienes somos?</h2>
+                    <span class="linea_2"></span>
+                    <P class="descripcion ">Somos un sisema web que tiene como funcionalidad facilitar la comunicacion del trabajo de artistas que busquen emprender en nuesto sitio web.</P>
+                    <span> 3 de Mazo, 2022 | Ayuda a Usuario</span>
+                    <span class="linea_2"></span>
+                </div>
+            </article>
+
+            <article class="post 2-">
+                <div class="post-body ">
+                    <h2>¿Tienes alguna consulta?</h2>
+                    <span class="linea_2"></span>
+                    <div class="input-cont">
+                        <div class="input">
+                            <input type="text" required>
+                            <label for="">Escribe tu consulta...</label>
+                        </div>
+                    </div>
+                    <br><br><br><br><br>
+                    <a href="# " class="post-link " onclick="mostrar()">Enviar...</a>
+                    <br><br><br><br><br>
+                    <p>Su consulta sera respondida dentro de 48Hrs Aprox...</p>
+                    <span class="linea_2"></span>
+                </div>
+            </article>
+            <article class="post 3-">
+                <div class="post-header ">
+                    <img class="post-img-1" src="{% static 'EscalArt/img/Artista.jpg' %}" alt="">
+                </div>
+                <div class="post-body ">
+
+                    <h2>¿Que es una cuenta profesional?</h2>
+                    <span class="linea_2"></span>
+                    <P class="descripcion ">Es una cuenta especialmente para los artistas, en donde podran publicar todos sus diseños para que puedan ser visualizados</P>
+                    <span> 3 de Mazo, 2022 | Ayuda a Usuario</span>
+                    <span class="linea_2"></span>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!--Pie de la pagina-->
+    <footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="{% static 'EscalArt/img/logo.jpg' %}" alt="Logo EscalArt">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>¿Quienes Somos?</h2>
+                <p>Somos un sistema web que tiene como funcionalidad facilitar la comunicacion y comercializacion del trabajo.</p>
+                <p>de los artistas que quieran emprender en nuestro sitio web</p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS...</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2022 EscalArt <b>Equipo EscalArt</b> - Politica de privacidad - Terminos de Servicios</small>
+        </div>
+    </footer>
+
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</html>
