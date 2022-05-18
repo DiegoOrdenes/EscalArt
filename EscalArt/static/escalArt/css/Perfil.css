@@ -4,9 +4,10 @@ body {
     background-color: #D9DBD2;
 }
 
-#settings-artista {
+
+/* #settings-artista {
     display: none;
-}
+} */
 
 .column {
     float: left;
