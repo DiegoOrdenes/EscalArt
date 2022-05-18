@@ -55,7 +55,7 @@
     </section>
 
     <section class="galeria">
-        {% for p in posts|shuffle %}
+        {% if posts is not None %} {% for p in posts|shuffle %}
         <!--  -->
         <article class="post ">
 
@@ -96,8 +96,8 @@
 
         <!--  -->
         {% endfor %}
-
-
+        <!--  -->
+        {%endif%}
 
 
 
