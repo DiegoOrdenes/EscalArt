@@ -11,4 +11,12 @@
         Desarrollo del perfil de cliente y funcionalidades en views.py (editar foto perfil y banner)
   
         return("Actualizacion a una hora decente, let's gooo")
+        
+    def 17.05.22():
+        Creacion de la tabla Guardado en models.py
+        Formulario de GuardarPostForm en forms.py
+        Desarrollo de funcionalidad de guardado de una publicacion en views.py
+        Edicion del html de perfil artista
+        
+        return("Ayuda me muero de sueño aaaaaaaaaaaaaa")
   
