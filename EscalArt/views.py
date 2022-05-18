@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-from EscalArt.forms import FormularioUsuario, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm
+from EscalArt.forms import FormularioUsuario, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
 from .models import Perfil, Publicacion, Usuario
 
 
@@ -240,7 +240,8 @@ def publicacion(request,artista,post):
             'edit': editPerfilForm(instance = algo),
             'foto':editFotoPerfilForm(instance = user),
             "listArt":listArtista,
-            "publi":publi
+            "publi":publi,
+            'guardarPost':GuardarPostForm()
 
         }
     else:
@@ -255,6 +256,21 @@ def publicacion(request,artista,post):
 
             "publi":publi
         }
+    
+    if request.method == 'POST':
+        if 'guardarPost' in request.POST:
+            guardarPost = GuardarPostForm(request.POST)
+            if guardarPost.is_valid:
+                obj = guardarPost.save(commit=False)
+                obj.idGuardado = f'{request.user}-{request.POST["idPost"]}'
+                obj.idUser = request.user
+                obj.idPublicacion = Publicacion.objects.get(idPublicacion = request.POST["idPost"])
+                print(obj.idPublicacion)
+                obj.save()
+        else:
+            print(guardarPost.errors)
+    else:
+        print('no se ha hecho ni un post')
     
     return render(request,'escalArt/publicacion.html',data)
 

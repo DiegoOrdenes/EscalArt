@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ayudacliente, home, perfil_cliente, publicacion, publicacionHome
+from .views import home , ayudacliente,  perfil_cliente, publicacion, publicacionHome
 from .views import perfil
 from .views import RegistrarUsuario,ayudacliente
 

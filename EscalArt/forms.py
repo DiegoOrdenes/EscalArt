@@ -1,12 +1,12 @@
 from cProfile import label
-from dataclasses import field
+from dataclasses import field, fields
 from socket import fromshare
 from tkinter import Widget
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from requests import RequestException, request
-from .models import Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from .models import Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -191,5 +191,10 @@ class ReferenciasForm(ModelForm):
         fields = ['img_referencia','idUser','usernameArtista']
         exclude = ['idUser','usernameArtista']
 
+class GuardarPostForm(ModelForm):
+    class Meta:
+        model = Guardado
+        fields = ['idUser','idPublicacion']
+        exclude = ['idUser','idPublicacion']
 
          
