@@ -19,4 +19,9 @@
         Edicion del html de perfil artista
         
         return("Ayuda me muero de sueño aaaaaaaaaaaaaa")
+        
+    def 19.05.22():
+        Guardar y eliminar publicacion 
+        Desarrollo funcionalidad de dar Like a una publicacion        
+        return("Hasta ahi nomas quedo el actualizar a horas decentes...")
   
