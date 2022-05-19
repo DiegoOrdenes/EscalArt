@@ -81,7 +81,7 @@
                 <P class="descripcion-post " id="descripcion-post">{{p.descripcion}}</P>
                 <div>
                     <span class="post-likes column"><i class="fa-solid fa-heart corazon"></i></span>
-                    <span class="post-likes column" id="cant-likes">{{p.cantLikes}}</span>
+                    <span class="post-likes column" id="cant-likes">{{p.cantLikes.all.count}}</span>
 
                 </div>
             </div>
@@ -131,9 +131,32 @@
                     <span></span>
                     <div class="ver-publi-lista">
                         <ul>
-                            <li><i class="fa-solid fa-heart corazon"></i>{{publi.cantLikes}}</li>
+                            <li>
+                                <form method="post" action="{% url 'like' publi.idPublicacion %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{request.path}}">
+                                    <button type="submit"><span class="post-likes column"><i class="fa-solid fa-heart corazon"> <span>{{publi.cantLikes.all.count}}</span></i></span></button>
+
+                                </form>
+                            </li>
                             <li><i class="fa-solid fa-comment-dots comentar"></i>Comentar</li>
                             <li><i class="fa-solid fa-share compartir"></i>Compartir</li>
+                            <li><button onclick="MostrarOpciones();"><i class="fa-solid fa-ellipsis post-settings"></i></button></li>
+                        </ul>
+                    </div>
+                    <div id="settings-post">
+                        <ul class="Configuracion-post">
+                            <li>
+                                <form action="" method="POST">
+                                    {% csrf_token %} {{guardarPost.as_hidden}}
+                                    <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost"> {% if guardado%}
+                                    <button method="submit" id="eliminar1" name="eliminarPostGuardado"><i class="fa-solid fa-bookmark" ></i></input>Eliminar de guardados</button> {%else%}
+
+                                    <button method="submit" id="guardar1" name="guardarPost"><i class="fa-solid fa-bookmark" ></i></input>Guardar</button> {%endif%}
+                                </form>
+                            </li>
+                            <li><button><i class="fa-solid fa-flag"></i>Reportar</button></li>
+                            <span class="linea_2"></span>
                         </ul>
                     </div>
                     <span></span>
@@ -198,6 +221,56 @@
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js "></script> -->
     <script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
     <script src="{% static 'escalArt/js/Slider.js' %}"></script>
+    <!-- scrip publicacion -->
+    <script src="{% static 'EscalArt/js/publicacion.js' %}"></script>
 </body>
 
 </html>
+
+<style>
+    .column {
+        float: left;
+    }
+    
+    #settings-post {
+        position: absolute;
+        width: 210px;
+        height: 216px;
+        background-color: rgba(255, 255, 255, 0.779);
+        z-index: 40;
+        display: none;
+        border-radius: 20px;
+        right: 125px;
+        box-shadow: 2px solid #000;
+        border: 1px solid #86C332;
+    }
+    
+    .Configuracion-post {
+        margin: 10px;
+        list-style: none;
+    }
+    
+    #settings-post .Configuracion-post li i {
+        font-size: 45px;
+        padding: 10px;
+    }
+    
+    #settings-post .Configuracion-post li a {
+        text-decoration: none;
+    }
+    
+    #settings-post .Configuracion-post span {
+        height: 2px;
+        width: 100%;
+        color: #659523;
+    }
+    
+    .settings-container {
+        position: relative;
+        margin: 0px 100px 80px 0px;
+    }
+    
+    .post-settings {
+        font-size: 25px;
+    }
+</style>

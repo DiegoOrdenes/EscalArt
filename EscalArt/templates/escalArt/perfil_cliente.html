@@ -26,6 +26,11 @@
 <body>
     {% include 'escalArt/includes/menu.html' %}
     <div class="scrol"></div>
+
+    {% if userInfo.idUser == user.idUser %}
+
+
+
     <!--<script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>-->
     <!--Diseño Perfi-->
     <section class="seccion-perfil-usuario">
@@ -104,12 +109,14 @@
     <!--Galeria de fotos-->
     <section class="galeria_guardados" id="gl-guardados" style="display: none;">
         <section id="galeria">
-            <img src="{% static 'EscalArt/img/foto_1.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_2.jpg' %}" alt="Galeria de imagenes">
+            {% for g in guardados %} {% if g.idUser == user %}
+            <img src="/{{g.idPublicacion.imagen}}" alt="Galeria de imagenes"> {%endif%} {%endfor%}
+            <!-- <img src="{% static 'EscalArt/img/foto_2.jpg' %}" alt="Galeria de imagenes">
             <img src="{% static 'EscalArt/img/foto_3.jpg' %}" alt="Galeria de imagenes">
             <img src="{% static 'EscalArt/img/foto_4.jpg' %}" alt="Galeria de imagenes">
             <img src="{% static 'EscalArt/img/foto_5.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_6.jpg' %}" alt="Galeria de imagenes">
+            <img src="{% static 'EscalArt/img/foto_6.jpg' %}" alt="Galeria de imagenes"> -->
+
         </section>
         <section id="contenedor-principal">
             <div class="contenedor-interno">
@@ -163,6 +170,11 @@
     <div class="Crear-Tareas">
 
     </div>
+    {%else%}
+    <br><br><br>
+    <br><br><br>
+    <br><br> {% endif %}
+
     <script src="{% static 'EscalArt/js/perfil_cliente.js' %}"></script>
     <script src="{% static 'EscalArt/js/Galeria.js' %}"></script>
     <!--Pie de la pagina-->

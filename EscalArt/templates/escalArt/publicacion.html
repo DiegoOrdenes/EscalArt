@@ -315,7 +315,7 @@
                 {% csrf_token %}
                 <div class="publicacion-centro">
                     <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                    <i class="fa-solid fa-face-smile"></i> {{ form.titulo }} {{form.descripcion}}{{form.cantLikes.as_hidden}}
+                    <i class="fa-solid fa-face-smile"></i> {{ form.titulo }} {{form.descripcion}}
                 </div>
                 <div class="publicacion-bottom">
 
@@ -378,7 +378,7 @@
                         <span></span>
                         <div class="ver-publi-lista">
                             <ul>
-                                <li><i class="fa-solid fa-heart corazon"></i>{{publi.cantLikes}}</li>
+                                <li><i class="fa-solid fa-heart corazon"></i>0</li>
                                 <li><i class="fa-solid fa-comment-dots comentar"></i>Comentar</li>
                                 <li><i class="fa-solid fa-share compartir"></i>Compartir</li>
                                 <li><button onclick="MostrarOpciones();"><i class="fa-solid fa-ellipsis post-settings"></i></button></li>
@@ -389,11 +389,17 @@
                                 <li>
                                     <form action="" method="POST">
                                         {% csrf_token %} {{guardarPost.as_hidden}}
-                                        <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost">
-                                        <button method="submit" name="guardarPost"><i class="fa-solid fa-bookmark"></i></input>Guardar</li></button>
+                                        <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost"> {% if guardado%}
+                                        <button method="submit" id="eliminar1" name="eliminarPostGuardado"><i class="fa-solid fa-bookmark" ></i></input>Eliminar de guardados</button> {%else%}
+
+                                        <button method="submit" id="guardar1" name="guardarPost"><i class="fa-solid fa-bookmark" ></i></input>Guardar</button> {%endif%}
                                     </form>
-                                    <li><i class="fa-solid fa-flag"></i>Reportar</li>
-                                    <span class="linea_2"></span>
+                                </li>
+                                <li><button><i class="fa-solid fa-flag"></i>Reportar</button></li>
+                                {% if publi.idUser == user %}
+                                <li><a href="{%url 'delete_publicacion' publi.idPublicacion %}"><button><i class="fa-solid fa-trash-can"></i>Eliminar</button></a></li>
+                                {%endif%}
+                                <span class="linea_2"></span>
                             </ul>
                         </div>
                         <span></span>

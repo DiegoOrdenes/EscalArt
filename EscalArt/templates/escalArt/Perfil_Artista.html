@@ -114,6 +114,7 @@
                     <!--  -->
                     {%endif%}
                 </div>
+                {% if user.is_authenticated %}
                 <div id="settings-artista">
                     <ul class="Configuracion-settings">
                         <li>
@@ -122,6 +123,7 @@
                         <span class="linea_2"></span>
                     </ul>
                 </div>
+                {%endif%}
                 <!--  -->
                 {% if list.username == user.username %}
 
@@ -354,7 +356,7 @@
                 {% csrf_token %}
                 <div class="publicacion-centro">
                     <!-- <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""> -->
-                    <i class="fa-solid fa-face-smile" id="emoji-post"></i> {{ form.titulo }} {{form.descripcion}}{{form.cantLikes.as_hidden}}
+                    <i class="fa-solid fa-face-smile" id="emoji-post"></i> {{ form.titulo }} {{form.descripcion}}
                 </div>
                 <div class="publicacion-bottom">
                     <!-- <img src="{% static 'EscalArt/img/fondo-ayuda.jpg' %}" alt=""> -->
