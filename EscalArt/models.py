@@ -94,7 +94,7 @@ class Publicacion(models.Model):
     descripcion = models.CharField('Descripcion', max_length=250, blank=True,null=True)
     titulo = models.CharField('Titulo Publicacion', max_length=150)
     imagen = models.ImageField('Imagen', upload_to=None, max_length=200, blank = False, null = False)
-    cantLikes = models.IntegerField('Cantidad de Likes')
+    cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='likes')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id Usuario')
 
     def __str__(self):
@@ -160,7 +160,7 @@ class Solicitud(models.Model):
     usernameArtista = models.CharField('Username Artista',max_length=150)
 
     def __str__(self):
-        return self.idCliente,self.usernameArtista
+        return f'{self.idCliente,self.usernameArtista}'
 
 class Referencia(models.Model):
     idReferecia = models.AutoField(primary_key=True,verbose_name='Id Referencia')
@@ -170,3 +170,11 @@ class Referencia(models.Model):
 
     def __str__(self):
         return f'{self.img_referencia,self.idUser,self.usernameArtista}'
+
+class Guardado(models.Model):
+    idGuardado = models.CharField(primary_key=True,verbose_name='Id Guardado',max_length=150)
+    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id usuario')
+    idPublicacion = models.ForeignKey(Publicacion,on_delete=models.CASCADE,verbose_name='Id publicacion')
+
+    def __str__(self):
+        return f'{self.idUser,self.idPublicacion}'
