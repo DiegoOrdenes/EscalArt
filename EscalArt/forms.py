@@ -1,12 +1,12 @@
 from cProfile import label
-from dataclasses import field, fields
+from dataclasses import field
 from socket import fromshare
 from tkinter import Widget
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from requests import RequestException, request
-from .models import Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from .models import Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -105,25 +105,7 @@ class publicacionForm( ModelForm):
     class Meta:
         model=Publicacion
         fields = ['descripcion','titulo','imagen','cantLikes']
-        exclude = ['idUser','imagen']
-        widgets = {
-            'titulo':forms.TextInput(
-                attrs = {
-                    'class':'form-control',
-                    'placeholder':'Ingrese un titulo',
-                    'id':'titulo-post'
-                
-                }
-            ),
-            'descripcion':forms.Textarea(
-                attrs = {
-                    'class':'form-control',
-                    'placeholder':'Ingresa una descripcion',
-                    'id':'descripcion-post',
-                    
-                }
-            )
-        }
+        exclude = ['idUser']
 
 
 class perfilForm(ModelForm):
@@ -141,23 +123,11 @@ class editPerfilForm(ModelForm):
     class Meta:
         model = Perfil
         fields = ['biografia','img_header']
-        widgets = {
-            'biografia':forms.Textarea(
-                attrs={
-                    'class':'form-control',
-                    'placeholder':'Ingrese biografia'
-                }
-            )
-
-        }
 
 class editFotoPerfilForm(ModelForm):
     class Meta:
         model = Usuario
         fields=['imagen']
-        # widgets = {
-        #     'imagen': forms.FileInput(),
-        # }
         exclude = ['idUser','username','email','nombre','tipoCuenta','usuario_activo','usuario_administrador','objects']
     
 class SolicitudForm(ModelForm):
@@ -191,10 +161,5 @@ class ReferenciasForm(ModelForm):
         fields = ['img_referencia','idUser','usernameArtista']
         exclude = ['idUser','usernameArtista']
 
-class GuardarPostForm(ModelForm):
-    class Meta:
-        model = Guardado
-        fields = ['idUser','idPublicacion']
-        exclude = ['idUser','idPublicacion']
 
          

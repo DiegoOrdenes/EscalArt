@@ -160,7 +160,7 @@ class Solicitud(models.Model):
     usernameArtista = models.CharField('Username Artista',max_length=150)
 
     def __str__(self):
-        return f'{self.idCliente,self.usernameArtista}'
+        return self.idCliente,self.usernameArtista
 
 class Referencia(models.Model):
     idReferecia = models.AutoField(primary_key=True,verbose_name='Id Referencia')
@@ -170,11 +170,3 @@ class Referencia(models.Model):
 
     def __str__(self):
         return f'{self.img_referencia,self.idUser,self.usernameArtista}'
-
-class Guardado(models.Model):
-    idGuardado = models.CharField(primary_key=True,verbose_name='Id Guardado',max_length=150)
-    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id usuario')
-    idPublicacion = models.ForeignKey(Publicacion,on_delete=models.CASCADE,verbose_name='Id publicacion')
-
-    def __str__(self):
-        return f'{self.idUser,self.idPublicacion}'
