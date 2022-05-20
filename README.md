@@ -29,5 +29,5 @@
         Funionalidad Follow/Unfollow
         Mostrar seguidores/seguidos en los perfiles de artista
         Funcionalidad buscar usuario        
-        return("Tecnicamente e suna hora decente no? lets go(???,,,,weno eso, tengo hambre")
+        return("Tecnicamente es una hora decente no? lets go(???,,,,weno eso, tengo hambre")
   
