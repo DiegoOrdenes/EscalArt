@@ -1,14 +1,16 @@
 <!--Header-->
-
 <header>
     <nav class="nav">
         <div class="logo">EscalArt</div>
-        <div class="search-box">
-            <input type="text" placeholder="Buscando...">
-            <a href="##" class="icon">
+
+        <form method="GET" class="search-box" action=" {% url 'buscar-perfil' %}">
+            <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
+            <button type="submit" class="icon">
                 <i class="fas fa-search"></i>
-            </a>
-        </div>
+            </button>
+        </form>
+
+
         <ul class="menu">
             <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
             <li><a href="#"><i class="fa-solid fa-comment-dots"></i></a></li>

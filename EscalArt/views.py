@@ -1,5 +1,7 @@
 from asyncio.windows_events import NULL
 from email import message
+from django.db.models import Q
+from multiprocessing.spawn import is_forking
 from tkinter.tix import Form
 from django import forms
 from django.http import HttpResponseRedirect
@@ -90,7 +92,27 @@ def perfil(request,id):
     post = Publicacion.objects.all()
     list = Perfil.objects.all()
     listArtista = Usuario.objects.all()
+    usuario = Perfil.objects.get(idUser = artista.idUser)
     
+    followers =  usuario.seguidores.all()
+
+    following = Perfil.objects.filter(seguidores= artista.idUser )
+    following_count = len(following)
+
+    if len(followers) ==0:
+        is_following = False
+
+    try:
+        for follower in followers:
+            if follower == request.user:
+                is_following = True
+                break
+            else:
+                is_following = False
+    except:
+        is_following = False
+
+    numero_de_seguidores = len(followers)
     # id = request.GET.get('id',None)
     # if id is None:
     #     publi = NULL
@@ -104,6 +126,9 @@ def perfil(request,id):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
 
+
+        
+
         data = {
             "list":artista,
             "posts":post,
@@ -114,7 +139,9 @@ def perfil(request,id):
             'foto':editFotoPerfilForm(instance = user),
             "listArt":listArtista,
             # "publi":publi
-
+            'numFollowers':numero_de_seguidores,
+            'is_following': is_following,
+            'following_count':following_count,
         }
     else:
         data = {
@@ -125,6 +152,8 @@ def perfil(request,id):
             'form':publicacionForm(),
             'perfil':list,
             "listArt":listArtista,
+            'numFollowers':numero_de_seguidores,
+            'is_following': is_following,
 
             # "publi":publi
         }
@@ -542,3 +571,28 @@ class AddLike(View):
 
         return HttpResponseRedirect(next)
         
+class AddFollower(View):
+    def post(self,request,id,*args,**kwargs):
+        profile = Perfil.objects.get(idUser = id)
+        profile.seguidores.add(request.user)
+
+        return redirect('perfil', id = profile.idUser.username)
+
+class RemoveFollower(View):
+    def post(self,request,id,*args,**kwargs):
+        profile = Perfil.objects.get(idUser = id)
+        profile.seguidores.remove(request.user)
+
+        return redirect('perfil', id = profile.idUser.username)
+
+class UserSearch(View):
+    def get(self,request,*args,**kwargs):
+        query = self.request.GET.get('query')
+        lista_perfil = Perfil.objects.filter(
+            Q(idUser__username__icontains = query)
+        )
+
+        data = {
+            'lista_perfil':lista_perfil,
+        }
+        return render(request, 'escalArt/search.html',data)

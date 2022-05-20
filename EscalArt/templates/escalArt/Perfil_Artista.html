@@ -127,7 +127,41 @@
                 <!--  -->
                 {% if list.username == user.username %}
 
-                <button onclick="MostrarConfi_bio();" class="btn-Editar-Bio"><i class="fa-solid fa-user-pen"></i>Editar Biografia</button> {%endif%}
+                <button onclick="MostrarConfi_bio();" class="btn-Editar-Bio"><i class="fa-solid fa-user-pen"></i>Editar Biografia</button>
+                <!--  -->
+                {%else%}
+                <div class="mb-3">
+
+                    {% if list.username == user.username %}
+                    <!--  -->
+                    {% else %}
+                    <!--  -->
+                    {% if is_following %}
+                    <form method="POST" action="{% url 'remove-follower' list.idUser %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-Editar-Bio">
+                            
+                            Dejar de seguir
+                        </button>
+
+                    </form>
+                    <!--  -->
+                    {% else %}
+                    <form method="POST" action=" {% url 'add-follower' list.idUser %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-Editar-Bio">
+                            
+                            Seguir
+                        </button>
+                    </form>
+
+                    {% endif %}
+                    <!--  -->
+                    {% endif %}
+
+                </div>
+                <!--  -->
+                {%endif%}
                 <div class="texto-bio">
                     <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
                     {% for perfil in perfil %}
@@ -150,8 +184,8 @@
 
 
                     {% if list.idUser == perfil.idUser.idUser %}
-                    <li class="lista-li">{{perfil.seguidos}} Siguiendo</li>
-                    <li class="lista-li">{{perfil.seguidores}} Seguidores</li>
+                    <li class="lista-li">{{following_count}} Siguiendo</li>
+                    <li class="lista-li">{{numFollowers}} Seguidores</li>
                     <button id="Boton" onclick="mostrar();"><li  class="lista-li" >{{perfil.calificacion}}</li></button>
                     <!-- 6 FIN if para identificar perfil segun user -->
                     {% endif %}

@@ -131,13 +131,26 @@
                     <span></span>
                     <div class="ver-publi-lista">
                         <ul>
-                            <li>
-                                <form method="post" action="{% url 'like' publi.idPublicacion %}">
+                            <li style="padding-right:0px;">
+                                {% if user.is_authenticated %}
+                                <form class="post-likes column"  method="post" action="{% url 'like' publi.idPublicacion %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{request.path}}">
-                                    <button type="submit"><span class="post-likes column"><i class="fa-solid fa-heart corazon"> <span>{{publi.cantLikes.all.count}}</span></i></span></button>
+                                    <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart corazon">{{publi.cantLikes.all.count}} </i></button>
 
                                 </form>
+                                {% comment %} <span class="post-likes column"></span> {% endcomment %}
+                                
+                                {%else%}
+                                <form>
+                                    <span style="background-color:transparent" class="post-likes column">
+                                        <i class="fa-solid fa-heart corazon">
+                                            {{publi.cantLikes.all.count}}
+                                        </i>
+                                    </span>
+                                </form>
+
+                                {%endif%}
                             </li>
                             <li><i class="fa-solid fa-comment-dots comentar"></i>Comentar</li>
                             <li><i class="fa-solid fa-share compartir"></i>Compartir</li>

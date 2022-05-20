@@ -127,15 +127,15 @@ class publicacionForm( ModelForm):
 
 
 class perfilForm(ModelForm):
-    seguidos = forms.IntegerField(initial = 0)
-    seguidores = forms.IntegerField(initial = 0)
+    # seguidos = forms.IntegerField(initial = 0)
+    # seguidores = forms.IntegerField(initial = 0)
     calificacion = forms.IntegerField(initial = 0)
    
 
     class Meta:
         model = Perfil
-        fields = ['seguidos','seguidores','calificacion','idUser']
-        exclude = ['idUser','biografia','img_header']
+        fields = ['calificacion','idUser']
+        exclude = ['idUser','biografia','img_header','seguidores']
 
 class editPerfilForm(ModelForm):
     class Meta:

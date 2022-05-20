@@ -102,8 +102,8 @@ class Publicacion(models.Model):
 
 class Perfil(models.Model):
     idPerfil = models.AutoField(primary_key = True, verbose_name = 'Id Perfil')
-    seguidos = models.IntegerField('nro Seguidos')
-    seguidores = models.IntegerField('nro Seguidores')
+    # seguidos = models.ManyToManyField(Usuario, blank=True, related_name='seguidos',verbose_name='nro Seguidos')
+    seguidores = models.ManyToManyField(Usuario, blank=True, related_name='seguidores',verbose_name='nro seguidores')
     calificacion = models.IntegerField('Calificacion')
     img_header = models.ImageField('Header', upload_to='index', max_length=200, blank=True, null=True)
     biografia = models.CharField('Biografia', max_length=250, blank=True,null=True)

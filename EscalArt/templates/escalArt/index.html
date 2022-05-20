@@ -79,9 +79,21 @@
                 <span class="linea_2"></span>
                 <P class="descripcion-post " id="descripcion-post">{{p.descripcion}}</P>
                 <div>
-                    <span class="post-likes column"><i class="fa-solid fa-heart corazon"></i></span>
-                    <span class="post-likes column" id="cant-likes">0</span>
+                    {% if user.is_authenticated %}
+                                <form class="post-likes column"  method="post" action="{% url 'like' p.idPublicacion %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="next" value="{{request.path}}">
+                                    <button type="submit" style="background-color:transparent; border:none;box-shadow:none;"><span class="post-likes column"><i class="fa-solid fa-heart corazon"></i></span></button>
+                                
 
+                                </form>
+                                <span class="post-likes column" id="cant-likes">{{p.cantLikes.all.count}}</span>
+                                {%else%}
+                                <span class="post-likes column"><i class="fa-solid fa-heart corazon"></i></span>
+                                <span class="post-likes column" id="cant-likes">{{p.cantLikes.all.count}}</span>
+            
+                                {%endif%}
+                    
                 </div>
             </div>
             <div class="post-header ">

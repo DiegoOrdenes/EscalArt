@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscando</title>
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+
+
+</head>
+
+<body>
+    {% include 'escalArt/includes/menu.html' %} {% block content %}
+    <div class="container">
+
+        {% for perfil in lista_perfil %}
+        <div style="height: 36.5vh;" class="row justify-content-center mt-3">
+            <div class="col-md-5 col-sm-12 border-bottom position-relative">
+                <p><a style="text-decoration: none;" href=" {% url 'perfil' perfil.idUser.username %}">
+                @{{perfil.idUser.username}}
+                </a></p>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    </div>
+    {%endblock content%} {% include 'escalArt/includes/footer.html' %}
+
+</body>
+
+</html>
