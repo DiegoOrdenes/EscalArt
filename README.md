@@ -24,4 +24,10 @@
         Guardar y eliminar publicacion 
         Desarrollo funcionalidad de dar Like a una publicacion        
         return("Hasta ahi nomas quedo el actualizar a horas decentes...")
+        
+    def 19.05.22_v2.0():
+        Funionalidad Follow/Unfollow
+        Mostrar seguidores/seguidos en los perfiles de artista
+        Funcionalidad buscar usuario        
+        return("Tecnicamente e suna hora decente no? lets go(???,,,,weno eso, tengo hambre")
   
