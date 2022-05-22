@@ -1,0 +1,797 @@
+.configuracion {
+    display: grid;
+    grid-template-columns: 0.2fr 1fr;
+    justify-content: center;
+    width: 100%;
+    margin: 30px 0px;
+    padding: 0 18%;
+    margin-top: -3%;
+}
+
+
+/* Parte Izquierda/left */
+
+.config-left {
+    border: 2px solid #000;
+    background-color: #12130F;
+}
+
+.config-lista ul {
+    text-align: center;
+}
+
+.config-lista ul li {
+    color: #fff;
+    padding: 20px 10px;
+    width: 100%;
+    font-size: 1.1rem;
+    list-style: none;
+}
+
+.config-lista .li-profesional {
+    padding: 100px 0px;
+    color: rgb(20, 255, 20);
+}
+
+
+/* Parte Derecha/right */
+
+.config-right {
+    background-color: #12130F;
+    z-index: 0;
+}
+
+
+/* Editar Perfil Artista */
+
+.Editar-perfil-Artista {
+    padding: 30px 40px;
+    position: relative;
+    z-index: 0;
+}
+
+.title-U {
+    position: relative;
+}
+
+.title-U img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    float: left;
+    margin: 0px 30px 0 0;
+}
+
+.title-U h1 {
+    color: #fff;
+    font-size: 2rem;
+    padding: 0 0 20px 0;
+}
+
+.title-U a {
+    color: #86C332;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+
+/* ----  */
+
+.Editar-perfil-Artista form {
+    padding: 2em 20% 2em 20%;
+    justify-content: center;
+}
+
+.Editar-perfil-Artista form p input {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.Editar-perfil-Artista form p textarea {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    max-width: 100%;
+    max-height: 60px;
+}
+
+.Editar-perfil-Artista form p label {
+    color: #fff;
+}
+
+.Editar-perfil-Artista form p {
+    padding: 5px 0px;
+}
+
+.editar-perfil-btn {
+    text-align: center;
+}
+
+.btn-form {
+    height: 3rem;
+    width: 12rem;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background: #111827;
+    cursor: pointer;
+    padding: 10px 30px;
+    color: #fff;
+    margin: 15px 0 0 0;
+}
+
+.btn-form::after {
+    content: '';
+    height: calc(100% + 10px);
+    width: calc(100% + 10px);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: -11;
+    border-radius: 10px;
+    background: linear-gradient(90deg, deeppink, deepskyblue, lawngreen, deeppink);
+    background-size: 300% 100%;
+    animation: animate 3s ease infinite;
+}
+
+@keyframes animate {
+    to {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 90% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.title-bottom p {
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    margin: 0 20% 0 20%;
+    padding-bottom: 10px;
+}
+
+.title-bottom {
+    padding: 20px 0;
+}
+
+.edit-artista-bottom h1 {
+    color: #fff;
+    font-size: 2rem;
+    padding: 0 0 15px 0;
+}
+
+.edit-artista-bottom p {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.botom-2 {
+    margin: 10px;
+    position: absolute;
+    right: 0;
+    margin-right: 55%;
+}
+
+
+/* Cambiar pass Artista*/
+
+.Cambiar-pass-Artista {
+    padding: 30px 40px;
+    position: relative;
+    z-index: 0;
+}
+
+.title-H {
+    position: relative;
+}
+
+.title-H img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    float: left;
+    margin: 0px 30px 0 0;
+}
+
+.title-H h1 {
+    color: #fff;
+    font-size: 2rem;
+    padding: 0 0 20px 0;
+}
+
+
+/* ----  */
+
+.Cambiar-pass-Artista form {
+    padding: 2em 20% 2em 20%;
+    justify-content: center;
+}
+
+.Cambiar-pass-Artista form p input {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.Cambiar-pass-Artista form p label {
+    color: #fff;
+}
+
+.Cambiar-pass-Artista form p {
+    padding: 5px 0px;
+}
+
+.Cambiar-pass-Artista-btn {
+    text-align: center;
+}
+
+
+/* Categoria-Artista */
+
+.Categoria-Artista {
+    padding: 30px;
+    position: relative;
+}
+
+.title-select h1 {
+    color: #86C332;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.title-select p {
+    font-size: 1.2rem;
+    padding: 15px 0;
+    text-align: center;
+    margin: 0 15%;
+    color: #fff;
+}
+
+.mostrar-categoria input {
+    width: 25px;
+    height: 25px;
+}
+
+.mostrar-categoria span {
+    font-size: 1.2rem;
+    color: #fff;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.buscar-categoria {
+    text-align: center;
+    padding: 10px 20%;
+    position: relative;
+}
+
+.buscar-categoria input {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.title-categoria {
+    position: relative;
+}
+
+.title-categoria h1 {
+    font-size: 1.5rem;
+    padding-bottom: 20px;
+    color: #86C332;
+}
+
+.title-categoria input {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+.title-categoria ul li {
+    color: #fff;
+    padding: 10px 0px;
+    font-size: 1rem;
+    list-style: none;
+    position: relative;
+}
+
+.linea-- {
+    background: #86C332;
+    height: 2px;
+    width: 100%;
+    display: block;
+    margin: 5px 0;
+}
+
+
+/* Editar Perfil */
+
+.Editar-perfil {
+    padding: 30px 40px;
+    position: relative;
+    z-index: 0;
+}
+
+.title-U {
+    position: relative;
+}
+
+.title-U img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    float: left;
+    margin: 0px 30px 0 0;
+}
+
+.title-U h1 {
+    color: #fff;
+    font-size: 2rem;
+    padding: 0 0 20px 0;
+}
+
+.title-U a {
+    color: #86C332;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+
+/* ----  */
+
+.Editar-perfil form {
+    padding: 2em 20% 2em 20%;
+    justify-content: center;
+}
+
+.Editar-perfil form p input {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.Editar-perfil form p label {
+    color: #fff;
+}
+
+.Editar-perfil form p {
+    padding: 5px 0px;
+}
+
+.editar-perfil-btn {
+    text-align: center;
+}
+
+.btn-form {
+    height: 3rem;
+    width: 12rem;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background: #111827;
+    cursor: pointer;
+    padding: 10px 30px;
+    color: #fff;
+    margin: 15px 0 0 0;
+}
+
+.btn-form::after {
+    content: '';
+    height: calc(100% + 10px);
+    width: calc(100% + 10px);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: -11;
+    border-radius: 10px;
+    background: linear-gradient(90deg, deeppink, deepskyblue, lawngreen, deeppink);
+    background-size: 300% 100%;
+    animation: animate 3s ease infinite;
+}
+
+@keyframes animate {
+    to {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 90% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.title-bottom p {
+    color: #fff;
+    font-size: 1rem;
+    text-align: center;
+    margin: 0 20% 0 20%;
+    padding-bottom: 10px;
+}
+
+.title-bottom {
+    padding: 20px 0;
+}
+
+
+/* Cambiar Pass */
+
+.Cambiar-pass {
+    padding: 30px 40px;
+    position: relative;
+    z-index: 0;
+}
+
+.title-H {
+    position: relative;
+}
+
+.title-H img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #000;
+    float: left;
+    margin: 0px 30px 0 0;
+}
+
+.title-H h1 {
+    color: #fff;
+    font-size: 2rem;
+    padding: 0 0 20px 0;
+}
+
+
+/* ----  */
+
+.Cambiar-pass form {
+    padding: 2em 20% 2em 20%;
+    justify-content: center;
+}
+
+.Cambiar-pass form p input {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+.Cambiar-pass form p label {
+    color: #fff;
+}
+
+.Cambiar-pass form p {
+    padding: 5px 0px;
+}
+
+.Cambiar-pass-btn {
+    text-align: center;
+}
+
+.btn-form {
+    height: 3rem;
+    width: 12rem;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background: #111827;
+    cursor: pointer;
+    padding: 10px 30px;
+    color: #fff;
+    margin: 25px 0;
+}
+
+.btn-form::after {
+    content: '';
+    height: calc(100% + 10px);
+    width: calc(100% + 10px);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: -11;
+    border-radius: 10px;
+    background: linear-gradient(90deg, deeppink, deepskyblue, lawngreen, deeppink);
+    background-size: 300% 100%;
+    animation: animate 3s ease infinite;
+}
+
+@keyframes animate {
+    to {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 90% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.editar-perfil-btn p {
+    color: #86C332;
+    font-size: 1rem;
+}
+
+.editar-perfil-btn p a {
+    text-decoration: none;
+    color: #86C332;
+}
+
+
+/*Seguridad*/
+
+.config-right .seguridad .title-s {
+    color: #fff;
+    float: left;
+    padding: 30px 0px;
+    margin-left: 40px;
+}
+
+.title-s h1 {
+    padding: 0 0 20px 0;
+    font-size: 2rem;
+}
+
+.title-s p {
+    font-size: 1rem;
+    margin-right: 15%;
+}
+
+.btn-seguridad {
+    height: 3rem;
+    width: 12rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    background: #111827;
+    cursor: pointer;
+    padding: 2px 10px;
+    color: #fff;
+    margin: 15px 0 0 0;
+}
+
+.btn-seguridad::after {
+    content: '';
+    height: calc(100% + 10px);
+    width: calc(100% + 10px);
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    z-index: -11;
+    border-radius: 10px;
+    background: linear-gradient(90deg, deeppink, deepskyblue, lawngreen, deeppink);
+    background-size: 300% 100%;
+    animation: animate 3s ease infinite;
+}
+
+@keyframes animate {
+    to {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 90% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+
+/* Privacidad */
+
+.priv-s {
+    padding: 30px;
+}
+
+.priv-s ul {
+    position: relative;
+}
+
+.priv-s ul li {
+    padding: 20px 0px;
+    color: #fff;
+    list-style: none;
+}
+
+.priv-s ul li span {
+    text-align: center;
+    font-size: 4rem;
+    position: absolute;
+    margin-right: 60px;
+    right: 0;
+}
+
+.priv-s ul li i {
+    float: left;
+    padding: 30px;
+    font-size: 50px;
+    color: #86C332;
+}
+
+.priv-s ul li h1 {
+    font-size: 2rem;
+    padding-bottom: 15px;
+}
+
+.priv-s ul li h1,
+p {
+    padding-left: 10px;
+}
+
+
+/* Notificaciones */
+
+.Notificaciones {
+    padding: 35px;
+    color: #fff;
+}
+
+.title-n {
+    padding-bottom: 45px;
+    position: relative;
+}
+
+.title-n h1 {
+    font-size: 2rem;
+    padding: 0 0 10px 0;
+}
+
+.title-n p {
+    font-size: 1rem;
+    margin: 0 5% 0 0;
+}
+
+.botom {
+    margin: 10px;
+    position: absolute;
+    right: 0;
+    margin-right: 20%;
+}
+
+.lbl-switch {
+    display: inline-block;
+    width: 55px;
+    height: 30px;
+    background: #aaa;
+    border-radius: 100px;
+    position: relative;
+    cursor: pointer;
+}
+
+#btn-switch:checked~.lbl-switch {
+    background: #61A0FF;
+}
+
+.lbl-switch::after {
+    position: absolute;
+    content: '';
+    width: 22px;
+    height: 22px;
+    background: #fff;
+    border-radius: 100px;
+    top: 4px;
+    left: 5px;
+    transition: 0.3s;
+}
+
+#btn-switch {
+    display: none;
+}
+
+#btn-switch:checked~.lbl-switch::after {
+    left: 28px;
+}
+
+
+/*------*/
+
+.title-n_2 {
+    position: relative;
+}
+
+.title-n_2 h1 {
+    font-size: 2rem;
+    padding-bottom: 30px;
+}
+
+.title-n_2 input {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+}
+
+.title-n_2 ul li {
+    padding: 20px 0px;
+    font-size: 1.3rem;
+    list-style: none;
+    position: relative;
+}
+
+
+/* Accesibilidad */
+
+.priv-a {
+    padding: 30px;
+}
+
+.priv-a ul {
+    position: relative;
+}
+
+.priv-a ul li {
+    padding: 20px 0px;
+    color: #fff;
+    list-style: none;
+}
+
+.priv-a ul li p {
+    font-size: 1rem;
+    margin-right: 10%;
+}
+
+.priv-a ul li span {
+    text-align: center;
+    font-size: 4rem;
+    position: absolute;
+    margin-right: 60px;
+    right: 0;
+}
+
+.priv-a ul li i {
+    float: left;
+    padding: 30px;
+    font-size: 50px;
+    color: #86C332;
+}
+
+.priv-a ul li h1 {
+    font-size: 2rem;
+    padding-bottom: 15px;
+}
+
+.priv-a ul li h1,
+p {
+    padding-left: 10px;
+}
