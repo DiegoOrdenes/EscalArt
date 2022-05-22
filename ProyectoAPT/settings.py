@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'EscalArt',
-    'crispy_forms'
+    'crispy_forms',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,6 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT= 'static'
+
+
+TAGGIT_CASE_INSENSITIVE = True
