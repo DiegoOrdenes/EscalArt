@@ -12,6 +12,14 @@ from EscalArt.forms import FormularioUsuario, editFotoPerfilForm, editPerfilForm
 from .models import Perfil, Publicacion, Usuario
 
 # Create your views here.
+
+def chats(request):
+    return render(request, 'escalArt/chats.html')
+    
+
+def seleccionarC(request):
+    return render(request, 'escalArt/seleccionarC.html')
+
 def ayudacliente(request):
     return render(request,'escalArt/ayudacliente.html')
 

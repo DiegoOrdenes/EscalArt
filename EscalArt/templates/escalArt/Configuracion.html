@@ -62,20 +62,131 @@
                 <ul>
                     <li>Editar Perfil</li>
                     <li>Cambiar Contraseña</li>
+                    <li style="display: none;">Editar Perfil</li>
+                    <li style="display: none;">Cambiar Contraseña</li>
                     <li>Seguridad</li>
                     <li>Privacidad</li>
                     <li>Notificaciones</li>
                     <li>Accesibilidad</li>
+                    <li style="display: none;">Categoria</li>
                     <li class="li-profesional">Cambiar una cuenta Profesional</li>
                 </ul>
             </div>
         </div>
         <div class="config-right">
-            <div class="Editar-perfil" style="display: none;">
-
+            <div class="Editar-perfil" >
+                <div class="title-U">
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
+                    <h1>[UserName]</h1>
+                    <a href="">Cambiar Foto de perfil</a>
+                </div>
+                <form action="">
+                    <p>
+                        <label>Nombre</label>
+                        <input type="text"></input>
+                    </p>
+                    <p>
+                        <label>Username</label>
+                        <input type="text"></input>
+                    </p>
+                    <p>
+                        <label>Email</label>
+                        <input type="Email"></input>
+                    </p>
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                    </div>
+                </form>
+                <div class="title-bottom">
+                    <p>Si eres o estas buscando emprender como artista cambia a una cuenta profesional para asi poder disfrutar de todas las funcionalidades de la página</p>
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form"><a href="#"></a>Cambiar a cuenta profesional</button>
+                    </div>
+                </div>
+            </div>
+            <div class="Editar-perfil-Artista" style="display: none;">
+                <div class="title-U">
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
+                    <h1>[UserNameArtista]</h1>
+                    <a href="">Cambiar Foto de perfil</a>
+                </div>
+                <form action="">
+                    <p>
+                        <label>Nombre</label>
+                        <input type="text"></input>
+                    </p>
+                    <p>
+                        <label>Username</label>
+                        <input type="text"></input>
+                    </p>
+                    <p>
+                        <label>Email</label>
+                        <input type="Email"></input>
+                    </p>
+                    <p>
+                        <label>Biografia</label>
+                        <textarea type="Email"></textarea>
+                    </p>
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                    </div>
+                </form>
+                <div class="edit-artista-bottom">
+                    <div class="botom-2">
+                        <input type="checkbox" id="btn-switch"></input>
+                        <label for="btn-switch" class="lbl-switch"></label>
+                    </div>
+                    <h1>Cuenta Privada</h1>
+                    <p>Activar/Desactivar cuenta privada</p>
+                </div>
             </div>
             <div class="Cambiar-pass" style="display: none;">
-
+                <div class="title-H">
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
+                    <h1>[UserName]</h1>
+                </div>
+                <form action="">
+                    <p>
+                        <label>Contraseña Antigua</label>
+                        <input type="password"></input>
+                    </p>
+                    <p>
+                        <label>Nueva Contraseña</label>
+                        <input type="password"></input>
+                    </p>
+                    <p>
+                        <label>Repetir nueva contraseña</label>
+                        <input type="password"></input>
+                    </p>
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                        <p>¿Olvidaste tu contraseña? <a href="#">Click Aqui</a></p>
+                    </div>
+                </form>
+            </div>
+            <div class="Cambiar-pass-Artista" style="display: none;">
+                <div class="title-H">
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
+                    <h1>[UserNameArtista]</h1>
+                </div>
+                <form action="">
+                    <p>
+                        <label>Contraseña Antigua</label>
+                        <input type="password"></input>
+                    </p>
+                    <p>
+                        <label>Nueva Contraseña</label>
+                        <input type="password"></input>
+                    </p>
+                    <p>
+                        <label>Repetir nueva contraseña</label>
+                        <input type="password"></input>
+                    </p>
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                        <p>¿Olvidaste tu contraseña? <a href="#">Click Aqui</a></p>
+                    </div>
+                </form>
             </div>
             <div class="seguridad" style="display: none;">
                 <div class="title-s">
@@ -125,7 +236,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="Notificaciones">
+            <div class="Notificaciones" style="display: none;">
                 <div class="title-n">
                     <div class="botom">
                         <input type="checkbox" id="btn-switch"></input>
@@ -176,6 +287,56 @@
                             <p>Administra qué idiomas se usan para personalizar tu experiencia en la pagina</p>
                         </li>
                     </ul>
+                </div>
+            </div>
+            <div class="Categoria-Artista" style="display: none;">
+                <div class="title-select">
+                    <h1>Selecciona una Categoría</h1>
+                    <p>Puedes cambiar la categoria que se te adapta mejor a tu estilo de trabajo, Tendras opcion para poder mostrar o no esta informacion en tu perfil.</p>
+                </div>
+                <div class="mostrar-categoria">
+                    <input type="checkbox"></input>
+                    <span>Mostrar Categoría en el perfil</span>
+                </div>
+                <div class="buscar-categoria">
+                    <input type="text" placeholder="Buscar..."></input>
+                </div>
+                <div class="title-categoria">
+                    <h1>Sugerencias</h1>
+                    <ul>
+                        <li>
+                            <span>Anime</span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li>
+                            <span>Ilustracion</span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li>
+                            <span>Esculturas</span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li>
+                            <span>Realismo</span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li>
+                            <span>Fotografia</span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li>
+                            <span>Animacion 3D</span>
+                            <input type="checkbox"></input>
+                        </li>
+                        <li>
+                            <span>Otro</span>
+                            <input type="checkbox"></input>
+                        </li>
+                    </ul>
+                    <span class="linea--"></span>
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                    </div>
                 </div>
             </div>
         </div>
