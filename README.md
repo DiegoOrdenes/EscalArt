@@ -28,6 +28,14 @@
     def 19.05.22_v2.0():
         Funionalidad Follow/Unfollow
         Mostrar seguidores/seguidos en los perfiles de artista
-        Funcionalidad buscar usuario        
+        Funcionalidad buscar usuario segun username        
         return("Tecnicamente es una hora decente no? lets go(???,,,,weno eso, tengo hambre")
   
+    def 22.05.22():
+        Agregar hashtags a publicaciones
+        Filtrar en home las publicaciones segun hashtag seleccionado
+        Buscar publicacion segun hashtag
+        Buscar usuario segun nombre
+        Agregar categoria/tags a perfil usuario
+        Buscar perfil de usuario segun tags
+        return("ah yes, actualizar a las [casi] 2am is my passion, tengo frio aiuda")
