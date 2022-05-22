@@ -123,25 +123,28 @@
                 <div class="ver-publi-superior">
                     {% for la in listArt %}
                     <!-- 16 Inicio if para verificar user conectado -->
-                    {% if list.username == la.username %} {% if la.imagen %}
-                    <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {%endif%} {%endif%} {%endfor%}
+                    {% if list.username == la.username %}{% if la.imagen %}
+                    <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {% else %}
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt=""> {% endif %} {%endif%} {%endfor%}
 
-                    <h1>{{list.username}}</h1>
-                    <p>{{publi.descripcion}}</p>
+                    <a href="{% url 'perfil' list.username %}">
+                        <h1>{{list.username}}</h1>
+                    </a>
+                    <p>{{publi.descripcion}} <br>{% for tag in publi.tags.all %}
+                        <a href="{% url 'tagged' tag.slug %}" class="mr-1 badge badge-info">#{{ tag }}</a> {% endfor %}
+                    </p>
                     <span></span>
                     <div class="ver-publi-lista">
                         <ul>
                             <li style="padding-right:0px;">
                                 {% if user.is_authenticated %}
-                                <form class="post-likes column"  method="post" action="{% url 'like' publi.idPublicacion %}">
+                                <form class="post-likes column" method="post" action="{% url 'like' publi.idPublicacion %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{request.path}}">
                                     <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart corazon">{{publi.cantLikes.all.count}} </i></button>
 
                                 </form>
-                                {% comment %} <span class="post-likes column"></span> {% endcomment %}
-                                
-                                {%else%}
+                                {% comment %} <span class="post-likes column"></span> {% endcomment %} {%else%}
                                 <form>
                                     <span style="background-color:transparent" class="post-likes column">
                                         <i class="fa-solid fa-heart corazon">

@@ -304,35 +304,6 @@
             </div>
         </div>
     </section>
-    <!--Crear Publicacion Artista-->
-    <section id="section-publicacion" class="section-publicacion">
-        <div class="publicacion-fondo">
-            <div class="publicacion-top">
-                <h1>Crear nueva publicacion</h1>
-                <button onclick="OcultarPublicacion();" class="btn-publicacion-cerrar">X</button>
-            </div>
-            <form action="" method="POST" enctype='multipart/form-data'>
-                {% csrf_token %}
-                <div class="publicacion-centro">
-                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                    <i class="fa-solid fa-face-smile"></i> {{ form.titulo }} {{form.descripcion}}
-                </div>
-                <div class="publicacion-bottom">
-
-                    <!-- send help -->
-                    {{form.imagen.as_hidden}}
-                    <input type="file" id="real-file2" name="pfp" hidden="hidden">
-                    <button type="button" class="boton-avatar" id="custom-button2" onclick="MostrarAlerta();">
-                        <img src="{% static 'escalArt/img/uploadImage.svg' %}" alt="">
-                    </button>
-                    <div class="publicacion-bottom_2">
-                        <input type="submit" name="publicar" value="Publicar...">
-                        <input type="reset" value="Limpiar">
-                    </div>
-                </div>
-            </form>
-        </div>
-    </section>
 
     <!--Galeria de fotos-->
     <span class="linea"></span>
@@ -370,11 +341,17 @@
                     <div class="ver-publi-superior">
                         {% for la in listArt %}
                         <!-- 16 Inicio if para verificar user conectado -->
-                        {% if list.username == la.username %} {% if la.imagen %}
-                        <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {%endif%} {%endif%} {%endfor%}
+                        {% if list.username == la.username %}{% if la.imagen %}
+                        <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {% else %}
+                        <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt=""> {% endif %} {%endif%} {%endfor%}
 
-                        <h1>{{list.username}}</h1>
-                        <p>{{publi.descripcion}}</p>
+                        <a href="{% url 'perfil' list.username %}">
+                            <h1>{{list.username}}</h1>
+                        </a>
+                        <p>{{publi.descripcion}} <br>{% for tag in publi.tags.all %}
+                            <a href="{% url 'tagged' tag.slug %}" class="mr-1 badge badge-info">#{{ tag }}</a> {% endfor %}
+                        </p>
+
                         <span></span>
                         <div class="ver-publi-lista">
                             <ul>

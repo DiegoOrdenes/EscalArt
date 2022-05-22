@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import  AddFollower, AddLike, RemoveFollower, UserSearch, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome
+from .views import  AddFollower, AddLike, RemoveFollower, UserSearch, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome, tagged
 from .views import perfil
 from .views import RegistrarUsuario,ayudacliente,delete_publicacion
 
@@ -18,6 +18,7 @@ urlpatterns =[
     path('perfil/<id>/followers/add', AddFollower.as_view(),name='add-follower'),
     path('perfil/<id>/followers/remove', RemoveFollower.as_view(),name='remove-follower'),
     path('buscar/',UserSearch.as_view(),name='buscar-perfil'),
+    path('tag/<slug:slug>/', tagged, name="tagged"),
 
     # path('borrar-guardado/<id>',delete_guardado,name='delete_guardado'),
 

@@ -39,10 +39,12 @@ body {
     height: 10vh;
     border-top: 1px solid #86C332;
     border-bottom: 1px solid #86C332;
+    width: 100%;
 }
 
 .chips-container {
-    width: 500px;
+    width: inherit;
+    text-align: center;
 }
 
 .chips {

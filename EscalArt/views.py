@@ -1,17 +1,21 @@
 from asyncio.windows_events import NULL
 from email import message
+from itertools import count
+from tkinter.messagebox import NO
 from django.db.models import Q
 from multiprocessing.spawn import is_forking
 from tkinter.tix import Form
 from django import forms
 from django.http import HttpResponseRedirect
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import get_object_or_404, render,redirect,HttpResponse
 # from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
+from taggit.models import Tag
+from django.template.defaultfilters import slugify
 
 from EscalArt.forms import FormularioUsuario, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
 from .models import Perfil, Publicacion, Usuario, Guardado
@@ -34,6 +38,7 @@ def delete_publicacion(request,id):
 #     guardado.delete()
 
 #     return redirect(to='home')
+
 
 def perfil_cliente(request,id):
     user = Usuario.objects.get(username = id)
@@ -89,7 +94,7 @@ def perfil_cliente(request,id):
 def perfil(request,id):
     artista = Usuario.objects.get(username = id)
 
-    post = Publicacion.objects.all()
+    post = Publicacion.objects.order_by('-idPublicacion').all()
     list = Perfil.objects.all()
     listArtista = Usuario.objects.all()
     usuario = Perfil.objects.get(idUser = artista.idUser)
@@ -126,7 +131,7 @@ def perfil(request,id):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
 
-
+        
         
 
         data = {
@@ -168,7 +173,8 @@ def perfil(request,id):
             else:
                 print('estas publicando')
 
-                formulario = publicacionForm(request.POST,request.FILES)           
+                formulario = publicacionForm(request.POST,request.FILES)   
+
 
                 if formulario.is_valid():
                     publi = formulario.save(commit=False)
@@ -176,6 +182,7 @@ def perfil(request,id):
                     publi.imagen = request.FILES.get('publi')
                     
                     publi.save()
+                    formulario.save_m2m()
                             
                 else:
                     
@@ -433,13 +440,15 @@ def publicacionHome(request,artista,post):
 
 
 
+def tagged(request, slug):
 
+    tag = get_object_or_404(Tag, slug=slug)
+    
 
-def home (request):
     list = Perfil.objects.all()
-    post = Publicacion.objects.all()
+    post = Publicacion.objects.filter(tags=tag)
     listArtista = Usuario.objects.all()
-
+    common_tags = Publicacion.tags.most_common()[:10]
     # print(request.user)
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
@@ -453,7 +462,9 @@ def home (request):
         'edit': editPerfilForm(instance = algo),
         'foto':editFotoPerfilForm(instance = user),
 
-        "listArt":listArtista
+        "listArt":listArtista,
+        'common_tags':common_tags,
+        'tag':tag,
 
     }
     else:
@@ -461,7 +472,45 @@ def home (request):
         "perfil":list,
         "posts":post,
         'form':publicacionForm(),
-        "listArt":listArtista
+        "listArt":listArtista,
+        'common_tags':common_tags,
+        'tag':tag,
+        
+    
+    }
+    return render(request, 'escalArt/index.html', data)
+
+from django.db.models import Count
+def home (request):
+    list = Perfil.objects.all()
+    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')) \
+        .order_by('-likes')
+    listArtista = Usuario.objects.all()
+    common_tags = Publicacion.tags.most_common()[:10]
+    # print(request.user)
+    if (request.user.is_authenticated):
+        algo = Perfil.objects.get(idUser = request.user)
+        user = Usuario.objects.get(idUser =  request.user.idUser)
+
+        data = {
+        "perfil":list,
+        "posts":post,
+        'form':publicacionForm(),
+        
+        'edit': editPerfilForm(instance = algo),
+        'foto':editFotoPerfilForm(instance = user),
+
+        "listArt":listArtista,
+        'common_tags':common_tags,
+
+    }
+    else:
+        data = {
+        "perfil":list,
+        "posts":post,
+        'form':publicacionForm(),
+        "listArt":listArtista,
+        'common_tags':common_tags,
         
     
     }
@@ -587,12 +636,33 @@ class RemoveFollower(View):
 
 class UserSearch(View):
     def get(self,request,*args,**kwargs):
-        query = self.request.GET.get('query')
-        lista_perfil = Perfil.objects.filter(
-            Q(idUser__username__icontains = query)
-        )
-
+        try:
+            query = self.request.GET.get('query')
+            
+            if Q(idUser__username__icontains = query):
+                lista_perfil = Perfil.objects.filter(
+                    Q(idUser__username__icontains = query)
+                )
+            
+            if Q(idUser__nombre__icontains = query):
+                lista_perfil = Perfil.objects.filter(
+                    Q(idUser__nombre__icontains = query)
+                )
+            if Q(tags__name__icontains = query):
+                lista_post = Publicacion.objects.filter(
+                    Q(tags__name__icontains = query)
+                )
+                lista_perfil_tag = Perfil.objects.filter(
+                    Q(tags__name__icontains = query)
+                )           
+        except:
+            lista_perfil = None
+            lista_post = None
+            lista_perfil_tag = None
+        
         data = {
             'lista_perfil':lista_perfil,
+            'lista_post':lista_post,
+            'lista_perfil_tag':lista_perfil_tag,
         }
         return render(request, 'escalArt/search.html',data)

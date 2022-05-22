@@ -97,14 +97,14 @@ class FormularioUsuario(forms.ModelForm):
 #         fields = ['seguidos','seguidores','calificacion','biografia','idUser']
 
 
-class publicacionForm( ModelForm):
+class publicacionForm(forms.ModelForm):
     
     
     
     
     class Meta:
         model=Publicacion
-        fields = ['descripcion','titulo','imagen']
+        fields = ['descripcion','titulo','imagen','tags']
         exclude = ['idUser','imagen','cantLikes']
         widgets = {
             'titulo':forms.TextInput(
@@ -122,7 +122,9 @@ class publicacionForm( ModelForm):
                     'id':'descripcion-post',
                     
                 }
-            )
+            ),
+            
+        
         }
 
 

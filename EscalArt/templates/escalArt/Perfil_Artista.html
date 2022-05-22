@@ -21,6 +21,8 @@
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+
 </head>
 
 <body>
@@ -391,6 +393,12 @@
                 <div class="publicacion-centro">
                     <!-- <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""> -->
                     <i class="fa-solid fa-face-smile" id="emoji-post"></i> {{ form.titulo }} {{form.descripcion}}
+                    <!-- <div><span>Tags:</span>{{form.tags}}</div> -->
+                    <div class="form-group">
+                        <!-- <label>Tags</label> -->
+                        <input type="text" data-role="tagsinput" placeholder="Ingresa tus tags!" class="form-control" name="tags">
+                    </div>
+
                 </div>
                 <div class="publicacion-bottom">
                     <!-- <img src="{% static 'EscalArt/img/fondo-ayuda.jpg' %}" alt=""> -->
@@ -417,25 +425,9 @@
 
         <section id="galeria">
             {% for p in posts %} {% if list.idUser == p.idUser.idUser %}
-            <!-- <form action="" id="post-form" method="POST">
-                {% csrf_token %}
-                <input style="display: none;" type="text" name="idPost" id="idPost" value="{{p.idPublicacion}}">
-                <button type="submit" name="publicacion" id="publicacion">
 
-                <img src="{{ p.imagen }}" alt="Galeria de imagenes" >
-                </button>
-
-
-            </form> -->
             <a href="{% url 'publicacion' list.username p.idPublicacion %}" name="idPost" id="idPost"><img src="/{{ p.imagen }}" alt="Galeria de imagenes"></a> {% endif %} {% endfor %}
 
-
-            <!-- {{p.titulo}} {{p.descripcion}} -->
-            <!-- <img src="{% static 'EscalArt/img/foto_2.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_3.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_4.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_5.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_6.jpg' %}" alt="Galeria de imagenes"> -->
 
 
         </section>
@@ -534,7 +526,14 @@
     
     #imagen-post {
         margin-left: 20%;
-        margin-top: 50px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    
+    #id_tags {
+        position: inherit;
+        margin-top: 60px;
+        margin-left: 20%;
     }
 </style>
 <script>

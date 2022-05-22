@@ -11,6 +11,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.test import TransactionTestCase
 from requests import request
+from taggit.managers import TaggableManager
 
 # Create your models here.
 class UsuarioManager(BaseUserManager):
@@ -47,12 +48,12 @@ class UsuarioManager(BaseUserManager):
         return usuario
 
 
-class Categoria(models.Model):
-    idCategoria = models.AutoField(primary_key=True,verbose_name='Id Categoría')
-    nombreCategoria = models.CharField(max_length=50,verbose_name='Nombre Categoría')
+# class Categoria(models.Model):
+#     idCategoria = models.AutoField(primary_key=True,verbose_name='Id Categoría')
+#     nombreCategoria = models.CharField(max_length=50,verbose_name='Nombre Categoría')
 
-    def __str__(self):
-        return  self.nombreCategoria
+#     def __str__(self):
+#         return  self.nombreCategoria
 
 class TipoCuenta(models.Model):
     idTipoCuenta = models.AutoField(primary_key=True, verbose_name='Id Tipo Cuenta')
@@ -71,6 +72,7 @@ class Usuario(AbstractBaseUser):
     usuario_activo = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
     objects = UsuarioManager()
+
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email','nombre','tipoCuenta']
@@ -96,6 +98,7 @@ class Publicacion(models.Model):
     imagen = models.ImageField('Imagen', upload_to=None, max_length=200, blank = False, null = False)
     cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='likes')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id Usuario')
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return f'{self.titulo,self.idUser}'
@@ -108,23 +111,24 @@ class Perfil(models.Model):
     img_header = models.ImageField('Header', upload_to='index', max_length=200, blank=True, null=True)
     biografia = models.CharField('Biografia', max_length=250, blank=True,null=True)
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user',unique = True)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return f'{self.idPerfil,self.idUser}'
 
-class Usuario_Categoria(models.Model):
-    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
-    idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
+# class Usuario_Categoria(models.Model):
+#     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
+#     idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
 
-    def __str__(self):
-        return f'{self.idUser,self.idCategoria}'
+#     def __str__(self):
+#         return f'{self.idUser,self.idCategoria}'
 
-class Publicacion_Categoria(models.Model):
-    idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
-    idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
+# class Publicacion_Categoria(models.Model):
+#     idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
+#     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
 
-    def __str__(self):
-        return f'{self.idPublicacion,self.idCategoria}'
+#     def __str__(self):
+#         return f'{self.idPublicacion,self.idCategoria}'
 
 class Comentarios(models.Model):
     comentario = models.CharField('Comentario', max_length=250)
