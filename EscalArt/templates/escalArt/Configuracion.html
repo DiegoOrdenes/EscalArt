@@ -59,22 +59,28 @@
     <div class="configuracion">
         <div class="config-left">
             <div class="config-lista">
-                <ul>
-                    <li>Editar Perfil</li>
-                    <li>Cambiar Contraseña</li>
-                    <li style="display: none;">Editar Perfil</li>
-                    <li style="display: none;">Cambiar Contraseña</li>
-                    <li>Seguridad</li>
-                    <li>Privacidad</li>
-                    <li>Notificaciones</li>
-                    <li>Accesibilidad</li>
-                    <li style="display: none;">Categoria</li>
-                    <li class="li-profesional">Cambiar una cuenta Profesional</li>
-                </ul>
+                <nav>
+                    <input type="checkbox" id="check">
+                    <label for="check" class="check-btn">
+                        <i class="fa-solid fa-bars"></i>
+                    </label>
+                    <ul>
+                        <li onclick="Editarperfil();">Editar Perfil</li>
+                        <li onclick="Cambiarpass();">Cambiar Contraseña</li>
+                        <li style="display: none;">Editar Perfil</li>
+                        <li style="display: none;">Cambiar Contraseña</li>
+                        <li onclick="seguridad();">Seguridad</li>
+                        <li onclick="privacidad();">Privacidad</li>
+                        <li onclick="Notificaciones();">Notificaciones</li>
+                        <li onclick="accesibilidad();">Accesibilidad</li>
+                        <li style="display: none;">Categoria</li>
+                        <li class="li-profesional">Cambiar una cuenta Profesional</li>
+                    </ul>
+                </nav>
             </div>
         </div>
         <div class="config-right">
-            <div class="Editar-perfil" >
+            <div class="Editar-perfil" id="Editar-perfil">
                 <div class="title-U">
                     <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
                     <h1>[UserName]</h1>
@@ -104,7 +110,7 @@
                     </div>
                 </div>
             </div>
-            <div class="Editar-perfil-Artista" style="display: none;">
+            <div class="Editar-perfil-Artista" id="Editar-perfil-Artista" style="display: none;">
                 <div class="title-U">
                     <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
                     <h1>[UserNameArtista]</h1>
@@ -140,7 +146,7 @@
                     <p>Activar/Desactivar cuenta privada</p>
                 </div>
             </div>
-            <div class="Cambiar-pass" style="display: none;">
+            <div class="Cambiar-pass" id="Cambiar-pass" style="display: none;">
                 <div class="title-H">
                     <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
                     <h1>[UserName]</h1>
@@ -164,7 +170,7 @@
                     </div>
                 </form>
             </div>
-            <div class="Cambiar-pass-Artista" style="display: none;">
+            <div class="Cambiar-pass-Artista" id="Cambiar-pass-Artista" style="display: none;">
                 <div class="title-H">
                     <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
                     <h1>[UserNameArtista]</h1>
@@ -188,7 +194,7 @@
                     </div>
                 </form>
             </div>
-            <div class="seguridad" style="display: none;">
+            <div class="seguridad" id="seguridad" style="display: none;">
                 <div class="title-s">
                     <h1>Seguridad</h1>
                     <p>Aqui podras administrar la seguridad de tu cuenta.</p>
@@ -210,7 +216,7 @@
                     </div>
                 </div>
             </div>
-            <div class="privacidad" style="display: none;">
+            <div class="privacidad" id="privacidad" style="display: none;">
                 <div class="priv-s">
                     <ul>
                         <li>
@@ -236,7 +242,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="Notificaciones" style="display: none;">
+            <div class="Notificaciones" id="Notificaciones" style="display: none;">
                 <div class="title-n">
                     <div class="botom">
                         <input type="checkbox" id="btn-switch"></input>
@@ -263,7 +269,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="accesibilidad" style="display: none;">
+            <div class="accesibilidad" id="accesibilidad" style="display: none;">
                 <div class="priv-a">
                     <ul>
                         <li>
@@ -289,7 +295,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="Categoria-Artista" style="display: none;">
+            <div class="Categoria-Artista" id="Categoria-Artista" style="display: none;">
                 <div class="title-select">
                     <h1>Selecciona una Categoría</h1>
                     <p>Puedes cambiar la categoria que se te adapta mejor a tu estilo de trabajo, Tendras opcion para poder mostrar o no esta informacion en tu perfil.</p>
@@ -346,6 +352,7 @@
 
 
 
+
     <!--Pie de la pagina-->
     <footer class="pie-pagina">
         <div class="grupo-1">
@@ -378,6 +385,7 @@
 
 
 </body>
+<script src="{% static 'EscalArt/js/configuracion.js' %}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -11,6 +11,18 @@
 
 /* Parte Izquierda/left */
 
+.check-btn {
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    display: none;
+}
+
+#check {
+    display: none;
+}
+
 .config-left {
     border: 2px solid #000;
     background-color: #12130F;
@@ -26,6 +38,10 @@
     width: 100%;
     font-size: 1.1rem;
     list-style: none;
+}
+
+.config-lista ul li:hover {
+    color: #86C332;
 }
 
 .config-lista .li-profesional {
@@ -238,7 +254,7 @@
 }
 
 .Cambiar-pass-Artista form p {
-    padding: 5px 0px;
+    padding: 20px 0px;
 }
 
 .Cambiar-pass-Artista-btn {
@@ -497,7 +513,7 @@
 }
 
 .Cambiar-pass form p {
-    padding: 5px 0px;
+    padding: 20px 0px;
 }
 
 .Cambiar-pass-btn {
@@ -794,4 +810,180 @@ p {
 .priv-a ul li h1,
 p {
     padding-left: 10px;
+}
+
+
+/* Responsividad */
+
+@media (max-width:1150px) {
+    .configuracion {
+        margin: 0;
+        padding: 0;
+        margin-bottom: 3px;
+    }
+    .scrol {
+        height: 3px;
+    }
+    .botom {
+        margin: 10px;
+        position: absolute;
+        right: 0;
+        margin-right: 10%;
+    }
+}
+
+@media (max-width:750px) {
+    /* General */
+    .scrol {
+        height: 3px;
+    }
+    .configuracion {
+        padding: 0;
+        margin: 0;
+        margin-bottom: 3px;
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .config-lista ul li {
+        padding: 7px 0px;
+    }
+    .config-lista .li-profesional {
+        bottom: 50px;
+        position: absolute;
+        margin-bottom: 20px;
+    }
+    .check-btn {
+        display: block;
+    }
+    .config-right {
+        z-index: 0;
+    }
+    .config-lista ul {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #2d2d2d;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+        z-index: 10;
+        margin-top: 62px;
+    }
+    .config-lista nav ul li {
+        display: block;
+        padding: 23px 0;
+        line-height: 30px;
+    }
+    #check:checked~ul {
+        left: 0;
+        z-index: 10;
+        position: fixed;
+    }
+    /* Editar-perfil */
+    .title-bottom p {
+        color: #fff;
+        font-size: 1rem;
+        text-align: center;
+        margin: 0;
+        padding-bottom: 10px;
+    }
+    .Editar-perfil form {
+        padding: 2em 10% 2em 10%;
+        justify-content: center;
+    }
+    /* Editar-perfil-Artista*/
+    .Editar-perfil-Ar form {
+        padding: 2em 10% 2em 10%;
+        justify-content: center;
+    }
+    .botom-2 {
+        margin: 10px;
+        position: absolute;
+        right: 0;
+        margin-right: 40px;
+    }
+    /* Cambiar-pass */
+    .Cambiar-pass form {
+        padding: 2em 10% 2em 10%;
+        justify-content: center;
+    }
+    /* Cambiar-pass-Artista */
+    .Cambiar-pass-Artista form {
+        padding: 2em 10% 2em 10%;
+        justify-content: center;
+    }
+    /* seguridad */
+    .seguridad-btn button {
+        width: 250px;
+        text-align: center;
+    }
+    /* privacidad */
+    .priv-s ul li span {
+        text-align: center;
+        font-size: 3rem;
+        position: absolute;
+        margin-right: 0px;
+        right: 0;
+    }
+    .priv-s ul li i {
+        float: left;
+        padding: 30px;
+        font-size: 40px;
+        color: #86C332;
+    }
+    .priv-s ul li h1 {
+        font-size: 1.4rem;
+        padding-bottom: 15px;
+    }
+    .priv-s ul li p {
+        font-size: 1rem;
+    }
+    /* Notificaciones */
+    .title-n_2 h1 {
+        font-size: 1.5rem;
+    }
+    .title-n_2 ul li span {
+        font-size: 1rem;
+    }
+    .botom {
+        position: absolute;
+        right: 0;
+        margin-right: 0;
+    }
+    .title-n h1 {
+        font-size: 2rem;
+    }
+    .title-n p {
+        font-size: 1rem;
+    }
+    /* accesibilidad */
+    .priv-a ul li span {
+        text-align: center;
+        font-size: 3rem;
+        position: absolute;
+        margin-right: 0px;
+        right: 0;
+    }
+    .priv-a ul li i {
+        float: left;
+        padding: 30px;
+        font-size: 40px;
+        color: #86C332;
+    }
+    .priv-a ul li h1 {
+        font-size: 1.4rem;
+        padding-bottom: 15px;
+    }
+    .priv-a ul li p {
+        font-size: 1rem;
+    }
+    /* Categoria-Artista */
+    .title-select p {
+        font-size: 1.2rem;
+        padding: 15px 0;
+        text-align: center;
+        margin: 0;
+        color: #fff;
+    }
 }
