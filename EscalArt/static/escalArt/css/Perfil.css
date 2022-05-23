@@ -592,6 +592,7 @@ body {
     height: 100%;
     border: #000 1px solid;
     position: relative;
+    background-color: white;
 }
 
 .ver-publi_1 img {
@@ -679,12 +680,15 @@ body {
     flex-wrap: wrap;
     width: 100%;
     padding: 5px 0px;
+    background-color: white;
 }
 
 .ver-testimonials-box {
     padding: 15px;
     margin: 1.5px;
+    height: 115px;
     cursor: pointer;
+    border-bottom: 1px solid #86C332;
 }
 
 .ver-profile-img {
@@ -802,7 +806,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     position: relative;
-    border: 1px #000 solid;
+    border-top: 1px #000 solid;
     text-align: center;
     justify-content: center;
     bottom: 0;
@@ -876,6 +880,7 @@ body {
         padding: 0;
         margin: 0;
         object-fit: cover;
+        background-color: white;
     }
     .ver-publi_1 {
         width: 100%;
@@ -1357,4 +1362,17 @@ body {
         width: 80%;
         margin: -100px 0px;
     }
+}
+
+
+/* Isa */
+
+.scroll-div {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 455px;
+}
+
+#id_comentario {
+    margin-top: 10px;
 }
