@@ -39,3 +39,9 @@
         Agregar categoria/tags a perfil usuario
         Buscar perfil de usuario segun tags
         return("ah yes, actualizar a las [casi] 2am is my passion, tengo frio aiuda")
+    
+    def 22.05.22_v2.0():
+        Crear comentario
+        Dar like a un comentario
+        Mostrar comentarios de una publicacion
+        return("ª")
