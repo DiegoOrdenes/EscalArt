@@ -152,3 +152,4 @@ STATIC_ROOT= 'static'
 
 
 TAGGIT_CASE_INSENSITIVE = True
+USE_TZ = False
