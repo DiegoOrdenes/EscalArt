@@ -2,6 +2,7 @@ from asyncio.windows_events import NULL
 from email import message
 from itertools import count
 from tkinter.messagebox import NO
+from xml.etree.ElementTree import Comment
 from django.db.models import Q
 from multiprocessing.spawn import is_forking
 from tkinter.tix import Form
@@ -17,8 +18,8 @@ from django.views.generic import CreateView
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import FormularioUsuario, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
-from .models import Perfil, Publicacion, Usuario, Guardado
+from EscalArt.forms import ComentarioForm, FormularioUsuario, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
+from .models import Comentarios, Perfil, Publicacion, Usuario, Guardado
 
 
 
@@ -263,9 +264,10 @@ def perfil(request,id):
     return render(request, 'escalArt/Perfil_Artista.html',data)
 
 def publicacion(request,artista,post):
+    comentarios = Comentarios.objects.filter(idPublicacion = post).order_by('-fechaCreacion')
     Artista = Usuario.objects.get(username = artista)
     publi = Publicacion.objects.get(idPublicacion = post)
-
+    commentForm = ComentarioForm()
     Post = Publicacion.objects.all()
     list = Perfil.objects.all()
     listArtista = Usuario.objects.all()
@@ -291,7 +293,9 @@ def publicacion(request,artista,post):
                 'foto':editFotoPerfilForm(instance = user),
                 "listArt":listArtista,
                 "publi":publi,
-                'guardarPost':GuardarPostForm()
+                'guardarPost':GuardarPostForm(),
+                'commentForm':commentForm,
+                'comentarios':comentarios,
 
             }
         else:
@@ -307,6 +311,8 @@ def publicacion(request,artista,post):
                 "publi":publi,
                 'guardarPost':GuardarPostForm(),
                 'guardado':guardado,
+                'commentForm':commentForm,
+                'comentarios':comentarios,
 
             }
     else:
@@ -319,7 +325,10 @@ def publicacion(request,artista,post):
             'perfil':list,
             "listArt":listArtista,
 
-            "publi":publi
+            "publi":publi,
+            'comentarios':comentarios,
+            'commentForm':commentForm,
+
         }
     
     if request.method == 'POST':
@@ -341,7 +350,15 @@ def publicacion(request,artista,post):
             guardado = Guardado.objects.get(idPublicacion=post)
             guardado.delete()
             data['guardado'] = None
-
+        elif 'comentar' in request.POST:
+            comentario = ComentarioForm(request.POST)
+            if comentario.is_valid:
+                nuevo_comentario = comentario.save(commit=False)
+                nuevo_comentario.idUser = request.user
+                nuevo_comentario.idPublicacion = publi
+                nuevo_comentario.save()
+            else:
+                print(comentario.errors)
         else:
             ('ningun post ha coincidido')
 
@@ -355,6 +372,11 @@ def publicacionHome(request,artista,post):
     Artista = Usuario.objects.get(username = artista)
     publi = Publicacion.objects.get(idPublicacion = post)
     guardados = Guardado.objects.all()
+    comentarios = Comentarios.objects.filter(idPublicacion = post).order_by('-fechaCreacion')
+    commentForm = ComentarioForm()
+        
+
+
     try:
         guardado = Guardado.objects.get(idPublicacion = post)
         
@@ -381,7 +403,11 @@ def publicacionHome(request,artista,post):
                 "listArt":listArtista,
                 "publi":publi,
                 'guardarPost':GuardarPostForm(),
-                'guardados':guardados,              
+                'guardados':guardados,
+                'comentarios':comentarios,
+                'commentForm':commentForm,
+
+
             }
         else:
             data = {
@@ -396,7 +422,10 @@ def publicacionHome(request,artista,post):
                 "publi":publi,
                 'guardarPost':GuardarPostForm(),
                 'guardados':guardados,
-                'guardado':guardado              
+                'guardado':guardado,    
+                'comentarios':comentarios,
+                'commentForm':commentForm,
+                          
             }
             
     else:
@@ -409,7 +438,10 @@ def publicacionHome(request,artista,post):
             'perfil':list,
             "listArt":listArtista,
 
-            "publi":publi
+            "publi":publi,
+            'comentarios':comentarios,
+            'commentForm':commentForm,
+           
         }
     
     if request.method == 'POST':
@@ -431,6 +463,15 @@ def publicacionHome(request,artista,post):
             guardado.delete()
             data['guardado'] = None
 
+        elif 'comentar' in request.POST:
+            comentario = ComentarioForm(request.POST)
+            if comentario.is_valid:
+                nuevo_comentario = comentario.save(commit=False)
+                nuevo_comentario.idUser = request.user
+                nuevo_comentario.idPublicacion = publi
+                nuevo_comentario.save()
+            else:
+                print(comentario.errors)
         else:
             ('ningun post ha coincidido')
         
@@ -448,7 +489,8 @@ def tagged(request, slug):
     list = Perfil.objects.all()
     post = Publicacion.objects.filter(tags=tag)
     listArtista = Usuario.objects.all()
-    common_tags = Publicacion.tags.most_common()[:10]
+    common_tags = Tag.objects.all()[:10]
+
     # print(request.user)
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
@@ -486,7 +528,7 @@ def home (request):
     post = Publicacion.objects.all().annotate(likes=Count('cantLikes')) \
         .order_by('-likes')
     listArtista = Usuario.objects.all()
-    common_tags = Publicacion.tags.most_common()[:10]
+    common_tags = Tag.objects.all()[:10]
     # print(request.user)
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
@@ -602,7 +644,7 @@ def RegistrarUsuario (request):
 class AddLike(View):
     def post(self, request, pk, *args, **kwargs):
         post = Publicacion.objects.get(idPublicacion = pk)
-
+        comment = Comentarios.objects.get(pk = pk)
         is_liked = False
 
         for like in post.cantLikes.all():
@@ -614,7 +656,40 @@ class AddLike(View):
             post.cantLikes.add(request.user)
 
         if is_liked:
-            post.cantLikes.remove(request.user)    
+            post.cantLikes.remove(request.user)
+
+        comment_liked = False
+
+        for like in comment.cantLikes.all():
+            if like == request.user:
+                comment_liked = True
+                break
+            
+        if not comment_liked:
+            comment.cantLikes.add(request.user)
+
+        if comment_liked:
+            comment.cantLikes.remove(request.user)    
+        
+        next = request.POST.get('next','/')
+
+        return HttpResponseRedirect(next)
+
+class AddLikeComment(View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comentarios.objects.get(pk = pk)
+        comment_liked = False
+
+        for like in comment.cantLikes.all():
+            if like == request.user:
+                comment_liked = True
+                break
+            
+        if not comment_liked:
+            comment.cantLikes.add(request.user)
+
+        if comment_liked:
+            comment.cantLikes.remove(request.user)    
         
         next = request.POST.get('next','/')
 

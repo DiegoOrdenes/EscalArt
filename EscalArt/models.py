@@ -1,3 +1,4 @@
+from django.utils import timezone
 from enum import unique
 from lib2to3.pytree import Base
 from mailbox import mbox
@@ -99,6 +100,7 @@ class Publicacion(models.Model):
     cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='likes')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id Usuario')
     tags = TaggableManager(blank=True)
+    fechaCreacion = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f'{self.titulo,self.idUser}'
@@ -132,6 +134,8 @@ class Perfil(models.Model):
 
 class Comentarios(models.Model):
     comentario = models.CharField('Comentario', max_length=250)
+    fechaCreacion = models.DateTimeField(default=timezone.now)
+    cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='CommentLikes')
     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
 

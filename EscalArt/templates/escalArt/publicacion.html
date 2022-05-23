@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -168,142 +168,7 @@
         </div>
     </section>
 
-    <!--Caja de Comentarios Calificaciones-->
-    <section id="testimonials" class="calificacion-principal">
-        <div class="testimonials-background">
-            <div class="testimonial-heading">
-                <div class="color-testi">
-                    <button id="btn-calif-cierra" type="button" onclick="ocultar();">X</button>
-                    <h1>Calificaciones <i class="fas fa-star reviews"></i></h1>
-                </div>
-                <span>General</span>
-                <div class="reviews">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-            </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="Comentar-Usuarios">
-                <div class="Comentar-calificacion">
-                    <span>Calificar</span>
-                    <div class="Comentar-iconos">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                <i class="fa-solid fa-face-smile"></i>
-                <input type="text" placeholder="Escriba su comentario...">
-                <div class="button-comentar">
-                    <button><a href="">Comentar...</a></button>
-                </div>
-            </div>
-        </div>
-    </section>
+
 
     <!--Galeria de fotos-->
     <span class="linea"></span>
@@ -364,7 +229,7 @@
 
                                     </form>
                                     {% comment %} <span class="post-likes column"></span> {% endcomment %} {%else%}
-                                    <form>
+                                    <form class="post-likes column">
                                         <span style="background-color:transparent" class="post-likes column">
                                             <i class="fa-solid fa-heart corazon">
                                                 {{publi.cantLikes.all.count}}
@@ -382,6 +247,8 @@
                         <div id="settings-post">
                             <ul class="Configuracion-post">
                                 <li>
+
+                                    {% if user.is_authenticated %}
                                     <form action="" method="POST">
                                         {% csrf_token %} {{guardarPost.as_hidden}}
                                         <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost"> {% if guardado%}
@@ -389,6 +256,17 @@
 
                                         <button method="submit" id="guardar1" name="guardarPost"><i class="fa-solid fa-bookmark" ></i></input>Guardar</button> {%endif%}
                                     </form>
+                                    {% else %}
+                                    <form action="" method="">
+                                        {% csrf_token %} {{guardarPost.as_hidden}}
+                                        <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost"> {% if guardado%}
+                                        <button method="" id="eliminar1" name="eliminarPostGuardado"><i class="fa-solid fa-bookmark" ></i></input>Eliminar de guardados</button> {%else%}
+
+                                        <button method="" id="guardar1" name="guardarPost"><i class="fa-solid fa-bookmark" ></i></input>Guardar</button> {%endif%}
+                                    </form>
+                                    {% endif %}
+
+
                                 </li>
                                 <li><button><i class="fa-solid fa-flag"></i>Reportar</button></li>
                                 {% if publi.idUser == user %}
@@ -401,34 +279,77 @@
                     </div>
                     <div class="ver-comentarios">
                         <div class="ver-boxcontainer">
-                            <div class="ver-testimonials-box">
-                                <div class="ver-box-top">
-                                    <div class="ver-profile">
-                                        <div class="ver-profile-img">
-                                            <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                                        </div>
-                                        <div class="ver-name-user">
-                                            <strong>Touseed</strong>
-                                            <span>@ksadjasdkaksa</span>
+                            <div class="scroll-div" style="width: inherit;">
+                                {% for c in comentarios %}
+                                <div class="ver-testimonials-box scroll-object" style="width: inherit;">
+                                    <div class="ver-box-top">
+                                        <div class="ver-profile">
+                                            <div class="ver-profile-img">
+                                                {% if c.idUser.imagen %}
+                                                <img src="/{{c.idUser.imagen}}" class="foto_perfil" alt="">
+                                                <!--  -->
+                                                {% else %}
+                                                <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt="">
+                                                <!--  -->
+                                                {% endif %}
+                                            </div>
+                                            <div class="ver-name-user">
+                                                <strong>{{c.idUser.nombre}}</strong>
+                                                <span>@{{c.idUser.username}}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="ver-client-comment">
+                                        <p>{{c.comentario}}</p>
+                                        {% if user.is_authenticated %}
+                                        <form method="post" action="{% url 'likeComment' c.pk %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="next" value="{{request.path}}">
+                                            <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart ">{{c.cantLikes.all.count}} </i></button>
+
+                                        </form>
+                                        {%else%}
+                                        <form>
+                                            <span style="background-color:transparent" class="post-likes column">
+                                        <i class="fa-solid fa-heart">
+                                            {{c.cantLikes.all.count}}
+                                        </i>
+                                    </span>
+                                        </form>
+
+                                        {%endif%}
+                                    </div>
+                                    <div class="ver-client-responder">
+                                        <ul>
+                                            <li class="ver-li">{{c.fechaCreacion}}</li>
+                                            <!-- <li class="ver-li-2">Min</li> -->
+                                            <li class="ver-li-3"><input type="submit" value="Responder"></li>
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="ver-client-comment">
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                                    <i class="fa-solid fa-heart"></i>
-                                </div>
-                                <div class="ver-client-responder">
-                                    <ul>
-                                        <li class="ver-li">35</li>
-                                        <li class="ver-li-2">Min</li>
-                                        <li class="ver-li-3"><input type="submit" value="Responder"></li>
-                                    </ul>
-                                </div>
+                                {%empty%}
+                                <p>Aun no hay comentarios</p>
+                                {% endfor %}
                             </div>
-                            <div class="ver-crear-comentario">
-                                <i class="fa-solid fa-face-grin"></i>
-                                <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario...">
-                                <input class="ver-comentario-btn" type="submit" value="Enviar">
+
+
+                            <div>
+
+                                {% if user.is_authenticated %}
+                                <form action="" method="POST" class="ver-crear-comentario">
+                                    <i class="fa-solid fa-face-grin"></i> {% csrf_token %} {{commentForm | crispy}}
+                                    <!-- <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario..."> -->
+                                    <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
+                                </form>
+                                {% else %}
+                                <form action="" method="" class="ver-crear-comentario">
+                                    <i class="fa-solid fa-face-grin"></i> {% csrf_token %} {{commentForm | crispy}}
+                                    <!-- <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario..."> -->
+                                    <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
+                                </form>
+                                {% endif %}
+
+
                             </div>
                         </div>
                     </div>

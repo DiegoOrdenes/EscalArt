@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from requests import RequestException, request
-from .models import Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from .models import Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -198,5 +198,19 @@ class GuardarPostForm(ModelForm):
         model = Guardado
         fields = ['idUser','idPublicacion']
         exclude = ['idUser','idPublicacion']
+    
 
+class ComentarioForm(forms.ModelForm):
+    comentario = forms.CharField(
+        label='',
+        widget=forms.Textarea(
+            attrs={
+                'rows':'3',
+                'placeholder': 'Escribe un comentario...'
+            }
+        )
+    )
+    class Meta:
+        model = Comentarios
+        fields=['comentario']
          

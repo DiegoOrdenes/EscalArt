@@ -1,4 +1,4 @@
-{% load static%} {% load shuffle %}
+{% load static%} {% load shuffle %} {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -163,6 +163,7 @@
                     <div id="settings-post">
                         <ul class="Configuracion-post">
                             <li>
+                                {% if user.is_authenticated %}
                                 <form action="" method="POST">
                                     {% csrf_token %} {{guardarPost.as_hidden}}
                                     <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost"> {% if guardado%}
@@ -170,6 +171,15 @@
 
                                     <button method="submit" id="guardar1" name="guardarPost"><i class="fa-solid fa-bookmark" ></i></input>Guardar</button> {%endif%}
                                 </form>
+                                {% else %}
+                                <form action="" method="">
+                                    {% csrf_token %} {{guardarPost.as_hidden}}
+                                    <input hidden="hidden" type="text" value="{{publi.idPublicacion}}" name="idPost"> {% if guardado%}
+                                    <button method="" id="eliminar1" name="eliminarPostGuardado"><i class="fa-solid fa-bookmark" ></i></input>Eliminar de guardados</button> {%else%}
+
+                                    <button method="" id="guardar1" name="guardarPost"><i class="fa-solid fa-bookmark" ></i></input>Guardar</button> {%endif%}
+                                </form>
+                                {% endif %}
                             </li>
                             <li><button><i class="fa-solid fa-flag"></i>Reportar</button></li>
                             <span class="linea_2"></span>
@@ -179,34 +189,78 @@
                 </div>
                 <div class="ver-comentarios">
                     <div class="ver-boxcontainer">
-                        <div class="ver-testimonials-box">
-                            <div class="ver-box-top">
-                                <div class="ver-profile">
-                                    <div class="ver-profile-img">
-                                        <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                                    </div>
-                                    <div class="ver-name-user">
-                                        <strong>Touseed</strong>
-                                        <span>@ksadjasdkaksa</span>
+                        <div class="scroll-div" style="width: inherit;">
+                            {% for c in comentarios %}
+                            <div class="ver-testimonials-box scroll-object" style="width: inherit;">
+                                <div class="ver-box-top">
+                                    <div class="ver-profile">
+                                        <div class="ver-profile-img">
+                                            {% if c.idUser.imagen %}
+                                            <img src="/{{c.idUser.imagen}}" class="foto_perfil" alt="">
+                                            <!--  -->
+                                            {% else %}
+                                            <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt="">
+                                            <!--  -->
+                                            {% endif %}
+                                        </div>
+                                        <div class="ver-name-user">
+                                            <strong>{{c.idUser.nombre}}</strong>
+                                            <span>@{{c.idUser.username}}</span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="ver-client-comment">
+                                    <p>{{c.comentario}}</p>
+                                    {% if user.is_authenticated %}
+                                    <form method="post" action="{% url 'likeComment' c.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{request.path}}">
+                                        <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart ">{{c.cantLikes.all.count}} </i></button>
+
+                                    </form>
+                                    {%else%}
+                                    <form>
+                                        <span style="background-color:transparent" class="post-likes column">
+                                        <i class="fa-solid fa-heart">
+                                            {{c.cantLikes.all.count}}
+                                        </i>
+                                    </span>
+                                    </form>
+
+                                    {%endif%}
+
+                                </div>
+                                <div class="ver-client-responder">
+                                    <ul>
+                                        <li class="ver-li">{{c.fechaCreacion}}</li>
+                                        <!-- <li class="ver-li-2">Min</li> -->
+                                        <li class="ver-li-3"><input type="submit" value="Responder"></li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="ver-client-comment">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                                <i class="fa-solid fa-heart"></i>
-                            </div>
-                            <div class="ver-client-responder">
-                                <ul>
-                                    <li class="ver-li">35</li>
-                                    <li class="ver-li-2">Min</li>
-                                    <li class="ver-li-3"><input type="submit" value="Responder"></li>
-                                </ul>
-                            </div>
+                            {%empty%}
+                            <p>Aun no hay comentarios</p>
+                            {% endfor %}
                         </div>
-                        <div class="ver-crear-comentario">
-                            <i class="fa-solid fa-face-grin"></i>
-                            <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario...">
-                            <input class="ver-comentario-btn" type="submit" value="Enviar">
+
+
+                        <div>
+
+                            {% if user.is_authenticated %}
+                            <form action="" method="POST" class="ver-crear-comentario">
+                                <i class="fa-solid fa-face-grin"></i> {% csrf_token %} {{commentForm | crispy}}
+                                <!-- <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario..."> -->
+                                <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
+                            </form>
+                            {% else %}
+                            <form action="" method="" class="ver-crear-comentario">
+                                <i class="fa-solid fa-face-grin"></i> {% csrf_token %} {{commentForm | crispy}}
+                                <!-- <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario..."> -->
+                                <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
+                            </form>
+                            {% endif %}
+
+
                         </div>
                     </div>
                 </div>

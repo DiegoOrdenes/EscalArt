@@ -59,7 +59,7 @@
     <section class="galeria">
         {% if posts is not None %} {% for p in posts %}
         <!--  -->
-        <article class="post ">
+        <article class="post">
 
             <div class="post-body ">
                 <div class="post-container">
@@ -99,7 +99,7 @@
 
                 </div>
             </div>
-            <div class="post-header ">
+            <div class="post-header">
                 <a href="{% url 'publicacionHome' p.idUser.username p.idPublicacion %}" name="idPost" id="idPost">
                     <img id="post-imagen" src="/{{ p.imagen }}" alt="Galeria de imagenes">
                 </a>
