@@ -1376,3 +1376,12 @@ body {
 #id_comentario {
     margin-top: 10px;
 }
+
+.d-none {
+    display: none;
+}
+
+.child-comment {
+    margin-left: 2rem;
+    padding-right: 50px;
+}
