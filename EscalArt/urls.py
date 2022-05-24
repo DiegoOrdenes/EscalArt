@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import  AddFollower, AddLike, AddLikeComment, RemoveFollower, UserSearch, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome, tagged
+from .views import  AddFollower, AddLike, AddLikeComment, RemoveFollower, ResponderComentarioView, UserSearch, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome, tagged
 from .views import perfil
 from .views import RegistrarUsuario,ayudacliente,delete_publicacion
 
@@ -20,6 +20,7 @@ urlpatterns =[
     path('buscar/',UserSearch.as_view(),name='buscar-perfil'),
     path('tag/<slug:slug>/', tagged, name="tagged"),
     path('comentario/<int:pk>/like',AddLikeComment.as_view(),name='likeComment'),
+    path('perfil/<artista>/publicacion/<int:post_pk>/comentario/<int:pk>/responder',ResponderComentarioView.as_view(),name='responder-comentario'),
 
 
     # path('borrar-guardado/<id>',delete_guardado,name='delete_guardado'),

@@ -1,5 +1,6 @@
 from asyncio.windows_events import NULL
 from email import message
+from hashlib import new
 from itertools import count
 from tkinter.messagebox import NO
 from xml.etree.ElementTree import Comment
@@ -480,7 +481,23 @@ def publicacionHome(request,artista,post):
     return render(request,'escalArt/publicacionHome.html',data)
 
 
+class ResponderComentarioView(View):
+    def post(self,request,artista,post_pk,pk,*args,**kwargs):
+        post = Publicacion.objects.get(idPublicacion = post_pk)
 
+        parent_comment = Comentarios.objects.get(pk = pk)
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.idUser = request.user
+            new_comment.idPublicacion = post
+            new_comment.parent = parent_comment
+            new_comment.save()
+       
+        next = request.POST.get('next','/')
+
+        return HttpResponseRedirect(next)
+        
 def tagged(request, slug):
 
     tag = get_object_or_404(Tag, slug=slug)

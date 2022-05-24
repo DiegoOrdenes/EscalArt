@@ -1,3 +1,4 @@
+from typing_extensions import Self
 from django.utils import timezone
 from enum import unique
 from lib2to3.pytree import Base
@@ -13,6 +14,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.test import TransactionTestCase
 from requests import request
 from taggit.managers import TaggableManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+# from typing_extensions import Self
 
 # Create your models here.
 class UsuarioManager(BaseUserManager):
@@ -138,9 +142,21 @@ class Comentarios(models.Model):
     cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='CommentLikes')
     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
+    parent = models.ForeignKey('self',on_delete=models.CASCADE,blank=True,null=True,related_name='+')
+
 
     def __str__(self):
         return f'{self.idUser,self.comentario}'
+
+    @property
+    def children(self):
+        return Comentarios.objects.filter(parent=self).order_by('-fechaCreacion').all()
+    
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True       
+        return False
 
 class EstadoComision(models.Model):
     idEstado = models.AutoField(primary_key=True, verbose_name='Id Estado Comision')
