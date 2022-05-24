@@ -45,3 +45,9 @@
         Dar like a un comentario
         Mostrar comentarios de una publicacion
         return("ª")
+    
+    def 23.05.22():        
+        Responder a un comentario
+        formulario responder a un comentario en html
+        listar respuestas en html bajo el comentario padre
+        return("y sufrir de paso asdsfdssds")
