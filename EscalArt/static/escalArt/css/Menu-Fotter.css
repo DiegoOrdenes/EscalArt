@@ -130,7 +130,7 @@ header {
 }
 
 .scrol {
-    height: 100px;
+    height: 1px;
 }
 
 .search-box {
@@ -260,10 +260,77 @@ header {
 }
 
 @media screen and (max-width:800px) {
+    /* Menu  pagina*/
+    .logo {
+        font-size: 1.3rem;
+    }
+    .nav ul li {
+        font-size: 30px;
+        padding: 0 10px;
+        margin: 0;
+    }
+    .search-box {
+        position: relative;
+        transform: translate(-50%, -50%);
+        height: 38px;
+        text-align: center;
+        left: 20%;
+    }
+    .search-box:hover>input {
+        width: 120px;
+        padding: 0 10px;
+    }
+    .search-box:hover>.icon {
+        background: #86C332;
+    }
+    .icon:hover {
+        transform: rotate(360deg) scale(0.8);
+    }
+    .search-box input {
+        width: 0;
+        border: none;
+        outline: none;
+        padding: 0;
+        background: none;
+        font-size: 0.8rem;
+        transition: 0.5s ease;
+        line-height: 40px;
+        color: #fff;
+    }
+    .icon {
+        color: #fff;
+        float: right;
+        width: 40px;
+        font-size: 20px;
+        height: 40px;
+        border-radius: 50%;
+        background: #2f3640;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.4s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    /* pie de pagina */
     .pie-pagina .grupo-1 {
         width: 100%;
         grid-template-columns: repeat(1, 1fr);
         grid-gap: 30px;
         padding: 35px 0px;
+    }
+    .box h2 {
+        text-align: center;
+        font-size: 1.5rem;
+    }
+    .box p {
+        text-align: center;
+        font-size: 1rem;
+    }
+    .red-social {
+        text-align: center;
+    }
+    .red-social a {
+        margin: 0px 15px;
     }
 }

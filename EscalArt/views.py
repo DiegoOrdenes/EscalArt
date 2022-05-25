@@ -15,6 +15,11 @@ from .models import Perfil, Publicacion, Usuario
 
 def chats(request):
     return render(request, 'escalArt/chats.html')
+
+def presentacion(request):
+    return render(request, 'escalArt/presentacion.html')
+
+
     
 
 def seleccionarC(request):

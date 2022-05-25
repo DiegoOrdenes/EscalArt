@@ -49,19 +49,38 @@
     </header>
     <div class="scrol"></div>
     <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
-
-    <div class="contenedor">
-        <figure>
-            <img src="{% static 'EscalArt/img/foro.png' %}" alt="">
-            <div class="capa">
-                <h3>¿Como podemos ayudarte?</h3>
-                <p>Aqui podra resolver algunas dudas que tendra en nuestra pagina web, ademas nos podra escribir alguna consulta si usted desea...</p>
+    <!-- slider -->
+    <section class="seccion-slider">
+        <div id="contenedor-slider" class="contenedor-slider">
+            <div id="slider" class="slider">
+                <section class="slider__section">
+                    <img class="Slide" src="{% static 'escalArt/img/1---.jpg' %}">
+                    <h1>¿Como podemos ayudarte?</h1>
+                    <p>En este sector podras resolver algunas de tus dudas sobre nuestro sistema web.</p>
+                </section>
+                <section class="slider__section">
+                    <img class="Slide" src="{% static 'escalArt/img/2---.png' %}">
+                    <h1>¿Cuenta de artista?</h1>
+                    <p>Podras saber como se puede crear una cuenta profesional, ademas de para que sirve y que beneficios tendras en nuestro sistema.</p>
+                </section>
+                <section class="slider__section">
+                    <img class="Slide" src="{% static 'escalArt/img/4---.jpg' %}">
+                    <h1>¿Tienes dudas/consultas?</h1>
+                    <p>Si tienes alguna duda/consulta sobre algo que no entiendes, en la parte inferior nos podras escribir cuando desees. Tardamos como maximo 48hrs en responder...</p>
+                </section>
+                <section class="slider__section">
+                    <img class="Slide" src="{% static 'escalArt/img/3---.jpg' %}">
+                    <h1>¿Como podemos ayudarte?</h1>
+                    <p>en este sector podras resolver algunas de tus dudas sobre nuestra pagina.</p>
+                </section>
             </div>
-        </figure>
-    </div>
+            <div id="btn-prev" class="btn-prev">&#60;</div>
+            <div id="btn-next" class="btn-next">&#62;</div>
+        </div>
+    </section>
+
     <section class="post-list">
         <div class="content">
-
             <article class="post 1-">
                 <div class="post-header ">
                     <img class="post-img-1" src="{% static 'EscalArt/img/artistas.jpg' %}" alt="">
@@ -143,5 +162,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="{% static 'EscalArt/js/ayuda_cliente.js' %}"></script>
 
 </html>
