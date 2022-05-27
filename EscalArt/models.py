@@ -202,3 +202,14 @@ class Guardado(models.Model):
 
     def __str__(self):
         return f'{self.idUser,self.idPublicacion}'
+
+
+class Review(models.Model):
+    idPerfil = models.ForeignKey(Perfil,on_delete=models.CASCADE)
+    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    review = models.TextField(max_length=500,blank=True)
+    rating = models.IntegerField()
+    fechaCreacion = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.rating}'

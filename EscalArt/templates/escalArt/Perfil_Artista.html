@@ -9,14 +9,14 @@
     <title>Perfil Artista</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
-    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&family=Roboto+Condensed:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--Iconos-->
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -246,7 +246,9 @@
     </section>
 
     <!--Caja de Comentarios Calificaciones-->
+    <!-- https://www.youtube.com/watch?v=gDtsAWMA3Jo&ab_channel=RathanKumar -->
     <section id="testimonials" class="calificacion-principal">
+
         <div class="testimonials-background">
             <div class="testimonial-heading">
                 <div class="color-testi">
@@ -255,130 +257,96 @@
                 </div>
                 <span>General</span>
                 <div class="reviews">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                    <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
+                    {% for perfil in perfil %}
+                    <!-- 6 inicio if para identificar perfil segun user -->
+
+
+                    {% if list.idUser == perfil.idUser.idUser %}
+                    <i class="fa fa-star{% if perfil.calificacion == 1 %}-half-o{% elif perfil.calificacion < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if perfil.calificacion == 3 %}-half-o{% elif perfil.calificacion < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if perfil.calificacion == 5 %}-half-o{% elif perfil.calificacion < 6 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if perfil.calificacion == 7 %}-half-o{% elif perfil.calificacion < 8 %}-o {% endif %}" aria-hidden="true"></i>
+                    <i class="fa fa-star{% if perfil.calificacion == 9 %}-half-o{% elif perfil.calificacion < 10 %}-o {% endif %}" aria-hidden="true"></i>
+                    <!-- 6 FIN if para identificar perfil segun user -->
+                    {% endif %}
+
+
+
+                    <!-- 5 FIN ciclo for que lista los perfiles -->
+                    {% endfor %}
+
                 </div>
             </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
+            <div class="contenedor-reviews">
+
+                {% for review in reviews %}
+                <div class="testimonial-box-container">
+                    <div class="testimonials-box">
+                        <div class="box-top">
+                            <div class="profile">
+                                <div class="profile-img">
+
+                                    {% if review.idUser.imagen %}
+                                    <img src="/{{review.idUser.imagen}}" alt=""> {% else %}
+                                    <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt=""> {% endif %}
+
+                                </div>
+                                <div class="name-user">
+                                    <strong>{{review.idUser.nombre}}</strong>
+                                    <span>@{{review.idUser.username}}</span>
+                                </div>
                             </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
+                            <div class="reviews">
+                                <i class="fa fa-star{% if review.rating == 1 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                                <i class="fa fa-star{% if review.rating == 3 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                                <i class="fa fa-star{% if review.rating == 5 %}-half-o{% elif review.rating < 6 %}-o {% endif %}" aria-hidden="true"></i>
+                                <i class="fa fa-star{% if review.rating == 7 %}-half-o{% elif review.rating < 8 %}-o {% endif %}" aria-hidden="true"></i>
+                                <i class="fa fa-star{% if review.rating == 9 %}-half-o{% elif review.rating < 10 %}-o {% endif %}" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                        <div class="client-comment">
+                            <p>{{review.review}}</p>
                         </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
                     </div>
                 </div>
+                {% endfor %}
+
+
+
             </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-box-container">
-                <div class="testimonials-box">
-                    <div class="box-top">
-                        <div class="profile">
-                            <div class="profile-img">
-                                <img src="{% static 'EscalArt/img/persona_1.jpg' %}" alt="">
-                            </div>
-                            <div class="name-user">
-                                <strong>Touseed</strong>
-                                <span>@ksadjasdkaksa</span>
-                            </div>
-                        </div>
-                        <div class="reviews">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <div class="client-comment">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="Comentar-Usuarios">
+
+            <form class="Comentar-Usuarios" method="POST">
+                {%csrf_token %}
                 <div class="Comentar-calificacion">
-                    <span>Calificar</span>
-                    <div class="Comentar-iconos">
+                    <span style="margin-right: 10px;">Calificar</span><br>
+                    <div class="Comentar-iconos rate" style="background-color: white;">
+                        <!-- <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i> -->
+                        <input type="radio" name="rating" id="rating10" value="10" required /><label for="rating10" title="10"></label>
+                        <input type="radio" name="rating" id="rating9" value="9" required /><label for="rating9" title="9" class="half"></label>
+                        <input type="radio" name="rating" id="rating8" value="8" required /><label for="rating8" title="8"></label>
+                        <input type="radio" name="rating" id="rating7" value="7" required /><label for="rating7" title="7" class="half"></label>
+                        <input type="radio" name="rating" id="rating6" value="6" required /><label for="rating6" title="6"></label>
+                        <input type="radio" name="rating" id="rating5" value="5" required /><label for="rating5" title="5" class="half"></label>
+                        <input type="radio" name="rating" id="rating4" value="4" required /><label for="rating4" title="4"></label>
+                        <input type="radio" name="rating" id="rating3" value="3" required /><label for="rating3" title="3" class="half"></label>
+                        <input type="radio" name="rating" id="rating2" value="2" required /><label for="rating2" title="2"></label>
+                        <input type="radio" name="rating" id="rating1" value="1" required /><label for="rating1" title="1" class="half"></label>
+
+
                     </div>
                 </div>
                 <i class="fa-solid fa-face-smile"></i>
-                <input type="text" placeholder="Escriba su comentario...">
+                <input hidden="hidden" name="calificacion" value="{{calificacion}}">
+                <input name="review" type="text" placeholder="Escriba su comentario...">
                 <div class="button-comentar">
-                    <button><a href="">Comentar...</a></button>
+                    <button name="enviarReview" type="submit">Comentar...</button>
                 </div>
-            </div>
+            </form>
         </div>
     </section>
     <!--Crear Publicacion Artista-->

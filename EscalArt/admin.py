@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Comentarios, Guardado, Perfil, Publicacion,  Referencia, TipoCuenta, Usuario, Comision,Comision_Cliente,EstadoComision
-from .models import Solicitud
+from .models import Solicitud,Review
 # Register your models here.
 
 
@@ -18,6 +18,7 @@ admin.site.register(EstadoComision)
 admin.site.register(Solicitud)
 admin.site.register(Referencia)
 admin.site.register(Guardado)
+admin.site.register(Review)
 
 
 

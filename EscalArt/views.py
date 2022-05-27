@@ -19,8 +19,8 @@ from django.views.generic import CreateView
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import ComentarioForm, FormularioUsuario, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
-from .models import Comentarios, Perfil, Publicacion, Usuario, Guardado
+from EscalArt.forms import ReviewForm,ComentarioForm, FormularioUsuario, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
+from .models import Comentarios, Perfil, Publicacion, Usuario, Guardado, Review
 
 
 
@@ -95,11 +95,13 @@ def perfil_cliente(request,id):
 
 def perfil(request,id):
     artista = Usuario.objects.get(username = id)
-
+    reviewForm = ReviewForm()
+    
     post = Publicacion.objects.order_by('-idPublicacion').all()
     list = Perfil.objects.all()
     listArtista = Usuario.objects.all()
     usuario = Perfil.objects.get(idUser = artista.idUser)
+    print(usuario.idUser.idUser)
     
     followers =  usuario.seguidores.all()
 
@@ -119,15 +121,31 @@ def perfil(request,id):
     except:
         is_following = False
 
-    numero_de_seguidores = len(followers)
-    # id = request.GET.get('id',None)
-    # if id is None:
-    #     publi = NULL
-    #     print('nothing')
-    # else:
-    #     print(id)
-    #     publi = Publicacion.objects.get(idPublicacion = request.GET.get('id'))
     
+    try:
+        reviews = Review.objects.filter(idPerfil = usuario).order_by('-fechaCreacion')
+        rating= reviews.values("rating")
+        print(f'ayuda: {rating}')
+        cant_datos = len(reviews)
+        print(cant_datos)
+        suma = 0
+        for i in rating:
+            print(f'i es: {i}')
+            i = i.get('rating')
+            suma = suma + i
+            print(f'suma for = {suma}')
+        print(suma)    
+         
+          
+            
+        promedio = suma/cant_datos
+        calificacion = round(promedio)
+
+    except:
+        calificacion = 0
+
+
+    numero_de_seguidores = len(followers)   
 
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
@@ -149,6 +167,10 @@ def perfil(request,id):
             'numFollowers':numero_de_seguidores,
             'is_following': is_following,
             'following_count':following_count,
+            'reviewForm':reviewForm,
+            'calificacion':calificacion,
+            'perfilform':calificacionForm(instance = usuario),
+            'reviews':reviews,
         }
     else:
         data = {
@@ -161,6 +183,12 @@ def perfil(request,id):
             "listArt":listArtista,
             'numFollowers':numero_de_seguidores,
             'is_following': is_following,
+            'reviewForm':reviewForm,
+            'calificacion':calificacion,
+            'perfilform':calificacionForm(instance = usuario),
+
+            'reviews':reviews,
+
 
             # "publi":publi
         }
@@ -189,19 +217,7 @@ def perfil(request,id):
                 else:
                     
                     print(formulario.errors)
-            # print('estas publicando')
-
-            # formulario = publicacionForm(request.POST,request.FILES)           
-
-            # if formulario.is_valid():
-            #     publi = formulario.save(commit=False)
-            #     publi.idUser = request.user
-                    
-            #     publi.save()
-                            
-            # else:
-                    
-            #     print(formulario.errors)
+            
         elif 'editar' in request.POST:
             
             perfil = editPerfilForm(request.POST,request.FILES,instance=algo)
@@ -241,27 +257,48 @@ def perfil(request,id):
                     obj.save()
                 else:
                     print(foto.errors)
-        # elif 'publicacion' in request.POST:
-        #     algo = Publicacion.objects.get(idPublicacion = request.POST['idPost'])
+        elif 'enviarReview' in request.POST:
+            review = ReviewForm(request.POST)
+            perfil = calificacionForm(request.POST, instance = usuario)
             
-        #     data = {
-        #         "posts":post,
 
-        #         'form':publicacionForm(),
-        #         'publi':algo
-        #     }
+            if review.is_valid():
+                obj = review.save(commit=False)
+                obj.idPerfil = usuario
+                obj.idUser = request.user
+                obj.review = request.POST['review']
+                obj.rating = request.POST['rating']
+                obj.save()
+
+                reviews = Review.objects.filter(idPerfil = usuario)
+                rating= reviews.values("rating")
+                # print(f'ayuda: {rating}')
+                cant_datos = len(reviews)
+                # print(cant_datos)
+                suma = 0
+                for i in rating:
+                    # print(f'i es: {i}')
+                    i = i.get('rating')
+                    suma = suma + i
+                    # print(f'suma for = {suma}')
+                print(f'post suma = {suma}')   
+                promedio = suma/cant_datos
+                    
+                data['calificacion'] =round(promedio)
+                if perfil.is_valid():  
+                    profile = perfil.save(commit=False)                    
+                    
+                    profile.calificacion = request.POST['calificacion']
+                    profile.calificacion = round(promedio)
+                    profile.save()
+                    data['reviews'] = Review.objects.filter(idPerfil = usuario).order_by('-fechaCreacion')
+                else:
+                    print(perfil.errors)                
+            else:
+                print(review.errors)
         else:
-            print('no se hizo ni un post')
-        
-    # if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
-    #     algo = request.POST.get("idPost")
-    #     obj = Publicacion.objects.get(idPublicacion = algo)
-    #     data = {
-    #         "posts":post,
-    #         'form':publicacionForm(),
-    #         'publi':obj
-    #     }
-    #     return render(request, 'escalArt/Perfil_Artista.html',data)
+            print('no se hizo ni un post')        
+    
     return render(request, 'escalArt/Perfil_Artista.html',data)
 
 def publicacion(request,artista,post):
@@ -569,19 +606,10 @@ def home (request):
         "posts":post,
         'form':publicacionForm(),
         "listArt":listArtista,
-        'common_tags':common_tags,
-        
+        'common_tags':common_tags,        
     
     }
-    
-    # data = {
-    #     "perfil":list,
-    #     "posts":post,
-    #     'form':publicacionForm(),
-        
-    #     'edit': editPerfilForm(instance = algo)
-    # }
-    # print(request.user.nombre)
+
     if(request.method=='POST' ):
 
         if 'editar' in request.POST:
@@ -617,13 +645,6 @@ def home (request):
         
     return render(request,'escalArt/index.html',data)
 
-
-
-# class RegistrarUsuario(CreateView):
-#     model = Usuario
-#     form_class = FormularioUsuario
-#     template_name = 'registration/registro.html'
-#     success_url = reverse_lazy('login')
 
 def RegistrarUsuario (request):
     data = {
@@ -758,3 +779,6 @@ class UserSearch(View):
             'lista_perfil_tag':lista_perfil_tag,
         }
         return render(request, 'escalArt/search.html',data)
+
+def chats(request):
+    return render(request, 'escalArt/chats.html')

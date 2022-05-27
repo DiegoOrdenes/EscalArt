@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from requests import RequestException, request
-from .models import Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from .models import Review,Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -139,6 +139,12 @@ class perfilForm(ModelForm):
         fields = ['calificacion','idUser']
         exclude = ['idUser','biografia','img_header','seguidores']
 
+class calificacionForm(ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['calificacion','idUser']
+        exclude = ['idUser']
+
 class editPerfilForm(ModelForm):
     class Meta:
         model = Perfil
@@ -214,3 +220,8 @@ class ComentarioForm(forms.ModelForm):
         model = Comentarios
         fields=['comentario']
          
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['review', 'rating']

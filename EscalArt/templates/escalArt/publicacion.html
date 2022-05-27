@@ -330,6 +330,7 @@
                                                     <button onclick="responderComentario('{{c.pk}}')"><input type="submit" value="Responder"></button>
                                                 </div>
                                             </li>
+                                            <li></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -341,16 +342,16 @@
                                     <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
                                 </form>
 
-                                {% if c.children %}
-                                <!-- <button id="activar">ver respuestas</button> -->
+
+
+
 
 
                                 <!--  -->
                                 {% for child_comment in c.children %}
 
-                                <button onclick="mostrarRespuestas('{{child_comment.pk}}')">ver respuestas</button>
 
-                                <div id="{{child_comment.pk}}" class="ver-testimonials-box scroll-object child-comment d-none" style="width: inherit;">
+                                <div id="{{child_comment.pk}}" class="ver-testimonials-box scroll-object child-comment" style="width: inherit;">
                                     <div class="ver-box-top">
                                         <div class="ver-profile">
                                             <div class="ver-profile-img">
@@ -392,7 +393,6 @@
                                         <ul>
                                             <li class="ver-li">{{child_comment.fechaCreacion}}</li>
                                             <!-- <li class="ver-li-2">Min</li> -->
-
                                         </ul>
                                     </div>
                                 </div>
@@ -400,8 +400,7 @@
                                 {% endfor %}
                                 <!--  -->
                                 {% endif %}
-                                <!--  -->
-                                {% endif %}
+
                                 <!--  -->
                                 {%empty%}
                                 <p>Aun no hay comentarios</p>
