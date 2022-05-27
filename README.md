@@ -51,3 +51,11 @@
         formulario responder a un comentario en html
         listar respuestas en html bajo el comentario padre
         return("y sufrir de paso asdsfdssds")
+    
+    def 26.05.22():        
+        Creacion modelo Review
+        Creacion formulario Review
+        Publicar una review
+        Mostrar reviews en html (comentario y cantidad de estrellas dadas)
+        Actualizar calificacion del artista en base a las reviews
+        return("Actualizacion luego de como 3 dias sin que nada me funcione LET'S GOOOO")
