@@ -129,6 +129,54 @@ header {
     border-radius: 15px;
 }
 
+
+/* Otro diseño de boton */
+
+.menu-logearse button {
+    padding: 10px 15px;
+    width: 180px;
+    margin: 0 10px;
+    background: none;
+    border: 2px solid #fff;
+    cursor: pointer;
+    color: #fff;
+}
+
+
+/* .menu-logearse {
+    padding: 0 15px;
+    position: relative;
+} */
+
+.menu-logearse ul {
+    margin-top: 10px;
+}
+
+.menu-logearse ul li {
+    display: inline;
+    margin: 0 5px 10px 5px;
+}
+
+.menu-logearse ul li a:hover {
+    padding: 0;
+    background: none;
+    border-radius: 0px;
+}
+
+
+/* .menu-logearse button {
+    padding: 10px 15px;
+    border-radius: 20px;
+    width: 180px;
+    cursor: pointer;
+    color: #fff;
+    background: #86C332;
+} */
+
+.menu-logearse button:hover {
+    background: #659523;
+}
+
 .scrol {
     height: 1px;
 }
@@ -155,9 +203,10 @@ header {
     background: #86C332;
 }
 
-.icon:hover {
+
+/* .icon:hover {
     transform: rotate(360deg) scale(0.8);
-}
+} */
 
 .search-box input {
     width: 0;
@@ -269,22 +318,62 @@ header {
         padding: 0 10px;
         margin: 0;
     }
+    /* ------ */
+    .menu-logearse {
+        padding: 0;
+        position: relative;
+    }
+    .menu-logearse ul {
+        padding-bottom: 0;
+    }
+    .menu-logearse ul li {
+        list-style-type: none;
+        display: flex;
+    }
+    .menu-logearse ul {
+        margin-top: -5px;
+    }
+    /* primer estilo de boton */
+    /* .menu-logearse button {
+        float: right;
+        padding: 5px 15px;
+        border-radius: 20px;
+        width: 125px;
+        cursor: pointer;
+        color: #fff;
+        background: #86C332;
+        margin: 3px 5px;
+    } */
+    /* Segundo diseño de boton :D */
+    .menu-logearse button {
+        padding: 5px 15px;
+        width: 125px;
+        margin: 0 5px;
+        background: none;
+        border: 2px solid #fff;
+        cursor: pointer;
+        color: #fff;
+    }
+    .menu-logearse button:hover {
+        background: #659523;
+    }
+    .menu .home-not-loged {
+        padding: 0;
+        margin-top: 18px;
+    }
     .search-box {
         position: relative;
         transform: translate(-50%, -50%);
         height: 38px;
         text-align: center;
-        left: 20%;
+        left: 15%;
     }
     .search-box:hover>input {
-        width: 120px;
+        width: 100px;
         padding: 0 10px;
     }
     .search-box:hover>.icon {
         background: #86C332;
-    }
-    .icon:hover {
-        transform: rotate(360deg) scale(0.8);
     }
     .search-box input {
         width: 0;

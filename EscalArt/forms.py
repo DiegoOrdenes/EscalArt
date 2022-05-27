@@ -5,7 +5,7 @@ from tkinter import Widget
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-from requests import RequestException, request
+# from requests import RequestException, request
 from .models import Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):

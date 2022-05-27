@@ -10,7 +10,7 @@ from webbrowser import get
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.test import TransactionTestCase
-from requests import request
+# from requests import request
 
 # Create your models here.
 class UsuarioManager(BaseUserManager):

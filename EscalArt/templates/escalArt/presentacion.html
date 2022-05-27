@@ -36,17 +36,23 @@
                 </a>
             </div>
             <ul class="menu">
-                <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-comment-dots"></i></a></li>
-                <li>
-                    <a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a>
-                </li>
-                <li onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li>
+                <!--Mostrar si el Usuario no esta logeado-->
+                <li class="home-not-loged"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
+                <div class="menu-logearse">
+                    <ul>
+                        <li><a href="#"><button>Iniciar Sesion</button></a></li>
+                        <li><a href="#"><button>Registrarse</button></a></li>
+                    </ul>
+                </div>
+                <!--Mostrar esto si el usuario esta logeado-->
+                <li style="display: none;"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
+                <li style="display: none;"><a href="{% url 'chats' %}"><i class="fa-solid fa-comment-dots"></i></a></li>
+                <li style="display: none;"><a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a></li>
+                <li style="display: none;" onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li>
             </ul>
         </nav>
         <div id="Configuracion">
             <ul class="Configuracion-menu">
-                <button onclick="ocultarConfig();" id="btn-cierra" type="button">X</button>
                 <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' %}">Perfil</a></li>
                 <li><i class="fa-solid fa-gear"></i><a href="#">Configuracion</a></li>
                 <span class="linea_2"></span>
@@ -56,7 +62,7 @@
     </header>
     <div class="scrol"></div>
     <!--Cartas de presentacion-->
-    <div class="body-card">
+    <!-- <div class="body-card">
         <section class="section-card">
             <div class=" swiper mySwiper container-card">
                 <div class=" swiper-wrapper content">
@@ -73,8 +79,8 @@
                             </div>
 
                             <div class="name-profession">
-                                <span class="name">Someone name</span>
-                                <span class="profession">web Developer</span>
+                                <span class="name">[Nombre Artista]</span>
+                                <span class="profession">[username]</span>
                             </div>
 
                             <div class="rating">
@@ -103,8 +109,8 @@
                             </div>
 
                             <div class="name-profession">
-                                <span class="name">Someone name</span>
-                                <span class="profession">web Developer</span>
+                                <span class="name">[Nombre Artista]</span>
+                                <span class="profession">[Username]</span>
                             </div>
 
                             <div class="rating">
@@ -133,8 +139,8 @@
                             </div>
 
                             <div class="name-profession">
-                                <span class="name">Someone name</span>
-                                <span class="profession">web Developer</span>
+                                <span class="name">[Nombre Artista]</span>
+                                <span class="profession">[Username]</span>
                             </div>
 
                             <div class="rating">
@@ -163,8 +169,8 @@
                             </div>
 
                             <div class="name-profession">
-                                <span class="name">Someone name</span>
-                                <span class="profession">web Developer</span>
+                                <span class="name">[Nombre Artista]</span>
+                                <span class="profession">[Username]</span>
                             </div>
 
                             <div class="rating">
@@ -193,8 +199,8 @@
                             </div>
 
                             <div class="name-profession">
-                                <span class="name">Someone name</span>
-                                <span class="profession">web Developer</span>
+                                <span class="name">[Nombre Artista]</span>
+                                <span class="profession">[Username]</span>
                             </div>
 
                             <div class="rating">
@@ -223,8 +229,8 @@
                             </div>
 
                             <div class="name-profession">
-                                <span class="name">Someone name</span>
-                                <span class="profession">web Developer</span>
+                                <span class="name">[Nombre Artista]</span>
+                                <span class="profession">[Username]</span>
                             </div>
 
                             <div class="rating">
@@ -247,8 +253,7 @@
             <div class="swiper-pagination"></div>
         </section>
     </div>
-    <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> -->
 
     <!-- Initialize Swiper -->
     <script>

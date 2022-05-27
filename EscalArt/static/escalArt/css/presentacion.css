@@ -138,14 +138,14 @@
 }
 
 .button-card button:hover {
-    background: #6616d0;
+    background: #719C35;
 }
 
 .swiper-pagination-bullet {
     height: 7px;
     width: 26px;
     border-radius: 25px;
-    background: #7d2ae8;
+    background: #719C35;
 }
 
 .swiper-button-next,
