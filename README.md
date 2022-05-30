@@ -59,3 +59,7 @@
         Mostrar reviews en html (comentario y cantidad de estrellas dadas)
         Actualizar calificacion del artista en base a las reviews
         return("Actualizacion luego de como 3 dias sin que nada me funcione LET'S GOOOO")
+        
+    def 30.05.22():        
+        Implementacion Chat (en progreso)
+        return("actualizar a una hora decente? que es eso? se come? also, hace frio aiuda")
