@@ -24,168 +24,13 @@
 </head>
 
 <body>
-    {% include 'escalArt/includes/menu.html' %}
+    {% include 'escalArt/Perfil_Artista.html' %}
 
-    <div class="scrol"></div>
-    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
-
-    <!--Diseño Perfi-->
-    <section class="seccion-perfil-usuario">
-        <div class="perfil-usuario-header">
-            <div class="perfil-usuario-portada">
-                <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
-                {% for perfil in perfil %}
-                <!-- 6 inicio if para identificar perfil segun user -->
-                {% if list.idUser == perfil.idUser.idUser %}
-
-                <!-- header -->
-
-                {% if perfil.img_header %}<img class="perfil-usuario-portada_2" src="/{{ perfil.img_header }}"> {% else %}
-                <img class="perfil-usuario-portada_2" src="{% static 'EscalArt/img/banner.jpg' %}" alt=""> {% endif %}
-
-
-                <!-- 6 FIN if para identificar perfil segun user -->
-                {% endif %}
-                <!-- 5 FIN ciclo for que lista los perfiles -->
-                {% endfor %}
-                <div class="perfil-usuario-avatar">
-
-                    {% for la in listArt %}
-                    <!-- 16 Inicio if para verificar user conectado -->
-                    {% if list.username == la.username %} {% if la.imagen %}
-                    <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {% else %}
-                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt=""> {% endif %}
-
-
-                    <!-- 16 Fin if para verificar user conectado -->
-                    {% endif %}
-                    <!-- 15 Fin for para cambiar foto perfil -->
-                    {% endfor %} {% if list.idUser == user.idUser %}
-
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %} {{foto.as_hidden}} <input type="file" id="real-file2" name="pfp" hidden="hidden">
-                        <button type="button" class="boton-avatar" id="custom-button2" onclick="MostrarAlerta();">
-                            <i class="far fa-image"></i>
-                        </button>
-                    </form>
-                    {%endif%}
-                </div>
-                {% if list.idUser == user.idUser %}
-                <form action="" method="POST" enctype='multipart/form-data'>
-                    {% csrf_token %} {{edit.img_header.as_hidden}}
-                    <input type="file" id="real-file3" name="header" hidden="hidden">
-                    <button type="button" class="boton-portada" id="custom-button3" onclick="MostrarAlerta2();">
-                        <i class="far fa-image"></i> Cambiar fondo
-                    </button>
-
-
-                </form>
-                {%endif%}
-            </div>
-        </div>
-        <div class="perfil-usuario-body">
-            <div class="perfil-usuario-bio">
-                {% if list.username == user.username %}
-                <button onclick="MostrarPublicacion();" class="btn-Crear-Publicacion"><i class="fa-solid fa-paint-roller"></i>Crear Publicacion</button> {%endif%}
-                <h3 class="titulo">{{list.username}}</h3>
-                {% if list.username == user.username %}
-
-                <button onclick="MostrarConfi_bio();" class="btn-Editar-Bio"><i class="fa-solid fa-user-pen"></i>Editar Biografia</button> {%endif%}
-                <div class="texto-bio">
-                    <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
-                    {% for perfil in perfil %}
-                    <!-- 6 inicio if para identificar perfil segun user -->
-                    {% if list.idUser == perfil.idUser.idUser %}
-
-                    <!-- biografia y header -->
-                    <p class="texto">{{perfil.biografia}}</p>
-                    <!-- 6 FIN if para identificar perfil segun user -->
-                    {% endif %}
-                    <!-- 5 FIN ciclo for que lista los perfiles -->
-                    {% endfor %}
-
-                </div>
-                <span class="linea_2"></span>
-                <ul class="lista-info">
-                    <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
-                    {% for perfil in perfil %}
-                    <!-- 6 inicio if para identificar perfil segun user -->
-
-
-                    {% if list.idUser == perfil.idUser.idUser %}
-                    <li class="lista-li">0 Siguiendo</li>
-                    <li class="lista-li">{{perfil.seguidores.all.count}} Seguidores</li>
-                    <button id="Boton" onclick="mostrar();"><li  class="lista-li" >{{perfil.calificacion}}</li></button>
-                    <!-- 6 FIN if para identificar perfil segun user -->
-                    {% endif %}
-
-
-
-                    <!-- 5 FIN ciclo for que lista los perfiles -->
-                    {% endfor %}
-
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!--Configurar Biografia-->
-
-    <section id="config-fondo">
-        <div class="config-fondo-bio">
-            <button type="button" class="button-cierra" onclick="OcultarConfi_bio();">X</button>
-            <div class="config-bio-top">
-                <h1>Configurar Biografia</h1>
-            </div>
-            <div class="config-bio-centro">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %} {% for la in listArt %}
-                    <!-- 16 Inicio if para verificar user conectado -->
-                    {% if user.username == la.username %} {% if la.imagen %}
-                    <input type="file" id="real-file" name="pfp" hidden="hidden">
-                    <button type="button" id="custom-button"><img src="/{{la.imagen}}" class="foto_perfil" alt=""></button> {% else %}
-                    <input type="file" id="real-file" name="pfp" hidden="hidden">
-                    <button type="button" id="custom-button"><img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""></button> {% endif %}
-
-                    <!-- formulario para editar foto de perfil -->
-
-                    <!-- 16 Fin if para verificar user conectado -->
-                    {% endif %}
-                    <!-- 15 Fin for para cambiar foto perfil -->
-                    {% endfor %} {{form.as_hidden}}
-
-
-                    <input class="bio-centro" type="submit" name="fotoPerfil" value="Editar Foto"><br><br><br>
-                    <div class="form-group">
-
-                        <label>Biografia: </label> {{edit.biografia}}
-                    </div>
-                    <div class="bio-bottom">
-                        <input type="submit" name="editar" value="Enviar">
-                        <input type="reset" value="Limpiar">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!--Galeria de fotos-->
-    <span class="linea"></span>
 
     <main>
 
         <!--  -->
 
-
-        <section id="galeria">
-            {% for p in posts %} {% if list.idUser == p.idUser.idUser %}
-
-            <a href="#" name="idPost" id="idPost"><img src="/{{ p.imagen }}" alt="Galeria de imagenes" onclick="AbrirPubli();"></a> {% endif %} {% endfor %}
-
-
-
-        </section>
 
         <!--Ver Publicacion-->
 
@@ -342,11 +187,6 @@
                                     <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
                                 </form>
 
-
-
-
-
-
                                 <!--  -->
                                 {% for child_comment in c.children %}
 
@@ -437,18 +277,19 @@
     </main>
 
 
+
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+
     <script src="{% static 'EscalArt/js/Galeria.js' %}"></script>
-    {% include 'escalArt/includes/footer.html' %}
 
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- scrip publicacion -->
+    <script src="{% static 'EscalArt/js/publicacion.js' %}"></script>
+    <script type="text/javascript" src="{% static 'EscalArt/js/Comments.js' %}"></script>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- scrip publicacion -->
-<script src="{% static 'EscalArt/js/publicacion.js' %}"></script>
-<script type="text/javascript" src="{% static 'EscalArt/js/Comments.js' %}"></script>
+
 
 </html>
 

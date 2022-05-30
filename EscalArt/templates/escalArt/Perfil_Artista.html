@@ -29,7 +29,6 @@
     {% include 'escalArt/includes/menu.html' %}
 
     <div class="scrol"></div>
-    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
     <!--<script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>-->
 
     <!--Diseño Perfi-->
@@ -137,6 +136,12 @@
                     {% if list.username == user.username %}
                     <!--  -->
                     {% else %}
+                    <form method="POST">
+                        {% csrf_token %} {{solicitudForm}}
+
+                        <input type="submit" class="btn-Crear-Publicacion" value="Solicitar Mensaje" name="solicitud">
+
+                    </form>
                     <!--  -->
                     {% if is_following %}
                     <form method="POST" action="{% url 'remove-follower' list.idUser %}">
@@ -164,6 +169,7 @@
                 </div>
                 <!--  -->
                 {%endif%}
+
                 <div class="texto-bio">
                     <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
                     {% for perfil in perfil %}
@@ -406,14 +412,17 @@
 
 
     <script src="{% static 'EscalArt/js/Galeria.js' %}"></script>
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     {% include 'escalArt/includes/footer.html' %}
 
 
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 </html>
 <style>

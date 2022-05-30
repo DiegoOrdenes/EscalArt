@@ -19,8 +19,8 @@ from django.views.generic import CreateView
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import ReviewForm,ComentarioForm, FormularioUsuario, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
-from .models import Comentarios, Perfil, Publicacion, Usuario, Guardado, Review
+from EscalArt.forms import ComisionArtistaForm, ComisionClienteForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
+from .models import Comentarios, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
 
 
 
@@ -171,6 +171,8 @@ def perfil(request,id):
             'calificacion':calificacion,
             'perfilform':calificacionForm(instance = usuario),
             'reviews':reviews,
+            'solicitudForm': SolicitudForm(),
+
         }
     else:
         data = {
@@ -296,6 +298,18 @@ def perfil(request,id):
                     print(perfil.errors)                
             else:
                 print(review.errors)
+        elif 'solicitud' in request.POST:
+            form = SolicitudForm(request.POST)
+        
+            if form.is_valid():
+                obj = form.save(commit = False)
+                obj.idSolicitud = f"{request.user}-{artista.username}"
+                obj.idCliente = request.user
+                obj.usernameArtista = artista.username
+                obj.save()
+                # return render(request,'escalArt/mensajes.html',data)
+            else:
+                print(form.errors)
         else:
             print('no se hizo ni un post')        
     
@@ -780,5 +794,31 @@ class UserSearch(View):
         }
         return render(request, 'escalArt/search.html',data)
 
-def chats(request):
-    return render(request, 'escalArt/chats.html')
+class chats(View):
+    def get(self, request):
+        artista = Usuario.objects.get(username = request.user.username)
+        cliente = Usuario.objects.all()
+        # estadoCom = EstadoComision.objects.get(idEstado = 1)
+        solicitud = Solicitud.objects.all()
+        referencias = Referencia.objects.all()
+        data ={
+            'list': artista,
+            'sol':solicitud,
+            'cli':cliente,
+            'comArt':ComisionArtistaForm,
+            'comCli':ComisionClienteForm,
+            'ref':ReferenciasForm(),
+            'refAll': referencias
+
+        }
+        return render(request, 'escalArt/chats.html',data)
+
+# Chats
+class PruebaChat(View):
+    def get(self, request):
+        return render(request, 'escalArt/pruebaChat.html')
+
+
+class Room(View):
+    def get(self,request,room_name):
+        return render(request,'escalArt/pruebaRoom.html',{'room_name':room_name})

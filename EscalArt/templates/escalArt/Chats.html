@@ -28,6 +28,10 @@
     {% include 'escalArt/includes/menu.html' %}
 
     <div class="scrol"></div>
+    What chat room would you like to enter?<br>
+
+
+
 
     <!--Chat nuevo-->
     <section class="body-chat">
@@ -44,48 +48,49 @@
                 </div>
             </div>
             <div class="seccion-lista-usuarios">
-                <div class="usuario">
+                {% for s in sol %}
+                <div class="usuario" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit">
+                    <!--  -->
+
+                    <!--  -->
+                    {% if user.username == s.usernameArtista or user == s.idCliente %}
+                    <input id="{{s.idSolicitud}}-input" type="text" size="100" value="{{s.usernameArtista}}{{s.idCliente}}" hidden><br>
+
                     <div class="avatar">
                         <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
                         <span class="estado-usuario enlinea"></span>
                     </div>
                     <div class="cuerpo">
-                        <span> Nombre apellido</span>
-                        <span class="username-block"> @Username</span>
+
+                        {% if user == s.idCliente %}
+                        <span><input style="background-color:transparent; border:none;box-shadow:none;" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit"  type="button" value="{{s.usernameArtista}}"></span>
+
+                        <span class="username-block"> @{{s.usernameArtista}}</span>
+                        <!--  -->
+                        {% endif %}
+                        <!--  -->
+                        {% if user.username == s.usernameArtista %}
+                        <span><input style="background-color:transparent; border:none;box-shadow:none;" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit"  type="button" value="{{s.idCliente.username}}"></span>
+
+                        <span class="username-block"> @{{s.idCliente.username}}</span>
+                        <!--  -->
+                        {% endif %}
+
+
                         <span>detalles de mensaje</span>
                     </div>
                     <span class="notificacion">
                         3
                     </span>
+
+                    <!--  -->
+                    {% endif %}
+
+
+
                 </div>
-                <div class="usuario">
-                    <div class="avatar">
-                        <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
-                        <span class="estado-usuario ocupado"></span>
-                    </div>
-                    <div class="cuerpo">
-                        <span> Nombre apellido</span>
-                        <span class="username-block"> @Username</span>
-                        <span>detalles de mensaje</span>
-                    </div>
-                    <span class="notificacion">
-                        1
-                    </span>
-                </div>
-                <div class="usuario">
-                    <div class="avatar">
-                        <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
-                        <span class="estado-usuario desconectado"></span>
-                    </div>
-                    <div class="cuerpo">
-                        <span> Nombre apellido</span>
-                        <span class="username-block"> @Username</span>
-                        <span>detalles de mensaje</span>
-                    </div>
-                    <span class="notificacion">
-                        1
-                    </span>
-                </div>
+                <!--  -->
+                {% endfor %}
             </div>
         </div>
         <div class="seccion-chat">
@@ -189,11 +194,27 @@
     <!--Pie de la pagina-->
     {% include 'escalArt/includes/footer.html' %}
 
+    <script>
+        function chat(solicitud) {
+            document.querySelector(`#${solicitud}-input`).focus();
+            document.querySelector(`#${solicitud}-input`).onkeyup = function(e) {
+                if (e.keyCode === 13) { // enter, return
+                    document.querySelector(`#${solicitud}-submit`).click();
+                }
+            };
 
+            document.querySelector(`#${solicitud}-submit`).onclick = function(e) {
+                var roomName = document.querySelector(`#${solicitud}-input`).value;
+                window.location.pathname = '/chat/' + roomName + '/';
+            };
+        }
+    </script>
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 </html>
