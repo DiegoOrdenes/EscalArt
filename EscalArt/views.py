@@ -18,6 +18,9 @@ def chats(request):
 
 def presentacion(request):
     return render(request, 'escalArt/presentacion.html')
+    
+def perfil_cliente_2(request):
+    return render(request, 'escalArt/perfil_cliente_2.html')
 
 
     

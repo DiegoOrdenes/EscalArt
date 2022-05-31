@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil_cliente.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil_cliente_2.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,11 +81,12 @@
     <span class="linea"></span>
     <div class="cliente-opt">
         <ul>
-            <li onclick="mostrarGuardados();"><i class="fa-solid fa-bookmark"></i>Guardados</li>
-            <li onclick="mostrarComisiones();"><i class="fa-solid fa-calendar-check"></i>Estado de Comisiones</li>
+            <li onclick="mostrarReferencias();"><i class="fa-solid fa-border-all"></i>Referencias</li>
+            <li onclick="mostrarTareas();"><i class="fa-solid fa-pen-to-square"></i>Tareas</li>
+            <li onclick="mostrarEsComision();"><i class="fa-solid fa-calendar-check"></i>Estado Comision</li>
         </ul>
     </div>
-    <!--Galeria de fotos-->
+    <!--Referencias-->
     <section class="galeria_guardados" id="gl-guardados" style="display: none;">
         <section id="galeria">
             <img src="{% static 'EscalArt/img/foto_1.jpg' %}" alt="Galeria de imagenes">
@@ -104,48 +105,74 @@
             </div>
         </section>
     </section>
-    <!--Estado Comision-->
-    <div class="estado-comision" id="es-comision" style="display: none;">
-        <div class="left">
-            <div class="titulo-art">
-                <h1>Tus Comisiones</h1>
+    <!--Creacion de Tareas-->
+    <div id="tareas--">
+        <div id="crear-tarea" class="list roundBorder">
+            <div class="title-tarea">
+                <h1>Crear Tarea</h1>
             </div>
-            <div class="estado-comision-lista">
-                <ul>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                </ul>
+            <div class="date">
+                <div class="dateRight">
+                    <ul>
+                        <li>
+                            <div id="dateNumber"></div>
+                        </li>
+                        <li>
+                            <div id="dateMonth"></div>
+                        </li>
+                        <li>
+                            <div id="dateYear"></div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="dateText"></div>
+            </div>
+            <form onsubmit="addNewTask(event)">
+                <input type="text" name="taskText" autocomplete="off" placeholder="Nueva tarea" class="roundBorder">
+                <button type="submit" class="addTaskButton">+</button>
+                <button type="button" class="orderButton roundBorder" onclick="renderOrderedTasks()">Ordenar</button>
+            </form>
+        </div>
+        <!--Mostrar la tarea-->
+        <div class="fondo-mostrar-tarea">
+            <div class="btn-mostrar-tarea">
+                <h1>Tareas Asignadas</h1>
+                <!-- <button onclick="ver_tareas();">Crear una tarea</button> -->
+            </div>
+            <div class="scroll-bg">
+                <div class="scroll-div">
+                    <div class="scroll-object">
+                        <div id="tasksContainer">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+    <!--Estado Comision-->
+    <div class="estado-comision" id="es-comision" style="display: none;">
         <div class="right">
-            <div class="titulo-art">
-                <h1>[Nombre Artista]</h1>
-            </div>
             <div class="comisiones">
                 <ul>
                     <li class="li-left"><i class="fa-solid fa-box-archive"></i>
                         <span class="span-left span-dis"></span>
                         <p>Tu Comision ha sido recibida</p>
+                        <input type="checkbox"></input>
                     </li>
                     <li class="li-left"><i class="fa-solid fa-spinner"></i>
                         <span class="span-centro span-dis"></span>
                         <p>Tu comision está en desarrollo</p>
                         <span class="span-centro_2"></span>
+                        <input type="checkbox"></input>
                     </li>
                     <li class="li-left"><i class="fa-solid fa-paper-plane"></i>
                         <span class="span-right span-dis"></span>
                         <p> ¡Tu comisión ya esta lista! </p>
+                        <input type="checkbox"></input>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
-    <!--Creacion de Tareas-->
-    <div class="Crear-Tareas">
-
     </div>
     <script src="{% static 'EscalArt/js/perfil_cliente.js' %}"></script>
     <script src="{% static 'EscalArt/js/Galeria.js' %}"></script>
