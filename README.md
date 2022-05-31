@@ -63,3 +63,11 @@
     def 30.05.22():        
         Implementacion Chat (en progreso)
         return("actualizar a una hora decente? que es eso? se come? also, hace frio aiuda")
+        
+    def 30.05.22_v2.0():        
+        Implementacion Chat (aun en progreso)
+        return("sigue haciendo frio aiuda")
+        
+        
+        
+        
