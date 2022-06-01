@@ -11,6 +11,7 @@ from django import forms
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect,HttpResponse
 # from .forms import CustomUserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -20,7 +21,7 @@ from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
 from EscalArt.forms import ComisionArtistaForm, ComisionClienteForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
-from .models import Comentarios, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
+from .models import Chat, ChatRoom, Comentarios, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
 
 
 
@@ -794,7 +795,7 @@ class UserSearch(View):
         }
         return render(request, 'escalArt/search.html',data)
 
-class chats(View):
+class chats(LoginRequiredMixin,View):
     def get(self, request):
         artista = Usuario.objects.get(username = request.user.username)
         cliente = Usuario.objects.all()
@@ -819,6 +820,13 @@ class PruebaChat(View):
         return render(request, 'escalArt/pruebaChat.html')
 
 
-class Room(View):
+class Room(LoginRequiredMixin,View):
     def get(self,request,room_name):
-        return render(request,'escalArt/pruebaRoom.html',{'room_name':room_name})
+        room = ChatRoom.objects.filter(nombre = room_name).first()
+        chats = []
+        if room:
+            chats = Chat.objects.filter(room=room).order_by('fecha')
+        else:
+            room = ChatRoom(nombre = room_name)
+            room.save()
+        return render(request,'escalArt/pruebaRoom.html',{'room_name':room_name,'chats':chats})

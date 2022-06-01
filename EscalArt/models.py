@@ -213,3 +213,13 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.rating}'
+
+
+class Chat(models.Model):
+    contenido = models.CharField(max_length=1000)
+    fecha = models.DateTimeField(auto_now=True)
+    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    room = models.ForeignKey('ChatRoom',on_delete=models.CASCADE)
+
+class ChatRoom(models.Model):
+    nombre = models.CharField(max_length=255)

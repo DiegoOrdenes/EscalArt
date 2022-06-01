@@ -2,6 +2,26 @@
 <div class="seccion-chat">
     <div id="chat-log" class="panel-chat">
 
+        {% for chat in chats.all %} {% if chat.idUser.idUser == request.user.idUser %}
+        <div class="mensaje left">
+            <div class="cuerpo">
+                <div class="texto">
+                    {{chat.contenido}}
+
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="mensaje">
+            <div class="cuerpo">
+                <div class="texto">
+                    {{chat.contenido}}
+
+                </div>
+            </div>
+        </div>
+        {% endif %} {% endfor %}
+
 
     </div>
 
@@ -31,6 +51,6 @@
 </div>
 
 
-
+{{ request.user.idUser|json_script:"user_idUser" }}
 <script src="{% static 'EscalArt/js/room.js' %}"></script>
 {% endblock %}
