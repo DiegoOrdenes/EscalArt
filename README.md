@@ -68,6 +68,11 @@
         Implementacion Chat (aun en progreso)
         return("sigue haciendo frio aiuda")
         
+    def 31.05.22():        
+        Models Chat y ChatRoom
+        enviar y recibir mensajes
+        return("vamos que se puede")
+        
         
         
         
