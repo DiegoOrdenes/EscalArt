@@ -36,6 +36,10 @@ def perfil_cliente(request):
 
 def configuracion(request):
     return render(request,'escalArt/Configuracion.html')
+
+def cambiar_pass(request):
+    return render(request,'registration/cambiar_pass.html')
+
     
 def perfil(request):
     post = Publicacion.objects.all()

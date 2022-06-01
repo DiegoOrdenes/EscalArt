@@ -308,14 +308,20 @@ header {
     font-size: 15px;
 }
 
+dl,
+ol,
+ul {
+    margin-bottom: 0;
+}
+
 @media screen and (max-width:800px) {
     /* Menu  pagina*/
     .logo {
         font-size: 1.3rem;
     }
     .nav ul li {
-        font-size: 30px;
-        padding: 0 10px;
+        font-size: 25px;
+        padding: 0 6px;
         margin: 0;
     }
     /* ------ */
@@ -366,7 +372,7 @@ header {
         transform: translate(-50%, -50%);
         height: 38px;
         text-align: center;
-        left: 15%;
+        left: 20%;
     }
     .search-box:hover>input {
         width: 100px;
