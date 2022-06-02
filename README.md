@@ -73,6 +73,11 @@
         enviar y recibir mensajes
         return("vamos que se puede")
         
+    def 02.06.22():        
+        modificaciones chat
+        implementacion formulario referencias
+        return("tecnicamente termine a una hora decente, solo tengo memoria de pez")
+        
         
         
         
