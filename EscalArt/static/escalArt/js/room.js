@@ -30,14 +30,15 @@ chatSocket.onmessage = function(e) {
         divMensaje.className = 'mensaje'
     }
 
-    const messageElement = document.createElement('div')
+    const cuerpo = document.createElement('div')
         // messageElement.innerText = data.message
-    messageElement.className = 'cuerpo'
-    const message = document.createElement('div')
-    message.className = 'texto'
-    message.innerText = data.message
-    messageElement.appendChild(message)
-    divMensaje.appendChild(messageElement)
+    cuerpo.className = 'cuerpo'
+    const texto = document.createElement('div')
+    texto.className = 'texto'
+    texto.innerText = data.message
+
+    cuerpo.appendChild(texto)
+    divMensaje.appendChild(cuerpo)
     chatLog.appendChild(divMensaje)
 
     if (document.querySelector('#emptyText')) {
