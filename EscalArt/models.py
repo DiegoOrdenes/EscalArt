@@ -217,9 +217,11 @@ class Review(models.Model):
 
 class Chat(models.Model):
     contenido = models.CharField(max_length=1000)
+    img_referencia = models.ImageField('Referencia', upload_to=None, max_length=200, blank=True, null=True)
     fecha = models.DateTimeField(auto_now=True)
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE)
     room = models.ForeignKey('ChatRoom',on_delete=models.CASCADE)
 
 class ChatRoom(models.Model):
     nombre = models.CharField(max_length=255)
+    

@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from requests import RequestException, request
-from .models import Review,Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from .models import Chat, Review,Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -225,3 +225,10 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['review', 'rating']
+
+
+class ChatForm(forms.ModelForm):
+    class Meta:
+        model = Chat
+        fields = ['img_referencia']
+        exclude = ['idUser','room']

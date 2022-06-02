@@ -20,7 +20,7 @@ from django.views.generic import CreateView
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import ComisionArtistaForm, ComisionClienteForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
+from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
 from .models import Chat, ChatRoom, Comentarios, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
 
 
@@ -304,7 +304,7 @@ def perfil(request,id):
         
             if form.is_valid():
                 obj = form.save(commit = False)
-                obj.idSolicitud = f"{request.user}-{artista.username}"
+                obj.idSolicitud = f"{request.user}{artista.username}"
                 obj.idCliente = request.user
                 obj.usernameArtista = artista.username
                 obj.save()
@@ -823,10 +823,70 @@ class PruebaChat(View):
 class Room(LoginRequiredMixin,View):
     def get(self,request,room_name):
         room = ChatRoom.objects.filter(nombre = room_name).first()
+        referencias = Referencia.objects.all()
+
         chats = []
         if room:
             chats = Chat.objects.filter(room=room).order_by('fecha')
         else:
             room = ChatRoom(nombre = room_name)
             room.save()
-        return render(request,'escalArt/pruebaRoom.html',{'room_name':room_name,'chats':chats})
+
+        artista = Usuario.objects.get(username = request.user.username)
+        cliente = Usuario.objects.all()
+        # estadoCom = EstadoComision.objects.get(idEstado = 1)
+        solicitud = Solicitud.objects.all()
+        referencias = Referencia.objects.all()
+        soliCli = Solicitud.objects.get(idSolicitud = room_name)
+        # print(f'solicitud = {soliCli.idCliente}')
+
+        # users = soliCli.values("idUser")
+        # for user in users:
+        #     user = user.get('idCliente')
+        #     if (user ==  request.user.idUser):
+        #         print('no')
+        #     else:
+        #         cli = user
+        #         break
+        
+
+        data ={
+            'list': artista,
+            'sol':solicitud,
+            'cli':cliente,
+            'comArt':ComisionArtistaForm,
+            'comCli':ComisionClienteForm,
+            'ref':ReferenciasForm(),
+            'refAll': referencias,
+            'room_name':room_name,
+            'chats':chats,
+            'sala':room,
+            'cliente':soliCli,
+            'refAll':referencias,
+            # 'users':users
+        }
+        return render(request,'escalArt/pruebaRoom.html',data)
+    def post(self,request,room_name,*args,**kwargs):
+        if 'referencia' in request.POST:
+            print('estas subiendo una referencia')
+            referencia = ReferenciasForm(request.POST,request.FILES)
+            soliCli = Solicitud.objects.get(idSolicitud = room_name)
+            
+           
+            if referencia.is_valid():
+                ref = referencia.save(commit=False)
+                ref.img_referencia = request.FILES['img_referencia']
+                ref.usernameArtista = soliCli.usernameArtista
+                ref.idUser = request.user
+                
+                ref.save()                
+                              
+            else:
+                print('algo paso wn matate')
+                print(referencia.errors)
+
+            
+
+        next = request.POST.get('next','/')
+
+        return HttpResponseRedirect(next)
