@@ -78,6 +78,16 @@
         implementacion formulario referencias
         return("tecnicamente termine a una hora decente, solo tengo memoria de pez")
         
+    def 02.06.22_v2.0(): 
+        mandar referencia (Cliente)
+        Crear comision desde chat (Artista)
+        Link chat con el perfil de datos del cliente correspondiente
+        Seccion con referencias recibidas del cliente
+        Seccion con lista de comisiones del cliente
+        revisar y editar estado de una comision (Artista)
+        Eliminar una comision cancelada
+        return("por fin siento que fui productiva lets goooooo")
+        
         
         
         
