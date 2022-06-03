@@ -69,39 +69,28 @@ function OcultarAlerta2() {
 
 // Fin alertas
 
-// upload files
-const realFileBtn2 = document.getElementById("real-file2");
-const CustomBtn2 = document.getElementById("custom-button2");
-CustomBtn2.addEventListener("click", function() {
-    realFileBtn2.click();
-});
 
-const realFileBtn3 = document.getElementById("real-file3");
-const CustomBtn3 = document.getElementById("custom-button3");
-CustomBtn3.addEventListener("click", function() {
-    realFileBtn3.click();
-});
 
-// fin upload files
+
 
 
 /* perfil cliente Vista artista*/
 function mostrarReferencias() {
     document.getElementById('es-comision').style.display = 'none';
-    document.getElementById('gl-guardados').style.display = 'block';
+    document.getElementById('gl-referencias').style.display = 'block';
     document.getElementById('tareas--').style.display = 'none';
 }
 
 function mostrarEsComision() {
     document.getElementById('es-comision').style.display = 'block';
-    document.getElementById('gl-guardados').style.display = 'none';
+    document.getElementById('gl-referencias').style.display = 'none';
     document.getElementById('tareas--').style.display = 'none';
 
 }
 
 function mostrarTareas() {
     document.getElementById('tareas--').style.display = 'block';
-    document.getElementById('gl-guardados').style.display = 'none';
+    document.getElementById('gl-referencias').style.display = 'none';
     document.getElementById('es-comision').style.display = 'none';
 
 }

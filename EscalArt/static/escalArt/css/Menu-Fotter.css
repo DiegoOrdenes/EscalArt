@@ -19,7 +19,7 @@
 }
 
 #Configuracion {
-    position: relative;
+    position: absolute;
     width: 210px;
     height: 216px;
     background-color: #fff;
@@ -28,6 +28,7 @@
     border-radius: 20px;
     margin: 5px 20px;
     float: right;
+    right: 0;
     box-shadow: 2px solid #000;
 }
 
