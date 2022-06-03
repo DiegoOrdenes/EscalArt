@@ -10,7 +10,7 @@
 
             {% if request.user.idUser == cliente.idCliente.idUser %}
             <span><a href="{% url 'perfil' cliente.usernameArtista %}">{{cliente.usernameArtista}}</a></span> {% else %}
-            <span><a href="#">{{cliente.idCliente.username}}</a></span> {% endif %}
+            <span><a href="{% url 'datosCliente' cliente.idCliente.username %}">{{cliente.idCliente.username}}</a></span> {% endif %}
 
 
             <span>Activo - Escribiendo...</span>
@@ -57,14 +57,7 @@
                         {{chat.fecha}}
                     </span>
                 </div>
-                {% for ref in refAll %}
-                <!--  -->
-                {% if user == ref.idUser and cliente.usernameArtista == ref.usernameArtista %}
-                <img src="/{{ref.img_referencia}}" alt="referencias">
-                <!--  -->
-                {% endif %}
-                <!--  -->
-                {% endfor %}
+
             </div>
 
 
@@ -86,11 +79,22 @@
     <div class="panel-escritura">
         <div class="textarea">
             <div class="opcines">
-                <button type="button">
-                    <i class="fas fa-file"></i>
-                    <label for="file"></label>
-                    <input type="file" id="file">
-                </button>
+
+                {% if user.username == cliente.usernameArtista %}
+                <form action="" method="post">
+                    <button type="button">
+                        <i class="fas fa-file"></i>
+                        <label for="file"></label>
+                        <input type="submit" id="file" name="comision">
+                    </button> {% csrf_token %} {{comCli.as_hidden}}{{comArt.as_hidden}}
+                    <input style="display: none;" type="text" name="cliente" value="{{cliente.idCliente}}">
+                    <input type="hidden" name="next" value="{{request.path}}">
+
+                </form>
+                {% endif %}
+
+
+
                 <form action="" method="POST" enctype='multipart/form-data'>
                     {% csrf_token %}
                     <button type="button">

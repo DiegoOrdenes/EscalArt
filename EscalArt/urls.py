@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import  AddFollower, AddLike, AddLikeComment, PruebaChat, RemoveFollower, ResponderComentarioView, Room, UserSearch, chats, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome, tagged
+from .views import  AddFollower, AddLike, AddLikeComment, PruebaChat, RemoveFollower, ResponderComentarioView, Room, UserSearch, chats, delete_comision, estadoComision, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome, tagged
 from .views import perfil
-from .views import RegistrarUsuario,ayudacliente,delete_publicacion
+from .views import RegistrarUsuario,ayudacliente,delete_publicacion,datosCliente
 
 
 urlpatterns =[
@@ -24,6 +24,10 @@ urlpatterns =[
     path('chat',chats.as_view(),name="chats"),
     path('prueba-chat',PruebaChat.as_view(),name='pruebaChat'),
     path('chat/<str:room_name>/',Room.as_view(),name='room'),
+    path('datosCliente/<id>',datosCliente,name="datosCliente"),
+    path('datosCliente/<idCliente>/comision/<idComision>',estadoComision,name='estadoComision'),
+    path('borrar-comision/<id>',delete_comision,name='delete_comision'),
+
 
 
     # path('borrar-guardado/<id>',delete_guardado,name='delete_guardado'),

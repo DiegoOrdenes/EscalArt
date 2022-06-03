@@ -20,8 +20,8 @@ from django.views.generic import CreateView
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
-from .models import Chat, ChatRoom, Comentarios, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
+from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, EditComArtForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
+from .models import Chat, ChatRoom, Comentarios, Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
 
 
 
@@ -867,6 +867,8 @@ class Room(LoginRequiredMixin,View):
         }
         return render(request,'escalArt/pruebaRoom.html',data)
     def post(self,request,room_name,*args,**kwargs):
+        estadoCom = EstadoComision.objects.get(idEstado = 1)
+
         if 'referencia' in request.POST:
             print('estas subiendo una referencia')
             referencia = ReferenciasForm(request.POST,request.FILES)
@@ -884,9 +886,88 @@ class Room(LoginRequiredMixin,View):
             else:
                 print('algo paso wn matate')
                 print(referencia.errors)
-
+        elif 'comision' in request.POST:
+            comArt = ComisionArtistaForm(request.POST)
+            comCli = ComisionClienteForm(request.POST)
+            if comArt.is_valid():
+                obj = comArt.save(commit = False)
+                obj.idEstado = estadoCom
+                obj.idArtista = request.user
+                
+                if comCli.is_valid():
+                    obj.save()
+                    obj2= comCli.save(commit=False)
+                    obj2.idComision = obj
+                    
+                    obj2.idCliente = Usuario.objects.get(nombre = request.POST['cliente'])
+                    obj2.save()
+                else:
+                    print(comCli.errors)
+                
+                # return render(request,'escalArt/mensajes.html',data)
+            else:
+                print(comArt.errors)
             
 
         next = request.POST.get('next','/')
 
         return HttpResponseRedirect(next)
+
+# Datos cliente
+def datosCliente(request,id):    
+    user = Usuario.objects.get(username = id)
+    comCli = Comision_Cliente.objects.filter(idCliente = user)
+    listaPerfiles = Perfil.objects.all()
+    perfil = Perfil.objects.get(idUser = user.idUser)
+    referencias = Referencia.objects.all()
+    data = {
+        'userInfo':user,
+        "perfiles":listaPerfiles,
+        'perfil':perfil,
+        'referencias':referencias,
+        'comCli':comCli,
+        
+    }
+    return render(request, 'escalArt/datosCliente.html',data)
+
+def estadoComision(request,idCliente,idComision):
+
+    user = Usuario.objects.get(username = idCliente)
+    comCli = Comision_Cliente.objects.filter(idCliente = user)
+    comision = Comision_Cliente.objects.get(idComision = idComision)
+    listaPerfiles = Perfil.objects.all()
+    perfil = Perfil.objects.get(idUser = user.idUser)
+    referencias = Referencia.objects.all()
+    data = {
+        'userInfo':user,
+        "perfiles":listaPerfiles,
+        'perfil':perfil,
+        'referencias':referencias,
+        'comCli':comCli,
+        'comision':comision,
+        'form':EditComArtForm()
+
+    }
+
+    if (request.method == 'POST' and 'editar' in request.POST):
+        
+        comision = Comision.objects.get(idComision = request.POST['comision'])
+        comArt = EditComArtForm(request.POST,instance = comision)
+        if comArt.is_valid():
+            comArt.save()            
+       
+        else:
+            print(comArt.errors)
+            
+    else:
+        print('no esta entrando')
+    return render(request, 'escalArt/estadoComision.html',data)
+
+# delete
+def delete_comision(request,id):
+    comision = Comision.objects.get(idComision = id)
+    comCli = Comision_Cliente.objects.get(idComision = comision)
+    idCli = comCli.idCliente.username
+    comision.delete()
+    
+    return redirect(to='datosCliente', id=idCli )
