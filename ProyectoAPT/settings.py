@@ -34,15 +34,22 @@ LOGOUT_REDIRECT_URL = '/'
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.sites',
     'EscalArt',
-    'crispy_forms'
+    'crispy_forms',
+    'taggit',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
 ]
+# SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,7 +80,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ProyectoAPT.wsgi.application'
+ASGI_APPLICATION = 'ProyectoAPT.asgi.application'
 
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND':'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             'hosts': [('127.0.0.1',6379)]
+#         }
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -87,7 +103,20 @@ DATABASES={
     'PASSWORD':'BDenlaNube22',#Please provide the db password here
     }
 }
+# DATABASES = {
 
+#     'default': {
+#         'ENGINE': 'django.db.backends.oracle',
+#         'NAME': '127.0.0.1:1521/XEPDB1',
+#         'USER':'ESCALART_2',
+#         'PASSWORD': 'ESCALART',
+#         'TEST':{
+#             'USER':'default_test',
+#             'TBLSPACE':'default_test_tbls',
+#             'TBLSPACE_TMP':'default_test_tbls_tmp',
+#         },
+#     }
+# }
 # configuracion ususario
 AUTH_USER_MODEL = 'EscalArt.Usuario'
 
@@ -130,8 +159,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# EMAIL_BACKEND = 'dajngo.core.mail.backends.console.EmailBackend'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT= 'static'
+
+
+TAGGIT_CASE_INSENSITIVE = True
+USE_TZ = False
