@@ -63,7 +63,7 @@ body {
 .container__form a {
     color: white;
     text-decoration: none;
-    margin-left: 10px;
+    margin-left: 45px;
 }
 
 .container__form a:hover {
@@ -73,6 +73,17 @@ body {
 .container__form label:hover {
     color: #b8b8b8;
 }
+
+
+/* .container__form .boton-form {
+    width: 200px;
+    border-radius: 15px;
+    background-color: #86C332;
+    color: white;
+    margin-top: 30px;
+    border: none;
+    border-bottom: 4px solid #000000;
+} */
 
 .container__form .boton-form {
     width: 200px;
@@ -86,7 +97,6 @@ body {
 
 .container__form .boton-form:active {
     background-color: #0b5a1c;
-    width: 190px;
 }
 
 .btn-guardar {
@@ -99,6 +109,7 @@ body {
     text-align: center;
     justify-content: center;
     display: flex;
+    margin-right: 35px;
 }
 
 .direc-cuenta span {
@@ -106,16 +117,16 @@ body {
 }
 
 @media (max-width:750px) {
-    .container__form a {
-        color: white;
-        text-decoration: none;
-        margin-left: 10px;
-    }
     .container__form {
         background-color: #12130F;
         /*#0a1e35*/
         border-radius: 15px;
         padding: 20px;
         opacity: 0.9;
+    }
+    .container__form a {
+        color: white;
+        text-decoration: none;
+        margin-left: 25px;
     }
 }
