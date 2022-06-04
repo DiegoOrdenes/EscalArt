@@ -87,6 +87,16 @@
         revisar y editar estado de una comision (Artista)
         Eliminar una comision cancelada
         return("por fin siento que fui productiva lets goooooo")
+    
+    def 04.06.22():
+        Lista de todas las comisiones del usuario
+        revisar estado de una comision (Cliente)        
+        Funcion de recuperar contrasenna = {
+            creacion correspondiente de htmls,
+            Enviar correo de confirmacion con link de formulario,
+            formulario de recuperacion de contrasenna
+        }
+        return("y de paso, creacion de Email para el Support Team de la pagina...")
         
         
         
