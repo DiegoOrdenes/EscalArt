@@ -18,14 +18,14 @@
                 <a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a>
             </li>
             {% if user.is_authenticated %}
-            <li onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li> {%endif%}
+            <li onclick="mostrarConfig();"> <a><i class="fa-solid fa-circle-user"></i></a></li> {%endif%}
         </ul>
     </nav>
     {% if user.is_authenticated %}
     <div id="Configuracion">
         <ul class="Configuracion-menu">
             <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' user.username %}">Perfil</a></li>
-            <li><i class="fa-solid fa-gear"></i><a href="#">Configuracion</a></li>
+            <li><i class="fa-solid fa-gear"></i><a href="{% url 'configuracion' %}">Configuracion</a></li>
             <span class="linea_2"></span>
             <li class="Cerrar-Sesion"><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
         </ul>

@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import  AddFollower, AddLike, AddLikeComment, PruebaChat, RemoveFollower, ResponderComentarioView, Room, UserSearch, chats, delete_comision, estadoComision, home , ayudacliente,  perfil_cliente, publicacion, publicacionHome, tagged
+from django.contrib.auth import views as auth_views
+from .views import  AddFollower, AddLike, AddLikeComment, RemoveFollower, ResponderComentarioView, Room, UserSearch, cambiar_pass, chats, configuracion, delete_comision, estadoComisionArt, estadoComisionCli, home , ayudacliente,  perfil_cliente, presentacion, publicacion, publicacionHome, seleccionarC, tagged
 from .views import perfil
 from .views import RegistrarUsuario,ayudacliente,delete_publicacion,datosCliente
 
@@ -7,7 +8,6 @@ from .views import RegistrarUsuario,ayudacliente,delete_publicacion,datosCliente
 urlpatterns =[
     path('',home, name="home"),
     path('perfil/<id>',perfil, name="perfil"),
-    # path('perfil/post/<id>',perfil_post, name="perfil-post"),
     path('registro/',RegistrarUsuario,name="registro"),
     path('ayudacliente',ayudacliente,name="ayudacliente"),
     path('perfil/<artista>/publicacion/<post>',publicacion,name="publicacion"),
@@ -21,15 +21,19 @@ urlpatterns =[
     path('tag/<slug:slug>/', tagged, name="tagged"),
     path('comentario/<int:pk>/like',AddLikeComment.as_view(),name='likeComment'),
     path('perfil/<artista>/publicacion/<int:post_pk>/comentario/<int:pk>/responder',ResponderComentarioView.as_view(),name='responder-comentario'),
-    path('chat',chats.as_view(),name="chats"),
-    path('prueba-chat',PruebaChat.as_view(),name='pruebaChat'),
+    path('chat',chats.as_view(),name="chats"),    
     path('chat/<str:room_name>/',Room.as_view(),name='room'),
     path('datosCliente/<id>',datosCliente,name="datosCliente"),
-    path('datosCliente/<idCliente>/comision/<idComision>',estadoComision,name='estadoComision'),
+    path('datosCliente/<idCliente>/comision/<idComision>',estadoComisionArt,name='estadoComisionArt'),
     path('borrar-comision/<id>',delete_comision,name='delete_comision'),
+    path('perfilCli/<id>/comision/<idComision>',estadoComisionCli,name='estadoComisionCli'),
 
-
-
-    # path('borrar-guardado/<id>',delete_guardado,name='delete_guardado'),
-
+    path('configuracion',configuracion,name="configuracion"),
+    path('seleccionarC',seleccionarC,name="seleccionarC"),
+    path('presentacion',presentacion,name="presentacion"),
+    path('cambiar_pass',cambiar_pass,name="cambiar_pass"),
+    path('reset_password/',auth_views.PasswordResetView.as_view(template_name="registration/cambiar_pass.html"),name='reset_password'),
+    path('accounts/password_reset/done/',auth_views.PasswordResetDoneView.as_view(template_name="registration/cambiar_pass_sent.html"),name='password_reset_done'),
+    path('accounts/reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name="registration/cambiar_pass_form.html"),name='password_reset_confirm'),
+    path('accounts/reset/done/',auth_views.PasswordResetCompleteView.as_view(template_name="registration/cambiar_pass_done.html"), name='password_reset_complete'),
 ]

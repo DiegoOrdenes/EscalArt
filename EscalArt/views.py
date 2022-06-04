@@ -30,31 +30,28 @@ from .models import Chat, ChatRoom, Comentarios, Comision, Comision_Cliente, Est
 def ayudacliente(request):
     return render(request,'escalArt/ayudacliente.html')
 
-def delete_publicacion(request,id):
-    post = Publicacion.objects.get(idPublicacion=id)
-    post.delete()
-
-    return redirect(to='home')
-
-# def delete_guardado(request,id):
-#     guardado = Guardado.objects.get(idPublicacion=id)
-#     guardado.delete()
-
-#     return redirect(to='home')
-
 
 def perfil_cliente(request,id):
-    user = Usuario.objects.get(username = id)
+    try:
+        user = Usuario.objects.get(username = id)
+    except:
+        return redirect(to='perfil_cliente', id=request.user.username )
     list = Perfil.objects.all()
     algo = Perfil.objects.get(idUser = request.user)
     guardados = Guardado.objects.all()
+    comisionCli = Comision_Cliente.objects.filter(idCliente = request.user)
+
     data = {
         'userInfo':user,
         "perfil":list,
         'foto':editFotoPerfilForm(instance = user),
         'edit': editPerfilForm(instance = algo),
         'guardados':guardados,
+        "comCli":comisionCli,
     }
+    if(request.user != user):
+        return redirect(to='perfil_cliente', id=request.user.username )
+    
 
 
     if request.method == "POST":
@@ -662,10 +659,42 @@ def home (request):
 
 
 def RegistrarUsuario (request):
-    data = {
+    list = Perfil.objects.all()
+    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')) \
+        .order_by('-likes')
+    listArtista = Usuario.objects.all()
+    common_tags = Tag.objects.all()[:10]
+    # print(request.user)
+    if (request.user.is_authenticated):
+        algo = Perfil.objects.get(idUser = request.user)
+        user = Usuario.objects.get(idUser =  request.user.idUser)
+
+        data = {
+        "perfil":list,
+        "posts":post,
+        'form':publicacionForm(),
+        
+        'edit': editPerfilForm(instance = algo),
+        'foto':editFotoPerfilForm(instance = user),
+
+        "listArt":listArtista,
+        'common_tags':common_tags,
         "perfil":perfilForm(),
-        'form':FormularioUsuario()
+        'form':FormularioUsuario(),
+
     }
+    else:
+        data = {
+        "perfil":list,
+        "posts":post,
+        'form':publicacionForm(),
+        "listArt":listArtista,
+        'common_tags':common_tags, 
+        "perfil":perfilForm(),
+        'form':FormularioUsuario(),       
+    
+    }
+   
     if(request.method=='POST' ):
         formulario = FormularioUsuario(request.POST)
         perfil = perfilForm(request.POST)      
@@ -694,6 +723,7 @@ def RegistrarUsuario (request):
             print(perfil.errors)
     return render(request,'registration/registro.html',data)
 
+# Agregar likes
 class AddLike(View):
     def post(self, request, pk, *args, **kwargs):
         post = Publicacion.objects.get(idPublicacion = pk)
@@ -747,7 +777,9 @@ class AddLikeComment(View):
         next = request.POST.get('next','/')
 
         return HttpResponseRedirect(next)
-        
+
+# Fin agregar likes
+# Follows
 class AddFollower(View):
     def post(self,request,id,*args,**kwargs):
         profile = Perfil.objects.get(idUser = id)
@@ -761,7 +793,8 @@ class RemoveFollower(View):
         profile.seguidores.remove(request.user)
 
         return redirect('perfil', id = profile.idUser.username)
-
+# Fin follows
+# Buscar
 class UserSearch(View):
     def get(self,request,*args,**kwargs):
         try:
@@ -794,7 +827,8 @@ class UserSearch(View):
             'lista_perfil_tag':lista_perfil_tag,
         }
         return render(request, 'escalArt/search.html',data)
-
+# Fin buscar
+# Chats
 class chats(LoginRequiredMixin,View):
     def get(self, request):
         artista = Usuario.objects.get(username = request.user.username)
@@ -813,12 +847,6 @@ class chats(LoginRequiredMixin,View):
 
         }
         return render(request, 'escalArt/chats.html',data)
-
-# Chats
-class PruebaChat(View):
-    def get(self, request):
-        return render(request, 'escalArt/pruebaChat.html')
-
 
 class Room(LoginRequiredMixin,View):
     def get(self,request,room_name):
@@ -912,6 +940,7 @@ class Room(LoginRequiredMixin,View):
         next = request.POST.get('next','/')
 
         return HttpResponseRedirect(next)
+# Fin chats
 
 # Datos cliente
 def datosCliente(request,id):    
@@ -929,8 +958,10 @@ def datosCliente(request,id):
         
     }
     return render(request, 'escalArt/datosCliente.html',data)
+# Fin datos cliente
 
-def estadoComision(request,idCliente,idComision):
+# estados comision
+def estadoComisionArt(request,idCliente,idComision):
 
     user = Usuario.objects.get(username = idCliente)
     comCli = Comision_Cliente.objects.filter(idCliente = user)
@@ -961,7 +992,36 @@ def estadoComision(request,idCliente,idComision):
             
     else:
         print('no esta entrando')
-    return render(request, 'escalArt/estadoComision.html',data)
+    return render(request, 'escalArt/estadoComisionArt.html',data)
+
+
+def estadoComisionCli(request,id,idComision):
+    try:
+        user = Usuario.objects.get(username = id)
+    except:
+        return redirect(to='perfil_cliente', id=request.user.username )
+    list = Perfil.objects.all()
+    algo = Perfil.objects.get(idUser = request.user)
+    guardados = Guardado.objects.all()
+    comisionCli = Comision_Cliente.objects.filter(idCliente = request.user)
+    comision = Comision_Cliente.objects.get(idComision = idComision)
+
+    data = {
+        'userInfo':user,
+        "perfil":list,
+        'foto':editFotoPerfilForm(instance = user),
+        'edit': editPerfilForm(instance = algo),
+        'guardados':guardados,
+        "comCli":comisionCli,
+        'comision':comision,
+
+    }
+    if(request.user != user):
+        return redirect(to='perfil_cliente', id=request.user.username )
+    
+    
+    return render(request, 'escalArt/estadoComisionCli.html',data)
+# fin estados comision
 
 # delete
 def delete_comision(request,id):
@@ -971,3 +1031,28 @@ def delete_comision(request,id):
     comision.delete()
     
     return redirect(to='datosCliente', id=idCli )
+
+def delete_publicacion(request,id):
+    post = Publicacion.objects.get(idPublicacion=id)
+    post.delete()
+
+    return redirect(to='home')
+
+#  Fin delete
+
+# Configuraciones
+
+def configuracion(request):
+    return render(request,'escalArt/Configuracion.html')
+def seleccionarC(request):
+    return render(request, 'escalArt/seleccionarC.html')
+# Fin Configuraciones
+# Cambiar contrasenna
+def cambiar_pass(request):
+    return render(request,'registration/cambiar_pass.html')
+# Fin cambair contrasenna
+
+# presentacion?
+def presentacion(request):
+    return render(request, 'escalArt/presentacion.html')
+# Fin presentacion?

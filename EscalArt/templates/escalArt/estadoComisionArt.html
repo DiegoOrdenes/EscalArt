@@ -1,0 +1,93 @@
+{% extends 'escalArt/datosCliente.html' %} {% load static %} {% block content %}
+
+<div class="comisiones">
+
+    {% if comision.idComision.idEstado.estado == "cancelada" %}
+    <ul>
+        <li class="li-left"><i class="fa-solid fa-box-archive" style="color: #bc0b0b;"></i>
+            <span class="span-left span-dis" style="background: #bc0b0b;"></span>
+            <p style="color: #bc0b0b;">Tu Comision ha sido recibida</p>
+
+
+            <input type="checkbox" hidden></input>
+
+
+
+        </li>
+        <li class="li-left">
+
+            <i class="fa-solid fa-spinner" style="color: #bc0b0b;"></i>
+            <span class="span-centro span-dis" style="background: #bc0b0b;"></span>
+            <p style="color: #bc0b0b;">Tu comision está en desarrollo</p>
+            <span class="span-centro_2" style="background: #bc0b0b;"></span><input type="checkbox" hidden></input>
+
+        </li>
+        <li class="li-left">
+
+            <i class="fa-solid fa-paper-plane" style="color: #bc0b0b;"></i>
+            <span class="span-right span-dis" style="background: #bc0b0b;"></span>
+            <p style="color: #bc0b0b;"> ¡Tu comisión ya esta lista! </p>
+            <input type="checkbox" hidden></input>
+            <!--  -->
+
+        </li>
+    </ul>
+    {% else %}
+    <ul>
+        <li class="li-left"><i class="fa-solid fa-box-archive"></i>
+            <span class="span-left span-dis"></span>
+            <p>Tu Comision ha sido recibida</p>
+
+
+            <input type="checkbox" checked></input>
+
+
+
+        </li>
+        <li class="li-left">
+            {% if comision.idComision.idEstado.estado == "en desarrollo" or comision.idComision.idEstado.estado == "terminada" %}
+            <i class="fa-solid fa-spinner"></i>
+            <span class="span-centro span-dis"></span>
+            <p>Tu comision está en desarrollo</p>
+            <span class="span-centro_2"></span> <input type="checkbox" checked></input>
+            {% else %}
+            <i class="fa-solid fa-spinner" style="color: gray;"></i>
+            <span class="span-centro span-dis" style="background: gray;"></span>
+            <p style="color: gray;">Tu comision está en desarrollo</p>
+            <span class="span-centro_2" style="background: gray;"></span><input type="checkbox"></input>
+            <!--  -->
+            {%endif%}
+        </li>
+        <li class="li-left">
+            {% if comision.idComision.idEstado.estado == "terminada" %}
+            <i class="fa-solid fa-paper-plane"></i>
+            <span class="span-right span-dis"></span>
+            <p> ¡Tu comisión ya esta lista! </p>
+            <input type="checkbox" checked></input>
+            {% else %}
+            <i class="fa-solid fa-paper-plane" style="color: gray;"></i>
+            <span class="span-right span-dis" style="background: gray;"></span>
+            <p style="color: gray;"> ¡Tu comisión ya esta lista! </p>
+            <input type="checkbox"></input>
+            <!--  -->
+            {%endif%}
+        </li>
+    </ul>
+    {% endif %}
+    <form class="li-left" method="POST">
+        {% csrf_token %} {{form}}
+        <input style="display: none;" type="text" name="comision" value="{{comision.idComision.idComision}}">
+
+        <input type="submit" name="editar" class="btn btn-danger" value="Editar Estado"> {% if comision.idComision.idEstado.estado == "cancelada" %}
+
+        <input type="hidden" name="next" value="/datosCliente/{{userInfo.username}}">
+        <td><button type="submit"><a href="{%url 'delete_comision' comision.idComision.idComision %} " >Eliminar</a></button></td>
+
+
+        {% endif %}
+
+
+    </form>
+</div>
+
+{% endblock %}

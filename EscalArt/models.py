@@ -74,7 +74,7 @@ class Usuario(AbstractBaseUser):
     nombre = models.CharField('Nombre completo', max_length=200, blank=True,null=True)
     imagen = models.ImageField('Foto de Perfil', upload_to=None, max_length=200, blank=True, null=True)
     tipoCuenta = models.ForeignKey(TipoCuenta,on_delete=models.CASCADE,verbose_name='Tipo de cuenta')
-    usuario_activo = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
     objects = UsuarioManager()
 

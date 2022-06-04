@@ -24,6 +24,7 @@
 </head>
 
 <body>
+    <!-- Header -->
     {% include 'escalArt/includes/menu.html' %}
     <div class="scrol"></div>
 
@@ -31,7 +32,7 @@
 
 
 
-    <!--<script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>-->
+
     <!--Diseño Perfi-->
     <section class="seccion-perfil-usuario">
         <div class="perfil-usuario-header">
@@ -39,11 +40,7 @@
                 <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
                 {% for perfil in perfil %}
                 <!-- 6 inicio if para identificar perfil segun user -->
-                {% if userInfo.idUser == perfil.idUser.idUser %}
-
-                <!-- header -->
-
-                {% if perfil.img_header %}<img class="perfil-usuario-portada_2" src="/{{ perfil.img_header }}"> {% else %}
+                {% if userInfo.idUser == perfil.idUser.idUser %} {% if perfil.img_header %}<img class="perfil-usuario-portada_2" src="/{{ perfil.img_header }}"> {% else %}
                 <img class="perfil-usuario-portada_2" src="{% static 'EscalArt/img/banner.jpg' %}" alt=""> {% endif %}
 
 
@@ -103,19 +100,17 @@
         <ul>
             <li onclick="mostrarGuardados();"><i class="fa-solid fa-bookmark"></i>Guardados</li>
             <li onclick="mostrarComisiones();"><i class="fa-solid fa-calendar-check"></i>Estado de Comisiones</li>
-            <li onclick="mostrarComisiones();"><i class="fa-solid fa-calendar-check"></i>Tareas</li>
+
         </ul>
     </div>
     <!--Galeria de fotos-->
     <section class="galeria_guardados" id="gl-guardados" style="display: none;">
         <section id="galeria">
             {% for g in guardados %} {% if g.idUser == user %}
-            <img src="/{{g.idPublicacion.imagen}}" alt="Galeria de imagenes"> {%endif%} {%endfor%}
-            <!-- <img src="{% static 'EscalArt/img/foto_2.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_3.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_4.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_5.jpg' %}" alt="Galeria de imagenes">
-            <img src="{% static 'EscalArt/img/foto_6.jpg' %}" alt="Galeria de imagenes"> -->
+            <img src="/{{g.idPublicacion.imagen}}" alt="Galeria de imagenes"> {%endif%} {%empty%}
+            <h3 class="empty-saves">No hay publicaciones guardadas</h3>
+            {%endfor%}
+
 
         </section>
         <section id="contenedor-principal">
@@ -135,19 +130,29 @@
             </div>
             <div class="estado-comision-lista">
                 <ul>
+                    {% for c in comCli %}
+
+                    <li>
+                        <a href="{% url 'estadoComisionCli' request.user.username c.idComision.idComision %}"> Comision {{c.idComision.idComision}} | {{c.idComision.idArtista.username}}</a></li>
+
+
+                    <!-- 13 FIN for para listar comisiones -->
+                    {% endfor %}
+
+
+                    <!-- <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
                     <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
                     <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
-                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li>
+                    <li><img class="estado_comision-img" src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">[Nombre Artista]</li> -->
                 </ul>
             </div>
         </div>
-        <div class="right">
-            <div class="titulo-art">
+        <div class="right" style="width: 80%;">
+            {%block content%}
+            <div class="titulo-art" hidden>
                 <h1>[Nombre Artista]</h1>
             </div>
-            <div class="comisiones">
+            <div class="comisiones" hidden>
                 <ul>
                     <li class="li-left"><i class="fa-solid fa-box-archive"></i>
                         <span class="span-left span-dis"></span>
@@ -164,12 +169,19 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="comisiones">
+                <ul>
+                    <li class="lif-left">
+                        <h3 class="empty-saves">Elige una comision para revisar su estado!</h3>
+                    </li>
+                </ul>
+
+            </div>
+            {% endblock %}
         </div>
     </div>
-    <!--Creacion de Tareas-->
-    <div class="Crear-Tareas">
 
-    </div>
     {%else%}
     <br><br><br>
     <br><br><br>

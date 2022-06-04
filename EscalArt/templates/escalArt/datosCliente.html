@@ -144,7 +144,7 @@
             {% if cc.idComision.idArtista == user %}
             <div class="estado-comision-lista">
                 <ul>
-                    <li><a href="{% url 'estadoComision' userInfo.username cc.idComision.idComision %}">Comision {{cc.idComision.idComision}}</a></li>
+                    <li><a href="{% url 'estadoComisionArt' userInfo.username cc.idComision.idComision %}">Comision {{cc.idComision.idComision}}</a></li>
 
                 </ul>
             </div>
