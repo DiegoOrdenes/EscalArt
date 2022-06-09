@@ -1,3 +1,5 @@
+from typing_extensions import Self
+from django.utils import timezone
 from enum import unique
 from lib2to3.pytree import Base
 from mailbox import mbox
@@ -10,7 +12,11 @@ from webbrowser import get
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.test import TransactionTestCase
-# from requests import request
+from requests import request
+from taggit.managers import TaggableManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+# from typing_extensions import Self
 
 # Create your models here.
 class UsuarioManager(BaseUserManager):
@@ -47,12 +53,12 @@ class UsuarioManager(BaseUserManager):
         return usuario
 
 
-class Categoria(models.Model):
-    idCategoria = models.AutoField(primary_key=True,verbose_name='Id Categoría')
-    nombreCategoria = models.CharField(max_length=50,verbose_name='Nombre Categoría')
+# class Categoria(models.Model):
+#     idCategoria = models.AutoField(primary_key=True,verbose_name='Id Categoría')
+#     nombreCategoria = models.CharField(max_length=50,verbose_name='Nombre Categoría')
 
-    def __str__(self):
-        return  self.nombreCategoria
+#     def __str__(self):
+#         return  self.nombreCategoria
 
 class TipoCuenta(models.Model):
     idTipoCuenta = models.AutoField(primary_key=True, verbose_name='Id Tipo Cuenta')
@@ -68,9 +74,10 @@ class Usuario(AbstractBaseUser):
     nombre = models.CharField('Nombre completo', max_length=200, blank=True,null=True)
     imagen = models.ImageField('Foto de Perfil', upload_to=None, max_length=200, blank=True, null=True)
     tipoCuenta = models.ForeignKey(TipoCuenta,on_delete=models.CASCADE,verbose_name='Tipo de cuenta')
-    usuario_activo = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=True)
     usuario_administrador = models.BooleanField(default=False)
     objects = UsuarioManager()
+
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email','nombre','tipoCuenta']
@@ -94,45 +101,63 @@ class Publicacion(models.Model):
     descripcion = models.CharField('Descripcion', max_length=250, blank=True,null=True)
     titulo = models.CharField('Titulo Publicacion', max_length=150)
     imagen = models.ImageField('Imagen', upload_to=None, max_length=200, blank = False, null = False)
-    cantLikes = models.IntegerField('Cantidad de Likes')
+    cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='likes')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id Usuario')
+    tags = TaggableManager(blank=True)
+    fechaCreacion = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f'{self.titulo,self.idUser}'
 
 class Perfil(models.Model):
     idPerfil = models.AutoField(primary_key = True, verbose_name = 'Id Perfil')
-    seguidos = models.IntegerField('nro Seguidos')
-    seguidores = models.IntegerField('nro Seguidores')
+    # seguidos = models.ManyToManyField(Usuario, blank=True, related_name='seguidos',verbose_name='nro Seguidos')
+    seguidores = models.ManyToManyField(Usuario, blank=True, related_name='seguidores',verbose_name='nro seguidores')
     calificacion = models.IntegerField('Calificacion')
     img_header = models.ImageField('Header', upload_to='index', max_length=200, blank=True, null=True)
     biografia = models.CharField('Biografia', max_length=250, blank=True,null=True)
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user',unique = True)
+    showTags = models.BooleanField(default=False)
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return f'{self.idPerfil,self.idUser}'
 
-class Usuario_Categoria(models.Model):
-    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
-    idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
+# class Usuario_Categoria(models.Model):
+#     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
+#     idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
 
-    def __str__(self):
-        return f'{self.idUser,self.idCategoria}'
+#     def __str__(self):
+#         return f'{self.idUser,self.idCategoria}'
 
-class Publicacion_Categoria(models.Model):
-    idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
-    idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
+# class Publicacion_Categoria(models.Model):
+#     idCategoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name='Id Categoria')
+#     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
 
-    def __str__(self):
-        return f'{self.idPublicacion,self.idCategoria}'
+#     def __str__(self):
+#         return f'{self.idPublicacion,self.idCategoria}'
 
 class Comentarios(models.Model):
     comentario = models.CharField('Comentario', max_length=250)
+    fechaCreacion = models.DateTimeField(default=timezone.now)
+    cantLikes = models.ManyToManyField(Usuario,blank=True,verbose_name='likes',related_name='CommentLikes')
     idPublicacion = models.ForeignKey(Publicacion, on_delete=models.CASCADE, verbose_name='Id Publicacion')
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user')
+    parent = models.ForeignKey('self',on_delete=models.CASCADE,blank=True,null=True,related_name='+')
+
 
     def __str__(self):
         return f'{self.idUser,self.comentario}'
+
+    @property
+    def children(self):
+        return Comentarios.objects.filter(parent=self).order_by('-fechaCreacion').all()
+    
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True       
+        return False
 
 class EstadoComision(models.Model):
     idEstado = models.AutoField(primary_key=True, verbose_name='Id Estado Comision')
@@ -160,7 +185,7 @@ class Solicitud(models.Model):
     usernameArtista = models.CharField('Username Artista',max_length=150)
 
     def __str__(self):
-        return self.idCliente,self.usernameArtista
+        return f'{self.idCliente,self.usernameArtista}'
 
 class Referencia(models.Model):
     idReferecia = models.AutoField(primary_key=True,verbose_name='Id Referencia')
@@ -170,3 +195,34 @@ class Referencia(models.Model):
 
     def __str__(self):
         return f'{self.img_referencia,self.idUser,self.usernameArtista}'
+
+class Guardado(models.Model):
+    idGuardado = models.CharField(primary_key=True,verbose_name='Id Guardado',max_length=150)
+    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id usuario')
+    idPublicacion = models.ForeignKey(Publicacion,on_delete=models.CASCADE,verbose_name='Id publicacion')
+
+    def __str__(self):
+        return f'{self.idUser,self.idPublicacion}'
+
+
+class Review(models.Model):
+    idPerfil = models.ForeignKey(Perfil,on_delete=models.CASCADE)
+    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    review = models.TextField(max_length=500,blank=True)
+    rating = models.IntegerField()
+    fechaCreacion = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f'{self.rating}'
+
+
+class Chat(models.Model):
+    contenido = models.CharField(max_length=1000)
+    img_referencia = models.ImageField('Referencia', upload_to=None, max_length=200, blank=True, null=True)
+    fecha = models.DateTimeField(auto_now=True)
+    idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE)
+    room = models.ForeignKey('ChatRoom',on_delete=models.CASCADE)
+
+class ChatRoom(models.Model):
+    nombre = models.CharField(max_length=255)
+    

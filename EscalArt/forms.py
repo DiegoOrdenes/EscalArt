@@ -1,12 +1,12 @@
 from cProfile import label
-from dataclasses import field
+from dataclasses import field, fields
 from socket import fromshare
 from tkinter import Widget
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
-# from requests import RequestException, request
-from .models import Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from requests import RequestException, request
+from .models import Chat, Review,Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -97,32 +97,59 @@ class FormularioUsuario(forms.ModelForm):
 #         fields = ['seguidos','seguidores','calificacion','biografia','idUser']
 
 
-class publicacionForm( ModelForm):
-    cantLikes = forms.IntegerField(initial=0)
+class publicacionForm(forms.ModelForm):
+    
     
     
     
     class Meta:
         model=Publicacion
-        fields = ['descripcion','titulo','imagen','cantLikes']
-        exclude = ['idUser']
+        fields = ['descripcion','titulo','imagen','tags']
+        exclude = ['idUser','imagen','cantLikes']
+        widgets = {
+            'titulo':forms.TextInput(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingrese un titulo',
+                    'id':'titulo-post'
+                
+                }
+            ),
+            'descripcion':forms.Textarea(
+                attrs = {
+                    'class':'form-control',
+                    'placeholder':'Ingresa una descripcion',
+                    'id':'descripcion-post',
+                    
+                }
+            ),
+            
+        
+        }
 
 
 class perfilForm(ModelForm):
-    seguidos = forms.IntegerField(initial = 0)
-    seguidores = forms.IntegerField(initial = 0)
+    # seguidos = forms.IntegerField(initial = 0)
+    # seguidores = forms.IntegerField(initial = 0)
     calificacion = forms.IntegerField(initial = 0)
    
 
     class Meta:
         model = Perfil
-        fields = ['seguidos','seguidores','calificacion','idUser']
-        exclude = ['idUser','biografia','img_header']
+        fields = ['calificacion','idUser']
+        exclude = ['idUser','biografia','img_header','seguidores']
+
+class calificacionForm(ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['calificacion','idUser']
+        exclude = ['idUser']
 
 class editPerfilForm(ModelForm):
     class Meta:
         model = Perfil
         fields = ['biografia','img_header']
+        exclude = ['img_header']
         widgets = {
             'biografia':forms.Textarea(
                 attrs={
@@ -173,5 +200,51 @@ class ReferenciasForm(ModelForm):
         fields = ['img_referencia','idUser','usernameArtista']
         exclude = ['idUser','usernameArtista']
 
+class GuardarPostForm(ModelForm):
+    class Meta:
+        model = Guardado
+        fields = ['idUser','idPublicacion']
+        exclude = ['idUser','idPublicacion']
+    
 
+class ComentarioForm(forms.ModelForm):
+    comentario = forms.CharField(
+        label='',
+        widget=forms.Textarea(
+            attrs={
+                'rows':'3',
+                'placeholder': 'Escribe un comentario...'
+            }
+        )
+    )
+    class Meta:
+        model = Comentarios
+        fields=['comentario']
          
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['review', 'rating']
+
+
+class ChatForm(forms.ModelForm):
+    class Meta:
+        model = Chat
+        fields = ['img_referencia']
+        exclude = ['idUser','room']
+
+
+class EditUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nombre','email','username']
+        exclude = ['idUser','imagen','tipoCuenta','email','username']
+
+# editar tags perfil
+class editTagsPerfil(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['showTags','tags']
+        exclude = ['showTags','tags','idPerfil','idUser']
+# fin editar tags perfil
