@@ -4,36 +4,6 @@ body {
     background: #f4f7ed;
 }
 
-
-/* Alertas y botones */
-
-#AlertaOk,
-#AlertaOk2 {
-    width: 25%;
-    height: 50px;
-    background-color: white;
-    position: absolute;
-    bottom: 50%;
-    left: 38%;
-    display: none;
-    z-index: 1;
-    border-radius: 5px;
-    border: 1px solid #86C332;
-}
-
-.btnHeader,
-.btnPfp {
-    background-color: #86C332;
-    color: #fff;
-    border-radius: 20px;
-    border: none;
-    padding: 5px 10px 10px 10px;
-    margin-top: 5px;
-}
-
-
-/* fin alertas y botones */
-
 .Configuracion {
     position: flex;
     width: 210px;
@@ -70,9 +40,10 @@ body {
     align-items: center;
 }
 
-.seccion-perfil-usuario {
+
+/* .seccion-perfil-usuario {
     margin-top: -100px;
-}
+} */
 
 .seccion-perfil-usuario .perfil-usuario-header {
     width: 100%;
@@ -90,6 +61,12 @@ body {
     height: 17rem;
     background-image: linear-gradient(45deg, #BC3CFF, #317FFF);
     border-radius: 0 0 20px 20px;
+    /*
+background-image: url('http://localhost/multimedia/png/user-portada-3.png');
+background-repeat: no-repeat;
+background-position: center;
+background-size: cover;
+*/
 }
 
 .perfil-usuario-portada_2 {
@@ -268,6 +245,24 @@ body {
     /*line-height: 1, 6;*/
 }
 
+
+/*
+#galeria {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+/*grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+grid-gap: 2px;
+padding: 0 10px;
+}
+
+#galeria img {
+width: 100%;
+height: auto;
+border-radius: 5px;
+cursor: pointer;
+}
+*/
+
 #galeria {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -296,10 +291,10 @@ body {
 
 
 /*
-    #galeria img:hover {
-    filter: blur(2px);
-    transform: rotate(10deg) scale(1);
-    }   */
+#galeria img:hover {
+filter: blur(2px);
+transform: rotate(10deg) scale(1);
+}*/
 
 #galeria img:hover {
     animation: pulsate 1s ease-in-out;
@@ -754,8 +749,7 @@ button {
 
 .estado-comision {
     display: grid;
-    grid-template-columns: 25% 75%;
-    height: 100%;
+    grid-template-columns: 1fr;
     margin: 10px 0px;
 }
 
@@ -790,11 +784,15 @@ button {
 .comisiones ul {
     text-align: center;
     padding: 10px;
-    margin-top: 5%;
 }
 
 .comisiones {
     position: relative;
+}
+
+.right {
+    justify-content: center;
+    text-align: center;
 }
 
 .comisiones ul li {
@@ -811,6 +809,11 @@ button {
     padding: 25px;
     color: #6c9e25;
     z-index: 5;
+}
+
+.comisiones ul li input {
+    height: 30px;
+    width: 30px;
 }
 
 .comisiones p {
@@ -866,11 +869,233 @@ button {
     bottom: 44%;
 }
 
-@media (max-width:900px) {
+
+/* Creacion de Tareas */
+
+:root {
+    --primary: #A5C882;
+    --secondary: #D33F49;
+    --light: #fff;
+    --dark: #000;
+    --diabled: #e7e7e7;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    height: 100vh;
+    background-color: var(--diabled);
+}
+
+*:first-letter {
+    text-transform: capitalize;
+}
+
+.roundBorder {
+    border-radius: 5px;
+}
+
+.list {
+    margin: 25px auto;
+    padding: 25px;
+    background-color: var(--light);
+    width: 100%;
+    max-width: 550px;
+    border-radius: 15px;
+    background-color: #fff;
+    max-height: 350px;
+    height: 100%;
+    z-index: 10;
+}
+
+.title-tarea h1 {
+    font-size: 1.75rem;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.date {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dateRight {
+    display: flex;
+    align-items: center;
+}
+
+.dateRight ul {
+    padding: 5px;
+    list-style: none;
+    display: inline-block;
+}
+
+.dateRight ul li {
+    display: inline-block;
+    font-size: 1.3rem;
+}
+
+
+/* #dateNumber {
+    font-size: 25px;
+} */
+
+#dateText {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+#dateMonth,
+#dateNumber,
+#dateText {
+    font-weight: bold;
+    color: #000;
+}
+
+
+/* #dateMonth,
+#dateYear {
+    margin-left: 7px;
+    font-size: 20px;
+} */
+
+form {
+    margin: 20px 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 35px auto;
+    grid-column-gap: 15px;
+}
+
+input {
+    border: none;
+    padding-left: 10px;
+    background-color: var(--diabled);
+}
+
+input:focus {
+    outline: none;
+}
+
+.addTaskButton,
+.orderButton {
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.addTaskButton {
+    height: 35px;
+    font-size: 18px;
+    background-color: #6c9e25;
+    width: 100%;
+    border-radius: 50%;
+    color: #fff;
+}
+
+.orderButton {
+    background: none;
+    border: 2px solid #000;
+    color: #000;
+    cursor: pointer;
+}
+
+.orderButton:hover {
+    background-color: #252525;
+    color: #fff;
+}
+
+.task {
+    background-color: var(--primary);
+    padding: 15px;
+    margin-top: 15px;
+    color: var(--light);
+    cursor: pointer;
+    position: relative;
+}
+
+.done {
+    background-color: var(--diabled);
+    text-decoration: line-through;
+    color: var(--dark);
+}
+
+
+/* Mostrar la tarea */
+
+.fondo-mostrar-tarea {
+    margin: 15px auto;
+    padding: 25px;
+    background-color: var(--light);
+    width: 100%;
+    max-width: 750px;
+    border-radius: 10px;
+}
+
+.btn-mostrar-tarea {
+    position: relative;
+}
+
+.btn-mostrar-tarea h1 {
+    text-align: center;
+    font-size: 1.75rem;
+    padding: 0px 5px 10px;
+    width: 100%;
+}
+
+.btn-mostrar-tarea button {
+    padding: 10px 15px;
+    width: 180px;
+    margin: 0 10px;
+    background: none;
+    border: 2px solid #000;
+    cursor: pointer;
+    color: #000;
+    border-radius: 5px;
+}
+
+
+/* .btn-mostrar-tarea button {
+    padding: 10px 15px;
+    border-radius: 20px;
+    width: 180px;
+    cursor: pointer;
+    color: #fff;
+    background: #86C332;
+} */
+
+.btn-mostrar-tarea button:hover {
+    background: #2b2b2b;
+    color: #fff;
+}
+
+
+/*Scroll*/
+
+.scroll-bg {
+    margin: 5px auto;
+    padding-bottom: 5px;
+}
+
+.scroll-div {
+    width: 100%;
+    height: 100%;
+    max-height: 280px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.scroll-object {
+    color: #fff;
+}
+
+@media (max-width:750px) {
     .estado-comision {
         display: grid;
         grid-template-columns: 1fr;
-        height: 100%;
+        /* height: 100%; */
         margin: 10px 0px;
     }
     .estado-comision-lista ul {
@@ -879,7 +1104,7 @@ button {
     }
     .estado-comision-lista ul li {
         list-style: none;
-        padding: 10px 5px;
+        padding: 10px 0;
         font-size: 20px;
         text-align: center;
         justify-content: center;
@@ -887,13 +1112,13 @@ button {
     .cliente-opt ul {
         text-align: center;
         justify-content: center;
-        font-size: 1.2rem;
-        padding: 10px;
+        font-size: 0.9rem;
+        padding: 10px 0;
         cursor: pointer;
     }
     .cliente-opt ul li {
         display: inline-block;
-        padding: 0px 30px;
+        padding: 0px 5px;
     }
     .cliente-opt i {
         color: #86C332;
@@ -906,37 +1131,45 @@ button {
     /* --- Estado comision */
     .comisiones ul {
         text-align: center;
-        padding: 10px;
-        margin-top: 5%;
     }
     .comisiones {
         position: relative;
+        overflow: hidden;
     }
     .comisiones ul li {
         display: inline-block;
         list-style: none;
-        padding: 20px;
+        padding: 20px 60px 20px 20px;
         position: relative;
+        width: 100%;
     }
     .comisiones ul li i {
-        font-size: 30px;
+        font-size: 25px;
         border: 1px solid #000;
         border-radius: 50%;
-        padding: 25px;
+        padding: 20px;
         color: #6c9e25;
         z-index: 5;
         float: left;
     }
     .comisiones p {
-        font-size: 1.1rem;
-        padding: 25px 15px;
+        font-size: 0.8rem;
+        padding: 25px 8px;
         float: right;
     }
     .comisiones ul li .span-left {
         display: none;
     }
+    .comisiones ul li input {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        right: 0;
+        top: 40%;
+        margin-right: 30px;
+    }
     .comisiones ul li .span-centro {
-        height: 33%;
+        height: 37%;
         background: #86C332;
         width: 5px;
         display: block;
@@ -944,13 +1177,13 @@ button {
         margin-bottom: 50px;
         position: absolute;
         left: 0;
-        bottom: 44%;
+        bottom: 36%;
     }
     .comisiones ul li .span-centro_2 {
         display: none;
     }
     .comisiones ul li .span-right {
-        height: 33%;
+        height: 37%;
         background: #86C332;
         width: 5px;
         display: block;
@@ -958,24 +1191,12 @@ button {
         margin-bottom: 50px;
         position: absolute;
         right: 0;
-        bottom: 44%;
+        bottom: 36%;
     }
     .li-left {
         float: left;
-        margin-left: 30px;
     }
     .span-dis {
-        margin-left: 57px;
+        margin-left: 50px;
     }
-}
-
-
-/*  Isa */
-
-.scrol {
-    height: 100px;
-}
-
-.empty-saves {
-    text-align: center;
 }

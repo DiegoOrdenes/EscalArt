@@ -31,6 +31,15 @@
     text-align: center;
 }
 
+.config-lista a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.config-lista a:hover {
+    color: #86C332;
+}
+
 .config-lista ul li {
     color: #fff;
     padding: 20px 10px;
@@ -76,6 +85,10 @@
     border: 1px solid #000;
     float: left;
     margin: 0px 30px 0 0;
+}
+
+.title-U span {
+    color: #fff;
 }
 
 .title-U h1 {
@@ -395,6 +408,18 @@
     outline: none;
     border-bottom: 1px solid #fff;
     color: #fff;
+}
+
+.Editar-perfil textarea {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    max-width: 100%;
+    max-height: 60px;
 }
 
 .Editar-perfil form p label {

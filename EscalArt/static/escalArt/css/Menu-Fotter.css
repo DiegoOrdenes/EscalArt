@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    z-index: 1;
 }
 
 #btn-cierra {
@@ -19,7 +20,7 @@
 }
 
 #Configuracion {
-    position: relative;
+    position: fixed;
     width: 210px;
     height: 216px;
     background-color: #fff;
@@ -27,8 +28,9 @@
     display: none;
     border-radius: 20px;
     margin: 5px 20px;
-    float: right;
+    float: left;
     box-shadow: 2px solid #000;
+    right: 0;
 }
 
 #Configuracion .Configuracion-menu {
@@ -58,7 +60,8 @@
 .Configuracion.active {
     background: #12130F;
     position: fixed;
-    z-index: 1;
+    z-index: 20;
+    display: block;
 }
 
 
@@ -86,6 +89,10 @@ header {
     background: #12130F;
     position: fixed;
     z-index: 10;
+}
+
+#Configuracion.active {
+    margin-top: 105px;
 }
 
 .nav.active .logo,
@@ -159,8 +166,8 @@ header {
 
 .menu-logearse ul li a:hover {
     padding: 0;
-    background: none;
     border-radius: 0px;
+    background: none;
 }
 
 
@@ -178,7 +185,7 @@ header {
 }
 
 .scrol {
-    height: 1px;
+    height: 0px;
 }
 
 .search-box {
@@ -315,9 +322,44 @@ ul {
 }
 
 @media screen and (max-width:800px) {
+    /*Configuracion  Diseño 1*/
+    #Configuracion {
+        position: fixed;
+        width: 150px;
+        height: 150px;
+        background-color: #fff;
+        z-index: 40;
+        display: none;
+        margin: 5px 0;
+    }
+    #Configuracion .Configuracion-menu {
+        margin: 10px;
+        list-style: none;
+    }
+    #Configuracion .Configuracion-menu li i {
+        font-size: 30px;
+        padding: 5px;
+    }
+    #Configuracion .Configuracion-menu li a {
+        text-decoration: none;
+        font-size: 0.8rem;
+    }
+    #Configuracion .Configuracion-menu span {
+        height: 2px;
+        width: 100%;
+        color: #659523;
+    }
+    .Cerrar-Sesion {
+        margin-top: 20px;
+    }
+    #Configuracion.active {
+        position: fixed;
+        margin-top: 85px;
+        z-index: 40;
+    }
     /* Menu  pagina*/
     .logo {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     .nav ul li {
         font-size: 25px;
@@ -352,8 +394,8 @@ ul {
     } */
     /* Segundo diseño de boton :D */
     .menu-logearse button {
-        padding: 5px 15px;
-        width: 125px;
+        padding: 5px 5px;
+        width: 110px;
         margin: 0 5px;
         background: none;
         border: 2px solid #fff;
@@ -367,15 +409,18 @@ ul {
         padding: 0;
         margin-top: 18px;
     }
+    .menu i {
+        font-size: 25px;
+    }
     .search-box {
         position: relative;
-        transform: translate(-50%, -50%);
+        /* transform: translate(-70%, -50%); */
         height: 38px;
         text-align: center;
         left: 20%;
     }
     .search-box:hover>input {
-        width: 100px;
+        width: 85px;
         padding: 0 10px;
     }
     .search-box:hover>.icon {

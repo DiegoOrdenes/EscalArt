@@ -457,7 +457,7 @@ body {
 }
 
 .mensaje.left .cuerpo::before {
-    border-color: transparent transparent transparent #EEEEEE;
+    border-color: transparent transparent transparent #4580F7;
     left: initial;
     right: -18px;
 }
@@ -607,4 +607,9 @@ body {
     .scrol {
         height: 0;
     }
+}
+
+.left>.cuerpo {
+    background-color: #4580F7;
+    color: white;
 }

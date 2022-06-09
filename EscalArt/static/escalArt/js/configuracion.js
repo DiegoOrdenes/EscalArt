@@ -6,6 +6,7 @@ function Editarperfil() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
 function Cambiarpass() {
@@ -15,6 +16,7 @@ function Cambiarpass() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
 function seguridad() {
@@ -24,6 +26,7 @@ function seguridad() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
 function privacidad() {
@@ -33,6 +36,7 @@ function privacidad() {
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
 function Notificaciones() {
@@ -42,6 +46,7 @@ function Notificaciones() {
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
 function accesibilidad() {
@@ -51,6 +56,7 @@ function accesibilidad() {
     document.getElementById('Cambiar-pass').style.display = 'none';
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('privacidad').style.display = 'none';
+    document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
 
@@ -83,9 +89,7 @@ function Cambiar_pass_Artista() {
 function Categoria_Artista() {
     document.getElementById('Categoria-Artista').style.display = 'block';
     document.getElementById('Editar-perfil').style.display = 'none';
-    document.getElementById('Editar-perfil-Artista').style.display = 'none';
     document.getElementById('Cambiar-pass').style.display = 'none';
-    document.getElementById('Cambiar-pass-Artista').style.display = 'none';
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';

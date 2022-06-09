@@ -1,0 +1,47 @@
+#settings-post {
+    position: absolute;
+    width: 210px;
+    height: 216px;
+    background-color: rgba(255, 255, 255, 0.779);
+    z-index: 40;
+    display: none;
+    border-radius: 20px;
+    right: 125px;
+    box-shadow: 2px solid #000;
+    border: 1px solid #86C332;
+}
+
+.Configuracion-post {
+    margin: 10px;
+    list-style: none;
+}
+
+#settings-post .Configuracion-post li i {
+    font-size: 45px;
+    padding: 10px;
+}
+
+#settings-post .Configuracion-post li a {
+    text-decoration: none;
+}
+
+#settings-post .Configuracion-post span {
+    height: 2px;
+    width: 100%;
+    color: #659523;
+}
+
+.settings-container {
+    float: left;
+    margin-left: 445px;
+    top: 35px
+}
+
+.post-settings {
+    font-size: 25px;
+}
+
+.child-comment {
+    margin-left: 2rem;
+    padding-right: 50px;
+}

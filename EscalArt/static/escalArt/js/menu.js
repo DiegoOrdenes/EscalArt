@@ -1,3 +1,4 @@
+var clicked = false;
 window.addEventListener("scroll", function() {
         var nav = document.querySelector(".nav");
         var config = document.querySelector("#Configuracion");
@@ -6,7 +7,14 @@ window.addEventListener("scroll", function() {
     })
     //----------------------Perfil--------------------------//
 function mostrarConfig() {
-    document.getElementById('Configuracion').style.display = 'flex';
+    if (clicked) {
+        document.getElementById('Configuracion').style.display = 'none';
+        clicked = false;
+    } else {
+        document.getElementById('Configuracion').style.display = 'flex';
+        clicked = true;
+    }
+
 }
 
 function ocultarConfig() {
