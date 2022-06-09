@@ -19,34 +19,8 @@
 </head>
 
 <body>
-    <header>
-        <nav class="nav">
-            <div class="logo">EscalArt</div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscando...">
-                <a href="##" class="icon">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-            <ul class="menu">
-                <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-comment-dots"></i></a></li>
-                <li>
-                    <a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a>
-                </li>
-                <li onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li>
-            </ul>
-        </nav>
-        <div id="Configuracion">
-            <ul class="Configuracion-menu">
-                <button onclick="ocultarConfig();" id="btn-cierra" type="button">X</button>
-                <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' %}">Perfil</a></li>
-                <li><i class="fa-solid fa-gear"></i><a href="#">Configuracion</a></li>
-                <span class="linea_2"></span>
-                <li class="Cerrar-Sesion"><a href="">Cerrar Sesion</a></li>
-            </ul>
-        </div>
-    </header>
+    {% include 'escalArt/includes/menu.html' %}
+
     <div class="scrol"></div>
     <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
     <!-- slider -->
@@ -54,108 +28,106 @@
         <div id="contenedor-slider" class="contenedor-slider">
             <div id="slider" class="slider">
                 <section class="slider__section">
-                    <img class="Slide" src="{% static 'escalArt/img/1---.jpg' %}">
+                    <img class="Slide" src="{% static 'escalArt/img/Artista.jpg' %}">
                     <h1>¿Como podemos ayudarte?</h1>
                     <p>En este sector podras resolver algunas de tus dudas sobre nuestro sistema web.</p>
+                    <ul class="slider-lista">
+                        <li>
+                            <h2>¿Cuenta de Artista?</h2>
+                            <span> Podras saber como se puede crear una cuenta profesional, ademas de para que sirve y que beneficios tendras en nuestro sistema.</span>
+                        </li>
+                        <li>
+                            <h3>¿Tienes dudas/consultas?</h3>
+                            <strong>Si tienes alguna duda/consulta sobre algo que no entiendes, en la parte inferior nos podras escribir cuando desees. Max 48hrs</strong>
+                        </li>
+                    </ul>
                 </section>
                 <section class="slider__section">
-                    <img class="Slide" src="{% static 'escalArt/img/2---.png' %}">
-                    <h1>¿Cuenta de artista?</h1>
-                    <p>Podras saber como se puede crear una cuenta profesional, ademas de para que sirve y que beneficios tendras en nuestro sistema.</p>
-                </section>
-                <section class="slider__section">
-                    <img class="Slide" src="{% static 'escalArt/img/4---.jpg' %}">
-                    <h1>¿Tienes dudas/consultas?</h1>
-                    <p>Si tienes alguna duda/consulta sobre algo que no entiendes, en la parte inferior nos podras escribir cuando desees. Tardamos como maximo 48hrs en responder...</p>
-                </section>
-                <section class="slider__section">
-                    <img class="Slide" src="{% static 'escalArt/img/3---.jpg' %}">
+                    <img class="Slide" src="{% static 'escalArt/img/1.jpg' %}">
                     <h1>¿Como podemos ayudarte?</h1>
-                    <p>en este sector podras resolver algunas de tus dudas sobre nuestra pagina.</p>
+                    <p>En este sector podras resolver algunas de tus dudas sobre nuestro sistema web.</p>
+                    <ul class="slider-lista">
+                        <li>
+                            <h2>¿Cuenta de Artista?</h2>
+                            <span> Podras saber como se puede crear una cuenta profesional, ademas de para que sirve y que beneficios tendras en nuestro sistema.</span>
+                        </li>
+                        <li>
+                            <h3>¿Tienes dudas/consultas?</h3>
+                            <strong>Si tienes alguna duda/consulta sobre algo que no entiendes, en la parte inferior nos podras escribir cuando desees. Max 48hrs</strong>
+                        </li>
+                    </ul>
+                </section>
+                <section class="slider__section">
+                    <img class="Slide" src="{% static 'escalArt/img/2.jpg' %}">
+                    <h1>¿Como podemos ayudarte?</h1>
+                    <p>En este sector podras resolver algunas de tus dudas sobre nuestro sistema web.</p>
+                    <ul class="slider-lista">
+                        <li>
+                            <h2>¿Cuenta de Artista?</h2>
+                            <span> Podras saber como se puede crear una cuenta profesional, ademas de para que sirve y que beneficios tendras en nuestro sistema.</span>
+                        </li>
+                        <li>
+                            <h3>¿Tienes dudas/consultas?</h3>
+                            <strong>Si tienes alguna duda/consulta sobre algo que no entiendes, en la parte inferior nos podras escribir cuando desees. Max 48hrs</strong>
+                        </li>
+                    </ul>
+                </section>
+                <section class="slider__section">
+                    <img class="Slide" src="{% static 'escalArt/img/3.jpg' %}">
+                    <h1>¿Como podemos ayudarte?</h1>
+                    <p>En este sector podras resolver algunas de tus dudas sobre nuestro sistema web.</p>
+                    <ul class="slider-lista">
+                        <li>
+                            <h2>¿Cuenta de Artista?</h2>
+                            <span> Podras saber como se puede crear una cuenta profesional, ademas de para que sirve y que beneficios tendras en nuestro sistema.</span>
+                        </li>
+                        <li>
+                            <h3>¿Tienes dudas/consultas?</h3>
+                            <strong>Si tienes alguna duda/consulta sobre algo que no entiendes, en la parte inferior nos podras escribir cuando desees. Tardamos como maximo 48hrs en responder...</strong>
+                        </li>
+                    </ul>
                 </section>
             </div>
             <div id="btn-prev" class="btn-prev">&#60;</div>
             <div id="btn-next" class="btn-next">&#62;</div>
         </div>
     </section>
-
-    <section class="post-list">
-        <div class="content">
-            <article class="post 1-">
-                <div class="post-header ">
-                    <img class="post-img-1" src="{% static 'EscalArt/img/artistas.jpg' %}" alt="">
-                </div>
-                <div class="post-body ">
-                    <h2>¿Quienes somos?</h2>
-                    <span class="linea_2"></span>
-                    <P class="descripcion ">Somos un sisema web que tiene como funcionalidad facilitar la comunicacion del trabajo de artistas que busquen emprender en nuesto sitio web.</P>
-                    <span> 3 de Mazo, 2022 | Ayuda a Usuario</span>
-                    <span class="linea_2"></span>
-                </div>
-            </article>
-
-            <article class="post 2-">
-                <div class="post-body ">
-                    <h2>¿Tienes alguna consulta?</h2>
-                    <span class="linea_2"></span>
-                    <div class="input-cont">
-                        <div class="input">
-                            <input type="text" required>
-                            <label for="">Escribe tu consulta...</label>
-                        </div>
+    <!-- Cards Ayuda Cliente-->
+    <section class="fondo-card">
+        <article class="card-1">
+            <div class="card__content">
+                <h3 class="card__title">¿Quienes somos?</h3>
+                <span class="card_subtitle">04 de Junio, 2022 | Ayuda a Usuario</span>
+                <p class="card__descripcion">Somos un sisema web que tiene como funcionalidad facilitar la comunicacion del trabajo de artistas que busquen emprender en nuesto sitio web.</p>
+            </div>
+        </article>
+        <article class="card-1">
+            <div class="card__content">
+                <h3 class="card__title">¿Tienes alguna consulta?</h3>
+                <span class="card_subtitle">04 de Junio, 2022 | Ayuda a Usuario</span>
+                <div class="input-cont">
+                    <div class="input">
+                        <input type="text" required>
+                        <label for="">Escribe tu consulta...</label>
                     </div>
-                    <br><br><br><br><br>
-                    <a href="# " class="post-link " onclick="mostrar()">Enviar...</a>
-                    <br><br><br><br><br>
-                    <p>Su consulta sera respondida dentro de 48Hrs Aprox...</p>
-                    <span class="linea_2"></span>
                 </div>
-            </article>
-            <article class="post 3-">
-                <div class="post-header ">
-                    <img class="post-img-1" src="{% static 'EscalArt/img/Artista.jpg' %}" alt="">
+                <div class="btn-consulta">
+                    <button>Enviar</button>
                 </div>
-                <div class="post-body ">
-
-                    <h2>¿Que es una cuenta profesional?</h2>
-                    <span class="linea_2"></span>
-                    <P class="descripcion ">Es una cuenta especialmente para los artistas, en donde podran publicar todos sus diseños para que puedan ser visualizados</P>
-                    <span> 3 de Mazo, 2022 | Ayuda a Usuario</span>
-                    <span class="linea_2"></span>
-                </div>
-            </article>
-        </div>
+            </div>
+        </article>
+        <article class="card-1">
+            <div class="card__content">
+                <h3 class="card__title">¿Que es una cuenta profesional?</h3>
+                <span class="card_subtitle">04 de Junio, 2022 | Ayuda a Usuario</span>
+                <p class="card__descripcion">Es una cuenta especialmente para los artistas, en donde podran publicar todos sus diseños para que puedan ser visualizados</p>
+            </div>
+        </article>
     </section>
 
-    <!--Pie de la pagina-->
-    <footer class="pie-pagina">
-        <div class="grupo-1">
-            <div class="box">
-                <figure>
-                    <a href="#">
-                        <img src="{% static 'EscalArt/img/logo.jpg' %}" alt="Logo EscalArt">
-                    </a>
-                </figure>
-            </div>
-            <div class="box">
-                <h2>¿Quienes Somos?</h2>
-                <p>Somos un sistema web que tiene como funcionalidad facilitar la comunicacion y comercializacion del trabajo.</p>
-                <p>de los artistas que quieran emprender en nuestro sitio web</p>
-            </div>
-            <div class="box">
-                <h2>SIGUENOS...</h2>
-                <div class="red-social">
-                    <a href="#" class="fa fa-facebook"></a>
-                    <a href="#" class="fa fa-instagram"></a>
-                    <a href="#" class="fa fa-twitter"></a>
-                    <a href="#" class="fa fa-youtube"></a>
-                </div>
-            </div>
-        </div>
-        <div class="grupo-2">
-            <small>&copy; 2022 EscalArt <b>Equipo EscalArt</b> - Politica de privacidad - Terminos de Servicios</small>
-        </div>
-    </footer>
+
+
+    {% include 'escalArt/includes/footer.html' %}
 
 
 </body>

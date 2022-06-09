@@ -26,21 +26,12 @@
     <div class="container-login">
         <div class="container__form">
             <img src="{% static 'EscalArt/img/candado.png' %}" alt="IMG Candado">
-            <h2>Cambiar Contraseña</h2>
-            <form method="POST">
-                {% csrf_token %}
-                <p style="color: white;">Olvidaste tu contraseña? Ingresa tu email abajo, y te enviaremos un correo con las instrucciones para crear una nueva.</p>
-                <p>
-                    <label>Correo</label>
-                    <input type="email" name="email"></input>
-                </p>
-                <div class="btn-guardar">
-                    <input class="boton-form" type="submit" value="Continuar" name="Send email">
-                </div>
-                <div class="direc-cuenta">
-                    <a href="{% url 'registro' %}">¿No tienes cuenta?<span>Crear</span></a>
-                </div>
-            </form>
+            <h2>Contraseña recuperada correctamente</h2>
+
+
+            <p style="color: white;">Tu contraseña ha sido cambiada. Ahora puedes continuar e ingresar a tu cuenta</p>
+
+            <a href="{% url 'login' %}">Inicia sesion</a>
 
         </div>
     </div>

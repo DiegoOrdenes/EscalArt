@@ -27,24 +27,41 @@
         <div class="container__form">
             <img src="{% static 'EscalArt/img/candado.png' %}" alt="IMG Candado">
             <h2>Cambiar Contraseña</h2>
-            <form method="POST">
+            <form action="" method="POST">
                 {% csrf_token %}
-                <p style="color: white;">Olvidaste tu contraseña? Ingresa tu email abajo, y te enviaremos un correo con las instrucciones para crear una nueva.</p>
                 <p>
-                    <label>Correo</label>
-                    <input type="email" name="email"></input>
+                    <label>Nueva contraseña</label>
+                    <input type="password" name="new_password1"></input>
                 </p>
-                <div class="btn-guardar">
-                    <input class="boton-form" type="submit" value="Continuar" name="Send email">
-                </div>
-                <div class="direc-cuenta">
-                    <a href="{% url 'registro' %}">¿No tienes cuenta?<span>Crear</span></a>
-                </div>
-            </form>
+                <p>
+                    <label>Confirmar contraseña</label>
+                    <input type="password" name="new_password2"></input>
+                </p>
+                <ul style="color: white;">
+                    <li>
+                        Tu contraseña no puede ser similar a tu informacion personal.
 
+                    </li>
+                    <li>
+                        Tu contraseña debe contener al menos 8 caracteres.
+
+                    </li>
+                    <li>
+                        Tu contraseña no puede ser una palabra comunmente usada.
+
+                    </li>
+                    <li>
+                        Tu contraseña no puede estar compuesta completamente por numeros.
+
+                    </li>
+                </ul>
+                <div class="btn-guardar">
+                    <input class="boton-form" type="submit" value="Guardar Cambios" name="Update Password">
+                </div>
+
+            </form>
         </div>
     </div>
-    <br>
 
     <!-- Menu toggle -->
     <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>

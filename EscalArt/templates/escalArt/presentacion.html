@@ -26,40 +26,8 @@
 
 <body>
     <!--Header-->
-    <header>
-        <nav class="nav">
-            <div class="logo">EscalArt</div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscando...">
-                <a href="##" class="icon">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-            <ul class="menu">
-                <!--Mostrar si el Usuario no esta logeado-->
-                <li class="home-not-loged"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
-                <div class="menu-logearse">
-                    <ul>
-                        <li><a href="#"><button>Iniciar Sesion</button></a></li>
-                        <li><a href="#"><button>Registrarse</button></a></li>
-                    </ul>
-                </div>
-                <!--Mostrar esto si el usuario esta logeado-->
-                <li style="display: none;"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
-                <li style="display: none;"><a href="{% url 'chats' %}"><i class="fa-solid fa-comment-dots"></i></a></li>
-                <li style="display: none;"><a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a></li>
-                <li style="display: none;" onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li>
-            </ul>
-        </nav>
-        <div id="Configuracion">
-            <ul class="Configuracion-menu">
-                <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' %}">Perfil</a></li>
-                <li><i class="fa-solid fa-gear"></i><a href="#">Configuracion</a></li>
-                <span class="linea_2"></span>
-                <li class="Cerrar-Sesion"><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
-            </ul>
-        </div>
-    </header>
+    {% include 'escalArt/includes/menu.html' %}
+
     <div class="scrol"></div>
     <!--Cartas de presentacion-->
     <!-- <div class="body-card">
@@ -275,34 +243,7 @@
     </script>
 
     <!--Pie de la pagina-->
-    <footer class="pie-pagina">
-        <div class="grupo-1">
-            <div class="box">
-                <figure>
-                    <a href="#">
-                        <img src="{% static 'EscalArt/img/logo.jpg' %}" alt="Logo EscalArt">
-                    </a>
-                </figure>
-            </div>
-            <div class="box">
-                <h2>¿Quienes Somos?</h2>
-                <p>Somos un sistema web que tiene como funcionalidad facilitar la comunicacion y comercializacion del trabajo.</p>
-                <p>de los artistas que quieran emprender en nuestro sitio web</p>
-            </div>
-            <div class="box">
-                <h2>SIGUENOS...</h2>
-                <div class="red-social">
-                    <a href="#" class="fa fa-facebook"></a>
-                    <a href="#" class="fa fa-instagram"></a>
-                    <a href="#" class="fa fa-twitter"></a>
-                    <a href="#" class="fa fa-youtube"></a>
-                </div>
-            </div>
-        </div>
-        <div class="grupo-2">
-            <small>&copy; 2022 EscalArt <b>Equipo EscalArt</b> - Politica de privacidad - Terminos de Servicios</small>
-        </div>
-    </footer>
+    {% include 'escalArt/includes/footer.html' %}
 
 
 </body>

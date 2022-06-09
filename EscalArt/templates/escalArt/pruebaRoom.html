@@ -1,0 +1,124 @@
+{% extends 'escalArt/Chats.html' %} {% load static %} {% block content %}
+<div class="seccion-chat">
+
+
+    <div class="usuario-seleccionado">
+        <div class="avatar">
+            <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
+        </div>
+        <div class="cuerpo">
+
+            {% if request.user.idUser == cliente.idCliente.idUser %}
+            <span><a href="{% url 'perfil' cliente.usernameArtista %}">{{cliente.usernameArtista}}</a></span> {% else %}
+            <span><a href="{% url 'datosCliente' cliente.idCliente.username %}">{{cliente.idCliente.username}}</a></span> {% endif %}
+
+
+            <span>Activo - Escribiendo...</span>
+        </div>
+        <div class="opciones">
+            <ul>
+                <li>
+                    <button type="button"><i class="fas fa-video"></i></button>
+                </li>
+                <li>
+                    <button type="button"><i class="fas fa-phone-alt"></i></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+    <div id="chat-log" class="panel-chat">
+
+        {% for chat in chats.all %} {% if chat.idUser.idUser == request.user.idUser %}
+        <div class="mensaje left">
+            <div class="cuerpo">
+                <div class="texto">
+                    {{chat.contenido}}
+                    <span class="tiempo">
+                        <i class="far fa-clock"></i>
+                        {{chat.fecha}}
+                    </span>
+                </div>
+
+            </div>
+
+
+        </div>
+        {% else %}
+        <div class="mensaje">
+            <div class="cuerpo">
+                <div class="texto">
+                    {{chat.contenido}}
+                    <span class="tiempo">
+                        <i class="far fa-clock"></i>
+                        {{chat.fecha}}
+                    </span>
+                </div>
+
+            </div>
+
+
+        </div>
+        {% endif %} {% endfor %}
+        <!-- {% for ref in refAll %}
+        
+        {% if user == ref.idUser and cliente.usernameArtista == ref.usernameArtista %}
+        <img src="/{{ref.img_referencia}}" alt="referencias">
+        
+        {% endif %}
+        
+        {% endfor %} -->
+
+
+    </div>
+
+
+    <div class="panel-escritura">
+        <div class="textarea">
+            <div class="opcines">
+
+                {% if user.username == cliente.usernameArtista %}
+                <form action="" method="post">
+                    <button type="button">
+                        <i class="fas fa-file"></i>
+                        <label for="file"></label>
+                        <input type="submit" id="file" name="comision">
+                    </button> {% csrf_token %} {{comCli.as_hidden}}{{comArt.as_hidden}}
+                    <input style="display: none;" type="text" name="cliente" value="{{cliente.idCliente}}">
+                    <input type="hidden" name="next" value="{{request.path}}">
+
+                </form>
+                {% endif %}
+
+
+
+                <form action="" method="POST" enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    <button type="button">
+                        <i class="far fa-image"></i>
+                        <label for="img"></label>
+                        <input type="file" id="img" name="img_referencia">
+                    </button>
+                    <input type="hidden" name="next" value="{{request.path}}">
+                    <input type="submit" name="referencia" value="subir">
+
+                </form>
+
+            </div>
+            <textarea id="chat-message-input" type="text" size="100"></textarea>
+            <button id="chat-message-submit" type="submit" class="enviar" value="Send">
+                <i class="fas fa-paper-plane"></i>
+            </button> {{ room_name|json_script:"room-name" }}
+        </div>
+
+    </div>
+
+</div>
+
+
+{{ request.user.idUser|json_script:"user_idUser" }}
+<script src="{% static 'EscalArt/js/room.js' %}"></script>
+{% endblock %}

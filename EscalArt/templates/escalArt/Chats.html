@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Chat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
@@ -25,132 +25,12 @@
 
 <body>
     <!--Header-->
-    <header>
-        <nav class="nav">
-            <div class="logo">EscalArt</div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscando...">
-                <a href="##" class="icon">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-            <ul class="menu">
-                <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
-                <li><a href="{% url 'chats' %}"><i class="fa-solid fa-comment-dots"></i></a></li>
-                <li>
-                    <a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a>
-                </li>
-                <li onclick="mostrarConfig();"> <a href="#"><i class="fa-solid fa-circle-user"></i></a></li>
-            </ul>
-        </nav>
-        <div id="Configuracion">
-            <ul class="Configuracion-menu">
+    {% include 'escalArt/includes/menu.html' %}
 
-                <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' %}">Perfil</a></li>
-                <li><i class="fa-solid fa-gear"></i><a href="#">Configuracion</a></li>
-                <span class="linea_2"></span>
-                <li class="Cerrar-Sesion"><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
-            </ul>
-        </div>
-    </header>
     <div class="scrol"></div>
-    <!--Chats Viejo-->
-    <!-- <section class="chats-fondo">
-        <div class="chat-left">
-            <div class="title-mensajes">
-                <h1>Mensajes</h1>
-            </div>
-            <div class="chat-completo">
-                <div class="ver-comentarios">
-                    <div class="ver-boxcontainer">
-                        <div class="ver-testimonials-box">
-                            <div class="ver-box-top">
-                                <div class="ver-profile">
-                                    <div class="ver-profile-img">
-                                        <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                                    </div>
-                                    <div class="ver-name-user">
-                                        <strong>[Nombre]</strong>
-                                        <span>[@Username]</span>
-                                        <i class="fa-solid fa-ellipsis" style="display: none;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ver-client-comment">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                            </div>
-                            <div class="hora-cant-mess">
-                                <ul>
-                                    <li>[15:55]</li>
-                                    <li class="cant-message">[5]</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ver-comentarios">
-                    <div class="ver-boxcontainer">
-                        <div class="ver-testimonials-box">
-                            <div class="ver-box-top">
-                                <div class="ver-profile">
-                                    <div class="ver-profile-img">
-                                        <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                                    </div>
-                                    <div class="ver-name-user">
-                                        <strong>[Nombre]</strong>
-                                        <span>[@Username]</span>
-                                        <i class="fa-solid fa-ellipsis" style="display: none;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="ver-client-comment">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem, illo.</p>
-                            </div>
-                            <div class="hora-cant-mess">
-                                <ul>
-                                    <li>[15:55]</li>
-                                    <li class="cant-message">[5]</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-        <div class="chat-right">
-            <div class="title-artista">
-                <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                <h1>[User Artista]</h1>
-                <span>[hace 35m]</span>
-            </div>
-            <div class="fecha-chat">
-                <h2>[fecha-chat-ultimo]</h2>
-            </div>
-            Escritura-chat
 
-    <div class="scroll-bg">
-        <div class="scroll-div">
-            <div class="scroll-object">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius, asperiores consequuntur nam excepturi labore aliquam qui necessitatibus libero iure sed nisi corporis sint temporibus doloribus nesciunt, ipsam assumenda id quibusdam voluptas minima eaque?
-                Obcaecati impedit tempore dolores. Accusantium rerum molestias officia itaque odit omnis libero, debitis accusamus! Iusto aperiam explicabo, impedit doloremque iste nobis aliquid neque, alias temporibus adipisci, fugiat quam enim porro
-                at perspiciatis praesentium. Aperiam iusto eligendi quis aliquid, fuga voluptatum! Libero sequi, quo esse veniam, deserunt asperiores modi tempora eum, pariatur sint cupiditate perferendis illum tenetur rem architecto commodi explicabo
-                ex ratione deleniti qui voluptatibus. Repellendus, corporis!
-            </div>
-        </div>
-    </div>
-    <div class="comentar-chat">
-        <ul>
-            <li class="block_"><i class="fa-solid fa-face-grin-beam"></i></li>
-            <li class="block_"><i class="fa-solid fa-paperclip"></i></li>
-            <li><input type="text" placeholder="Enviar Mensaje..."></li>
-            <li class="block_2"><i class="fa-solid fa-paper-plane"></i></li>
-        </ul>
-    </div>
-    </div>
 
-    </div>
-    </section>-->
+
 
     <!--Chat nuevo-->
     <section class="body-chat">
@@ -167,50 +47,106 @@
                 </div>
             </div>
             <div class="seccion-lista-usuarios">
-                <div class="usuario">
+                {% for s in sol %}
+                <!--  -->
+                {% if user.username == s.usernameArtista %}
+                <!--  -->
+                {% for c in cli %}
+                <!--  -->
+                {% if s.usernameArtista == user.username and c.username == s.idCliente.username %}
+
+                <div class="usuario" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit">
+
+                    <!--  -->
+
+                    <input id="{{s.idSolicitud}}-input" type="text" size="100" value="{{s.idSolicitud}}" hidden><br>
+
                     <div class="avatar">
                         <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
                         <span class="estado-usuario enlinea"></span>
                     </div>
                     <div class="cuerpo">
-                        <span> Nombre apellido</span>
-                        <span class="username-block"> @Username</span>
+
+
+                        <span><input style="background-color:transparent; border:none;box-shadow:none;" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit"  type="button" value="{{s.idCliente.nombre}} (cliente)"></span>
+
+                        <span class="username-block"> @{{s.idCliente.username}}</span>
+
+
+
                         <span>detalles de mensaje</span>
                     </div>
                     <span class="notificacion">
                         3
                     </span>
+
+
+
+
+
                 </div>
-                <div class="usuario">
+                {%endif%}
+                <!--  -->
+                {% endfor %}
+                <!--  -->
+                {% else %}
+                <!--  -->
+                {% for c in cli %}
+                <!--  -->
+                {% if s.idCliente == user and c.username == s.idCliente.username %}
+                <div class="usuario" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit">
+
+                    <!--  -->
+
+                    <input id="{{s.idSolicitud}}-input" type="text" size="100" value="{{s.idSolicitud}}" hidden><br>
+
                     <div class="avatar">
                         <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
-                        <span class="estado-usuario ocupado"></span>
+                        <span class="estado-usuario enlinea"></span>
                     </div>
                     <div class="cuerpo">
-                        <span> Nombre apellido</span>
-                        <span class="username-block"> @Username</span>
+
+                        {% for a in cli %}
+                        <!--  -->
+                        <!--  -->
+                        {% if s.usernameArtista == a.username %}
+                        <span><input style="background-color:transparent; border:none;box-shadow:none;" onclick="chat('{{s.idSolicitud}}');" id="{{s.idSolicitud}}-submit"  type="button" value="{{a.nombre}}"></span>
+                        <!--  -->
+                        {% endif %}
+                        <!--  -->
+                        {% endfor %}
+
+
+
+
+                        <span class="username-block"> @{{s.usernameArtista}}</span>
+
+
+
                         <span>detalles de mensaje</span>
                     </div>
                     <span class="notificacion">
-                        1
+                        3
                     </span>
+
+
+
+
+
                 </div>
-                <div class="usuario">
-                    <div class="avatar">
-                        <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
-                        <span class="estado-usuario desconectado"></span>
-                    </div>
-                    <div class="cuerpo">
-                        <span> Nombre apellido</span>
-                        <span class="username-block"> @Username</span>
-                        <span>detalles de mensaje</span>
-                    </div>
-                    <span class="notificacion">
-                        1
-                    </span>
-                </div>
+                <!--  -->
+                {%endif%}
+                <!--  -->
+                {% endfor %}
+
+                <!--  -->
+                {%endif%}
+
+                <!--  -->
+                {% endfor %}
             </div>
         </div>
+        {%block content%}
         <div class="seccion-chat">
             <div class="usuario-seleccionado">
                 <div class="avatar">
@@ -307,42 +243,19 @@
                 </form>
             </div>
         </div>
+        {% endblock %}
     </section>
 
     <!--Pie de la pagina-->
-    <footer class="pie-pagina">
-        <div class="grupo-1">
-            <div class="box">
-                <figure>
-                    <a href="#">
-                        <img src="{% static 'EscalArt/img/logo.jpg' %}" alt="Logo EscalArt">
-                    </a>
-                </figure>
-            </div>
-            <div class="box">
-                <h2>¿Quienes Somos?</h2>
-                <p>Somos un sistema web que tiene como funcionalidad facilitar la comunicacion y comercializacion del trabajo.</p>
-                <p>de los artistas que quieran emprender en nuestro sitio web</p>
-            </div>
-            <div class="box">
-                <h2>SIGUENOS...</h2>
-                <div class="red-social">
-                    <a href="#" class="fa fa-facebook"></a>
-                    <a href="#" class="fa fa-instagram"></a>
-                    <a href="#" class="fa fa-twitter"></a>
-                    <a href="#" class="fa fa-youtube"></a>
-                </div>
-            </div>
-        </div>
-        <div class="grupo-2">
-            <small>&copy; 2022 EscalArt <b>Equipo EscalArt</b> - Politica de privacidad - Terminos de Servicios</small>
-        </div>
-    </footer>
+    {% include 'escalArt/includes/footer.html' %}
 
+    <script src="{% static 'EscalArt/js/chat.js' %}"></script>
+    <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 </html>
