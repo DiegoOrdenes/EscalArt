@@ -84,7 +84,7 @@
                     </P>
                     <div>
                         {% if user.is_authenticated %}
-                        <form class="post-likes column" method="post" action="{% url 'like' post.idPublicacion %}">
+                        <form class="post-likes column" method="post" action="{% url 'LikePublicacion' post.idPublicacion %}">
                             {% csrf_token %}
                             <input type="hidden" name="next" value="{{request.path}}?query={{request.GET.query}}">
                             <button type=" submit " style="background-color:transparent; border:none;box-shadow:none; "><span class="post-likes column "><i class="fa-solid fa-heart corazon "></i></span></button>

@@ -178,6 +178,11 @@
 
                     <!-- biografia y header -->
                     <p class="texto">{{perfil.biografia}}</p>
+
+                    {% if perfil.showTags == True %} {% for tag in perfil.tags.all %}
+                    <a href="{% url 'tagged' tag.slug %}" class="mr-1 badge badge-info">#{{ tag }}</a> {% endfor %} {% endif %}
+
+
                     <!-- 6 FIN if para identificar perfil segun user -->
                     {% endif %}
                     <!-- 5 FIN ciclo for que lista los perfiles -->

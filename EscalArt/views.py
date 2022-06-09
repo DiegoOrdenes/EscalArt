@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404, render,redirect,HttpResponse
 # from .forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import View
@@ -20,7 +21,7 @@ from django.views.generic import CreateView
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, EditComArtForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, perfilForm, publicacionForm, GuardarPostForm
+from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, EditComArtForm, EditUsuarioForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, editTagsPerfil, perfilForm, publicacionForm, GuardarPostForm
 from .models import Chat, ChatRoom, Comentarios, Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
 
 
@@ -92,9 +93,11 @@ def perfil_cliente(request,id):
     return render(request,'escalArt/perfil_cliente.html',data)
 
 def perfil(request,id):
+    
     artista = Usuario.objects.get(username = id)
     reviewForm = ReviewForm()
-    
+    if artista.tipoCuenta.tipoCuenta == 'cliente':    
+        return redirect(to='perfil_cliente', id=request.user.username )
     post = Publicacion.objects.order_by('-idPublicacion').all()
     list = Perfil.objects.all()
     listArtista = Usuario.objects.all()
@@ -591,8 +594,7 @@ def tagged(request, slug):
 from django.db.models import Count
 def home (request):
     list = Perfil.objects.all()
-    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')) \
-        .order_by('-likes')
+    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')).order_by('-likes')
     listArtista = Usuario.objects.all()
     common_tags = Tag.objects.all()[:10]
     # print(request.user)
@@ -660,8 +662,7 @@ def home (request):
 
 def RegistrarUsuario (request):
     list = Perfil.objects.all()
-    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')) \
-        .order_by('-likes')
+    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')).order_by('-likes')
     listArtista = Usuario.objects.all()
     common_tags = Tag.objects.all()[:10]
     # print(request.user)
@@ -827,6 +828,165 @@ class UserSearch(View):
             'lista_perfil_tag':lista_perfil_tag,
         }
         return render(request, 'escalArt/search.html',data)
+class CategoriaSearch(View):
+    def get(self,request,*args,**kwargs):
+        usuario = Usuario.objects.get(idUser = request.user.idUser)    
+        if usuario.tipoCuenta.tipoCuenta == 'cliente':
+            return redirect(to='configuracion')    
+        common_tags = Tag.objects.all().order_by('name')[:10]
+        perfilUser = Perfil.objects.get(idUser = request.user)
+        Notags =[]
+        tagPerfil = perfilUser.tags.all()
+        # print(tagPerfil)
+        
+        for ctags in common_tags:
+            # print(ctags)
+            if (ctags in tagPerfil):
+                # print('a')
+                pass
+            else:
+                Notags.append(ctags)
+                # print(Notags)
+
+             
+
+        try:
+            query = self.request.GET.get('query')            
+            
+            lista_tag = []
+            tag = Tag.objects.filter(name = query) 
+            obj = tag.values('name')
+            for i in obj:
+                i = i.get('name')
+                print(i)
+                lista_tag.append(i)
+
+        except:
+            lista_tag = []
+        
+        tagsPerfil = []
+        tagPerfil = perfilUser.tags.all()
+        tag= tagPerfil.values("name")
+        for i in tag:
+            i = i.get('name')
+            print(i)
+            tagsPerfil.append(i)
+        exists = False
+        for ltag in lista_tag:
+            if ltag in tagsPerfil:
+                exists = True
+            else:
+                exists = False
+        
+        data = {
+            'lista_tag':lista_tag,
+            'usuario':usuario,
+            'common_tags':common_tags,
+            'perfil':perfilUser,
+            'Notags':Notags,
+            'existe':exists,
+        }
+        return render(request, 'escalArt/searchCategorias.html',data)
+    def post(self,request,*args,**kwargs):
+        usuario = Usuario.objects.get(idUser = request.user.idUser)
+        perfilUser = Perfil.objects.get(idUser = request.user)
+        common_tags = Tag.objects.all().order_by('name')[:10]
+
+        if request.method == "POST":
+            if 'editarPerfil' in request.POST:
+                cuenta = EditUsuarioForm(request.POST,instance=usuario)               
+                if request.POST['username']:
+                    username = request.POST['username']
+                else:
+                    username = usuario.username
+                if request.POST['nombre']:
+                    nombre = request.POST['nombre']
+                else:
+                    nombre = usuario.nombre
+                if request.POST['email']:
+                    email = request.POST['email']
+                else:
+                    email = usuario.email              
+               
+               
+                if cuenta.is_valid():
+                    obj = cuenta.save(commit=False) 
+                    obj.nombre = nombre
+                    obj.email = email
+                    obj.username = username
+                    obj.save()                     
+                else:
+                    print(f'edit usuario errores: {cuenta.errors}')
+            
+            
+            elif 'editarBio' in request.POST:
+                perfil = editPerfilForm(request.POST,request.FILES,instance=perfilUser)
+                print('estas editando')
+                if perfil.is_valid():
+                    obj=perfil.save(commit=False)
+                    obj.biografia = request.POST['biografia']
+                    obj.save()
+                else:
+                    print(perfil.errors)
+
+            elif 'editPfp' in request.POST:
+                pfp = request.FILES.get('pfp',None)
+                if pfp is None:
+                    print('no se subio un archivo')
+                else:
+                    foto = editFotoPerfilForm(request.POST,request.FILES,instance=usuario)
+                    if foto.is_valid():
+                        obj =foto.save(commit=False)
+                        obj.imagen = request.FILES["pfp"]
+                        obj.save()
+                    else:
+                        print(foto.errors)
+            elif 'editTags' in request.POST:
+                tagsForm = editTagsPerfil(request.POST, instance = perfilUser)
+                tagsPerfil = []
+                tagPerfil = perfilUser.tags.all()
+                tag= tagPerfil.values("name")
+                for i in tag:
+                    i = i.get('name')
+                    print(i)
+                    tagsPerfil.append(i)
+                print(f'tags en perfil: {tagsPerfil}')
+                tagsElegidas = request.POST.getlist('tags')
+                unCheck = request.POST.get('tags',False)
+                
+                showTags = request.POST.get('showTags',False)
+                print(tagsElegidas)
+                print(showTags)
+                if tagsForm.is_valid():
+                    obj = tagsForm.save(commit=False)
+                    if showTags == 'on':
+                        obj.showTags = True
+                    else:
+                        obj.showTags = False
+
+                    try:
+                        query = self.request.GET.get('query') 
+                        if unCheck is False:
+                            perfilUser.tags.remove(query)
+                    except:
+                        pass
+
+                    for tagElegida in tagsElegidas:
+                        if tagElegida in tagsPerfil:
+                            print('ya tienes esta tag')
+                        else:
+                            perfilUser.tags.add(tagElegida)
+                    
+                    
+                    
+                    obj.save()
+                    tagsForm.save_m2m()
+                else:
+                    print(f'error en editar tags: {tagsForm.errors}')    
+                # if tagsForm
+                
+            next = request.POST.get('next','/')
+        return redirect(to='configuracion')
 # Fin buscar
 # Chats
 class chats(LoginRequiredMixin,View):
@@ -1042,17 +1202,155 @@ def delete_publicacion(request,id):
 
 # Configuraciones
 
-def configuracion(request):
-    return render(request,'escalArt/Configuracion.html')
+class configuracion (LoginRequiredMixin,View):
+    def get(self,request):
+        usuario = Usuario.objects.get(idUser = request.user.idUser)        
+        common_tags = Tag.objects.all().order_by('name')[:10]
+        perfilUser = Perfil.objects.get(idUser = request.user)
+        Notags =[]
+        tagPerfil = perfilUser.tags.all()
+        # print(tagPerfil)
+        
+        for ctags in common_tags:
+            # print(ctags)
+            if (ctags in tagPerfil):
+                # print('a')
+                pass
+            else:
+                Notags.append(ctags)
+                # print(Notags)
+
+        
+        data = {
+            'usuario':usuario,
+            'common_tags':common_tags,
+            'perfil':perfilUser,
+            'Notags':Notags,
+        }       
+
+        return render(request,'escalArt/Configuracion.html',data)
+    def post(self,request,*args,**kwargs):
+        usuario = Usuario.objects.get(idUser = request.user.idUser)
+        perfilUser = Perfil.objects.get(idUser = request.user)
+        common_tags = Tag.objects.all().order_by('name')[:10]
+
+        if request.method == "POST":
+            if 'editarPerfil' in request.POST:
+                cuenta = EditUsuarioForm(request.POST,instance=usuario)               
+                if request.POST['username']:
+                    username = request.POST['username']
+                else:
+                    username = usuario.username
+                if request.POST['nombre']:
+                    nombre = request.POST['nombre']
+                else:
+                    nombre = usuario.nombre
+                if request.POST['email']:
+                    email = request.POST['email']
+                else:
+                    email = usuario.email              
+               
+               
+                if cuenta.is_valid():
+                    obj = cuenta.save(commit=False) 
+                    obj.nombre = nombre
+                    obj.email = email
+                    obj.username = username
+                    obj.save()                     
+                else:
+                    print(f'edit usuario errores: {cuenta.errors}')
+            
+            
+            elif 'editarBio' in request.POST:
+                perfil = editPerfilForm(request.POST,request.FILES,instance=perfilUser)
+                print('estas editando')
+                if perfil.is_valid():
+                    obj=perfil.save(commit=False)
+                    obj.biografia = request.POST['biografia']
+                    obj.save()
+                else:
+                    print(perfil.errors)
+
+            elif 'editPfp' in request.POST:
+                pfp = request.FILES.get('pfp',None)
+                if pfp is None:
+                    print('no se subio un archivo')
+                else:
+                    foto = editFotoPerfilForm(request.POST,request.FILES,instance=usuario)
+                    if foto.is_valid():
+                        obj =foto.save(commit=False)
+                        obj.imagen = request.FILES["pfp"]
+                        obj.save()
+                    else:
+                        print(foto.errors)
+            elif 'editTags' in request.POST:
+                tagsForm = editTagsPerfil(request.POST, instance = perfilUser)
+                tagsPerfil = []
+                tagPerfil = perfilUser.tags.all()
+                tag= tagPerfil.values("name")
+                for i in tag:
+                    i = i.get('name')
+                    print(i)
+                    tagsPerfil.append(i)
+                print(f'tags en perfil: {tagsPerfil}')
+                tagsElegidas = request.POST.getlist('tags')
+                
+                showTags = request.POST.get('showTags',False)
+                print(tagsElegidas)
+                print(showTags)
+                if tagsForm.is_valid():
+                    obj = tagsForm.save(commit=False)
+                    if showTags == 'on':
+                        obj.showTags = True
+                    else:
+                        obj.showTags = False
+
+                    for tagElegida in tagsElegidas:
+                        if tagElegida in tagsPerfil:
+                            print('ya tienes esta tag')
+                        else:
+                            perfilUser.tags.add(tagElegida)
+                    
+                    NotChecked = []
+                    tag= common_tags.values("name")                    
+                    for ctags in tag:
+                        ctags = ctags.get('name')
+                        if (ctags in tagsElegidas):
+                            print('a')
+                            pass
+                        else:
+                            NotChecked.append(ctags)
+                            print(NotChecked)
+                    print(f'lista no checked = {NotChecked}')
+                    
+                    for notTag in NotChecked:
+                        if notTag in tagsPerfil:
+                            perfilUser.tags.remove(notTag)
+                    
+                    obj.save()
+                    tagsForm.save_m2m()
+                else:
+                    print(f'error en editar tags: {tagsForm.errors}')    
+                # if tagsForm
+                
+            next = request.POST.get('next','/')
+        return HttpResponseRedirect(next)
 def seleccionarC(request):
     return render(request, 'escalArt/seleccionarC.html')
 # Fin Configuraciones
 # Cambiar contrasenna
-def cambiar_pass(request):
-    return render(request,'registration/cambiar_pass.html')
+class cambiar_pass(PasswordChangeView,LoginRequiredMixin,View):
+    def get(self,request):
+        usuario = Usuario.objects.get(idUser = request.user.idUser)        
+        data = {
+            'usuario':usuario
+        }       
+
+        return render(request,'registration/cambiar_contra_form.html',data)
 # Fin cambair contrasenna
 
 # presentacion?
 def presentacion(request):
     return render(request, 'escalArt/presentacion.html')
 # Fin presentacion?
+

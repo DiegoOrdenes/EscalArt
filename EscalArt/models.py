@@ -117,6 +117,7 @@ class Perfil(models.Model):
     img_header = models.ImageField('Header', upload_to='index', max_length=200, blank=True, null=True)
     biografia = models.CharField('Biografia', max_length=250, blank=True,null=True)
     idUser = models.ForeignKey(Usuario,on_delete=models.CASCADE,verbose_name='Id user',unique = True)
+    showTags = models.BooleanField(default=False)
     tags = TaggableManager(blank=True)
 
     def __str__(self):

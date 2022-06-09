@@ -64,7 +64,7 @@
                         <ul>
                             <li style="padding-right:0px;">
                                 {% if user.is_authenticated %}
-                                <form class="post-likes column" method="post" action="{% url 'like' publi.idPublicacion %}">
+                                <form class="post-likes column" method="post" action="{% url 'LikePublicacion' publi.idPublicacion %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="next" value="{{request.path}}">
                                     <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart corazon">{{publi.cantLikes.all.count}} </i></button>
@@ -117,6 +117,8 @@
                     <div class="ver-boxcontainer">
                         <div class="scroll-div" style="width: inherit;">
                             {% for c in comentarios %}
+                            <!--  -->
+                            {% if c.is_parent %}
                             <div class="ver-testimonials-box scroll-object" style="width: inherit;">
                                 <div class="ver-box-top">
                                     <div class="ver-profile">
@@ -147,24 +149,88 @@
                                     {%else%}
                                     <form>
                                         <span style="background-color:transparent" class="post-likes column">
-                                        <i class="fa-solid fa-heart">
-                                            {{c.cantLikes.all.count}}
-                                        </i>
-                                    </span>
+                                            <i class="fa-solid fa-heart">
+                                                {{c.cantLikes.all.count}}
+                                            </i>
+                                        </span>
                                     </form>
 
                                     {%endif%}
-
                                 </div>
                                 <div class="ver-client-responder">
                                     <ul>
                                         <li class="ver-li">{{c.fechaCreacion}}</li>
                                         <!-- <li class="ver-li-2">Min</li> -->
-                                        <li class="ver-li-3"><input type="submit" value="Responder"></li>
+                                        <li class="ver-li-3">
+                                            <div>
+                                                <button onclick="responderComentario('{{c.pk}}')"><input type="submit" value="Responder"></button>
+                                            </div>
+                                        </li>
+                                        <li></li>
                                     </ul>
                                 </div>
                             </div>
-                            {%empty%}
+                            <form action="{% url 'responder-comentario' list.username publi.idPublicacion c.pk %}" method="POST" class="ver-crear-comentario d-none" id="{{c.pk}}">
+                                <i class="fa-solid fa-face-grin"></i> {% csrf_token %} {{commentForm | crispy}}
+                                <input type="hidden" name="next" value="{{request.path}}">
+
+                                <!-- <input class="ver-comentario-añadir" type="text" placeholder="Añade un Comentario..."> -->
+                                <input class="ver-comentario-btn" type="submit" value="Enviar" name="comentar">
+                            </form>
+
+                            <!--  -->
+                            {% for child_comment in c.children %}
+
+
+                            <div id="{{child_comment.pk}}" class="ver-testimonials-box scroll-object child-comment" style="width: inherit;">
+                                <div class="ver-box-top">
+                                    <div class="ver-profile">
+                                        <div class="ver-profile-img">
+                                            {% if child_comment.idUser.imagen %}
+                                            <img src="/{{child_comment.idUser.imagen}}" class="foto_perfil" alt="">
+                                            <!--  -->
+                                            {% else %}
+                                            <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt="">
+                                            <!--  -->
+                                            {% endif %}
+                                        </div>
+                                        <div class="ver-name-user">
+                                            <strong>{{child_comment.idUser.nombre}}</strong>
+                                            <span>@{{child_comment.idUser.username}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="ver-client-comment">
+                                    <p>{{child_comment.comentario}}</p>
+                                    {% if user.is_authenticated %}
+                                    <form method="post" action="{% url 'likeComment' child_comment.pk %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="next" value="{{request.path}}">
+                                        <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart ">{{child_comment.cantLikes.all.count}} </i></button>
+
+                                    </form>
+                                    {%else%}
+                                    <form>
+                                        <span style="background-color:transparent" class="post-likes column">
+                                            <i class="fa-solid fa-heart">
+                                                {{child_comment.cantLikes.all.count}}
+                                            </i>
+                                        </span>
+                                    </form>
+
+                                    {%endif%}
+                                </div>
+                                <div class="ver-client-responder">
+                                    <ul>
+                                        <li class="ver-li">{{child_comment.fechaCreacion}}</li>
+                                        <!-- <li class="ver-li-2">Min</li> -->
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                            <!--  -->
+                            {% endif %} {%empty%}
                             <p>Aun no hay comentarios</p>
                             {% endfor %}
                         </div>

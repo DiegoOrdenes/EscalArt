@@ -67,7 +67,7 @@
                             <ul>
                                 <li style="padding-right:0px;">
                                     {% if user.is_authenticated %}
-                                    <form class="post-likes column" method="post" action="{% url 'like' publi.idPublicacion %}">
+                                    <form class="post-likes column" method="post" action="{% url 'LikePublicacion' publi.idPublicacion %}">
                                         {% csrf_token %}
                                         <input type="hidden" name="next" value="{{request.path}}">
                                         <button style="background-color:transparent; border:none;box-shadow:none;" type="submit"><i class="fa-solid fa-heart corazon">{{publi.cantLikes.all.count}} </i></button>

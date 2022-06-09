@@ -24,7 +24,13 @@
     {% if user.is_authenticated %}
     <div id="Configuracion">
         <ul class="Configuracion-menu">
+
+            {% if user.tipoCuenta.tipoCuenta == 'artista' %}
             <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' user.username %}">Perfil</a></li>
+            {% else %}
+            <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil_cliente' user.username %}">Perfil</a></li>
+            {% endif %}
+
             <li><i class="fa-solid fa-gear"></i><a href="{% url 'configuracion' %}">Configuracion</a></li>
             <span class="linea_2"></span>
             <li class="Cerrar-Sesion"><a href="{% url 'logout' %}">Cerrar Sesion</a></li>

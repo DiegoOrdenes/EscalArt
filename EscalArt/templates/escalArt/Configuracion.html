@@ -38,50 +38,103 @@
                         <i class="fa-solid fa-bars"></i>
                     </label>
                     <ul>
-                        <li onclick="Editarperfil();">Editar Perfil</li>
-                        <li onclick="Cambiarpass();">Cambiar Contraseña</li>
+                        <li><a href="{% url 'configuracion' %}">Editar Perfil</a></li>
+                        <li><a href="{% url 'cambiar_pass' %}">Cambiar Contraseña</a> </li>
                         <li style="display: none;">Editar Perfil</li>
                         <li style="display: none;">Cambiar Contraseña</li>
                         <li onclick="seguridad();">Seguridad</li>
                         <li onclick="privacidad();">Privacidad</li>
                         <li onclick="Notificaciones();">Notificaciones</li>
                         <li onclick="accesibilidad();">Accesibilidad</li>
-                        <li style="display: none;">Categoria</li>
+
+                        {% if usuario.tipoCuenta.tipoCuenta == "artista" %}
+                        <li onclick="Categoria_Artista();">Categoria</li>
+                        {% endif %}
+
                         <li class="li-profesional">Cambiar una cuenta Profesional</li>
                     </ul>
                 </nav>
             </div>
         </div>
+
         <div class="config-right">
-            <div class="Editar-perfil" id="Editar-perfil">
+            {%block content%}
+            <div class="Editar-perfil Editar-perfil-Artista" id="Editar-perfil">
                 <div class="title-U">
-                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                    <h1>[UserName]</h1>
-                    <a href="">Cambiar Foto de perfil</a>
+
+                    {% if usuario.imagen %}
+                    <img src="/{{usuario.imagen}}" alt=""> {% else %}
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""> {% endif %}
+
+                    <h1>{{usuario.nombre}}</h1>
+                    <span>@{{usuario.username}}</span> <span>| {{usuario.email}}</span><br>
+
+                    <form action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+                        <input type="file" value="Cambiar Foto de perfil" style="color: white" name="pfp">
+                        <input type="hidden" name="next" value="{{request.path}}">
+
+                        </input>
+                        <button style="background-color:transparent; border:none;box-shadow:none;" type="submit" name="editPfp"><a >Cambiar Foto de perfil</a></button>
+
+                    </form>
                 </div>
-                <form action="">
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <p>
                         <label>Nombre</label>
-                        <input type="text"></input>
+                        <input type="text" name="nombre"></input>
                     </p>
                     <p>
                         <label>Username</label>
-                        <input type="text"></input>
+                        <input type="text" name="username"></input>
                     </p>
                     <p>
                         <label>Email</label>
-                        <input type="Email"></input>
+                        <input type="Email" name="email"></input>
                     </p>
+                    <input type="hidden" name="next" value="{{request.path}}">
+
+
                     <div class="editar-perfil-btn">
-                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                        <button type="submit" class="btn-form" name="editarPerfil">Guardar cambios</button>
                     </div>
                 </form>
+                {% if usuario.tipoCuenta.tipoCuenta == "artista" %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <p>
+                        <label>Biografia</label>
+                        <textarea type="Email" name="biografia"></textarea>
+                    </p>
+
+                    <input type="hidden" name="next" value="{{request.path}}">
+
+
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form" name="editarBio">Guardar cambios</button>
+                    </div>
+                </form>
+                {% endif %}
+                <!--  -->
+                {% if usuario.tipoCuenta.tipoCuenta == "cliente" %}
                 <div class="title-bottom">
                     <p>Si eres o estas buscando emprender como artista cambia a una cuenta profesional para asi poder disfrutar de todas las funcionalidades de la página</p>
                     <div class="editar-perfil-btn">
                         <button type="submit" class="btn-form"><a href="#"></a>Cambiar a cuenta profesional</button>
                     </div>
                 </div>
+                {% endif %}
+                <!--  -->
+                {% if usuario.tipoCuenta.tipoCuenta == "artista" %}
+                <div class="edit-artista-bottom">
+                    <div class="botom-2">
+                        <input type="checkbox" id="btn-switch"></input>
+                        <label for="btn-switch" class="lbl-switch"></label>
+                    </div>
+                    <h1>Cuenta Privada</h1>
+                    <p>Activar/Desactivar cuenta privada</p>
+                </div>
+                {%endif%}
             </div>
             <div class="Editar-perfil-Artista" id="Editar-perfil-Artista" style="display: none;">
                 <div class="title-U">
@@ -122,48 +175,25 @@
             <div class="Cambiar-pass" id="Cambiar-pass" style="display: none;">
                 <div class="title-H">
                     <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                    <h1>[UserName]</h1>
+                    <h1>{{usuario.nombre}}</h1>
                 </div>
-                <form action="">
+                <form action="" method="post">
+                    {% csrf_token %}
                     <p>
                         <label>Contraseña Antigua</label>
-                        <input type="password"></input>
+                        <input type="password" name="old_password"></input>
                     </p>
                     <p>
                         <label>Nueva Contraseña</label>
-                        <input type="password"></input>
+                        <input type="password" name="new_password1"></input>
                     </p>
                     <p>
                         <label>Repetir nueva contraseña</label>
-                        <input type="password"></input>
+                        <input type="password" name="new_password2"></input>
                     </p>
                     <div class="editar-perfil-btn">
-                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
-                        <p>¿Olvidaste tu contraseña? <a href="#">Click Aqui</a></p>
-                    </div>
-                </form>
-            </div>
-            <div class="Cambiar-pass-Artista" id="Cambiar-pass-Artista" style="display: none;">
-                <div class="title-H">
-                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="">
-                    <h1>[UserNameArtista]</h1>
-                </div>
-                <form action="">
-                    <p>
-                        <label>Contraseña Antigua</label>
-                        <input type="password"></input>
-                    </p>
-                    <p>
-                        <label>Nueva Contraseña</label>
-                        <input type="password"></input>
-                    </p>
-                    <p>
-                        <label>Repetir nueva contraseña</label>
-                        <input type="password"></input>
-                    </p>
-                    <div class="editar-perfil-btn">
-                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
-                        <p>¿Olvidaste tu contraseña? <a href="#">Click Aqui</a></p>
+                        <button type="submit" class="btn-form">Guardar cambios</button>
+                        <p>¿Olvidaste tu contraseña? <a href="{% url 'reset_password' %}">Click Aqui</a></p>
                     </div>
                 </form>
             </div>
@@ -273,51 +303,83 @@
                     <h1>Selecciona una Categoría</h1>
                     <p>Puedes cambiar la categoria que se te adapta mejor a tu estilo de trabajo, Tendras opcion para poder mostrar o no esta informacion en tu perfil.</p>
                 </div>
-                <div class="mostrar-categoria">
-                    <input type="checkbox"></input>
-                    <span>Mostrar Categoría en el perfil</span>
-                </div>
-                <div class="buscar-categoria">
-                    <input type="text" placeholder="Buscar..."></input>
-                </div>
-                <div class="title-categoria">
-                    <h1>Sugerencias</h1>
-                    <ul>
-                        <li>
-                            <span>Anime</span>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li>
-                            <span>Ilustracion</span>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li>
-                            <span>Esculturas</span>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li>
-                            <span>Realismo</span>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li>
-                            <span>Fotografia</span>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li>
-                            <span>Animacion 3D</span>
-                            <input type="checkbox"></input>
-                        </li>
-                        <li>
-                            <span>Otro</span>
-                            <input type="checkbox"></input>
-                        </li>
-                    </ul>
-                    <span class="linea--"></span>
-                    <div class="editar-perfil-btn">
-                        <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+                <form method="GET" class="buscar-categoria" action=" {% url 'buscar-categoria' %}">
+                    <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
+                    <button type="submit" class="icon">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mostrar-categoria">
+
+                        {% if perfil.showTags == True %}
+                        <input type="checkbox" name="showTags" checked></input>
+                        {% else %}
+                        <input type="checkbox" name="showTags"></input>
+
+                        {% endif %}
+
+                        <span>Mostrar Categoría en el perfil</span>
                     </div>
+                    <!-- <div class="buscar-categoria">
+                        <input type="text" placeholder="Buscar..."></input>
+                    </div> -->
+
+                    <div class="title-categoria">
+                        <h1>Sugerencias</h1>
+                        <ul>
+                            {% for tags in perfil.tags.all %} {% for tag in common_tags %} {% if tags == tag %}
+                            <li>
+                                <span>{{tag}}</span>
+                                <input type="checkbox" name="tags" value="{{tag}}" checked></input>
+                            </li>
+                            {%endif%} {% endfor %} {%endfor%} {% for Notag in Notags%}
+                            <li>
+                                <span>{{Notag}}</span>
+                                <input type="checkbox" name="tags" value="{{Notag}}"></input>
+                            </li>
+                            {%endfor%}
+
+
+
+                            <input type="hidden" name="next" value="{{request.path}}">
+
+                            <!-- <li>
+                                <span>Ilustracion</span>
+                                <input type="checkbox"></input>
+                            </li>
+                            <li>
+                                <span>Esculturas</span>
+                                <input type="checkbox"></input>
+                            </li>
+                            <li>
+                                <span>Realismo</span>
+                                <input type="checkbox"></input>
+                            </li>
+                            <li>
+                                <span>Fotografia</span>
+                                <input type="checkbox"></input>
+                            </li>
+                            <li>
+                                <span>Animacion 3D</span>
+                                <input type="checkbox"></input>
+                            </li>
+                            <li>
+                                <span>Otro</span>
+                                <input type="checkbox"></input>
+                            </li> -->
+                        </ul>
+                        <span class="linea--"></span>
+                        <div class="editar-perfil-btn">
+                            <button type="submit" class="btn-form" name="editTags">Guardar cambios</button>
+                        </div>
+                </form>
+
                 </div>
             </div>
+            {% endblock %}
+
         </div>
     </div>
 

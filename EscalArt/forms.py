@@ -149,6 +149,7 @@ class editPerfilForm(ModelForm):
     class Meta:
         model = Perfil
         fields = ['biografia','img_header']
+        exclude = ['img_header']
         widgets = {
             'biografia':forms.Textarea(
                 attrs={
@@ -232,3 +233,18 @@ class ChatForm(forms.ModelForm):
         model = Chat
         fields = ['img_referencia']
         exclude = ['idUser','room']
+
+
+class EditUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nombre','email','username']
+        exclude = ['idUser','imagen','tipoCuenta','email','username']
+
+# editar tags perfil
+class editTagsPerfil(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['showTags','tags']
+        exclude = ['showTags','tags','idPerfil','idUser']
+# fin editar tags perfil
