@@ -40,3 +40,8 @@
 .post-settings {
     font-size: 25px;
 }
+
+.child-comment {
+    margin-left: 2rem;
+    padding-right: 50px;
+}

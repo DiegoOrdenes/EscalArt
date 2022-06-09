@@ -30,6 +30,7 @@
     float: right;
     right: 0;
     box-shadow: 2px solid #000;
+    position: fixed;
 }
 
 #Configuracion .Configuracion-menu {
