@@ -82,14 +82,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ProyectoAPT.wsgi.application'
 ASGI_APPLICATION = 'ProyectoAPT.asgi.application'
 
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND':'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             'hosts': [('127.0.0.1',6379)]
-#         }
-#     }
-# }
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND':'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1',6379)]
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -171,3 +171,11 @@ STATIC_ROOT= 'static'
 
 TAGGIT_CASE_INSENSITIVE = True
 USE_TZ = False
+
+# SMTP configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'EscalArt.CommunicationsTeam@gmail.com'
+EMAIL_HOST_PASSWORD = 'mjsatiqbontxxdxi'
