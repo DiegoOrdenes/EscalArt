@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import  AddFollower, AddLike, AddLikeComment, RemoveFollower, ResponderComentarioView, Room, UserSearch, cambiar_pass, chats, configuracion, delete_comision, estadoComisionArt, estadoComisionCli, home , ayudacliente,  perfil_cliente, presentacion, publicacion, publicacionHome, seleccionarC, tagged
-from .views import perfil,sobre_nosotros
+from .views import perfil,sobre_nosotros,CategoriaSearch
 from .views import RegistrarUsuario,ayudacliente,delete_publicacion,datosCliente
 
 
@@ -30,6 +30,8 @@ urlpatterns =[
     path('perfilCli/<id>/comision/<idComision>',estadoComisionCli,name='estadoComisionCli'),
 
     path('configuracion',configuracion.as_view(),name="configuracion"),
+    path('buscarcategoria/',CategoriaSearch.as_view(),name='buscar-categoria'),
+
     path('seleccionarC',seleccionarC,name="seleccionarC"),
     path('presentacion',presentacion,name="presentacion"),
     path('configuracion/cambiar_pass',cambiar_pass.as_view(),name="cambiar_pass"),
