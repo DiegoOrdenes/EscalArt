@@ -85,6 +85,10 @@ header {
     position: relative;
 }
 
+.nav ul {
+    margin-bottom: 0;
+}
+
 .nav.active {
     background: #12130F;
     position: fixed;
@@ -147,6 +151,7 @@ header {
     border: 2px solid #fff;
     cursor: pointer;
     color: #fff;
+    font-size: 17px;
 }
 
 
@@ -170,15 +175,11 @@ header {
     background: none;
 }
 
-
-/* .menu-logearse button {
-    padding: 10px 15px;
-    border-radius: 20px;
-    width: 180px;
-    cursor: pointer;
-    color: #fff;
-    background: #86C332;
-} */
+.menu-logearse.active ul li a:hover {
+    background: none;
+    padding: 0;
+    border-radius: 0px;
+}
 
 .menu-logearse button:hover {
     background: #659523;
@@ -381,17 +382,6 @@ ul {
     .menu-logearse ul {
         margin-top: -5px;
     }
-    /* primer estilo de boton */
-    /* .menu-logearse button {
-        float: right;
-        padding: 5px 15px;
-        border-radius: 20px;
-        width: 125px;
-        cursor: pointer;
-        color: #fff;
-        background: #86C332;
-        margin: 3px 5px;
-    } */
     /* Segundo diseño de boton :D */
     .menu-logearse button {
         padding: 5px 5px;
@@ -401,6 +391,7 @@ ul {
         border: 2px solid #fff;
         cursor: pointer;
         color: #fff;
+        font-size: 10px;
     }
     .menu-logearse button:hover {
         background: #659523;
