@@ -57,8 +57,8 @@
             <li style="display: none;" class="home-not-loged"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
             <div class="menu-logearse">
                 <ul>
-                    <li style="display: none;"><a href="#"><button>Iniciar Sesion</button></a></li>
-                    <li style="display: none;"><a href="#"><button>Registrarse</button></a></li>
+                    <li style="display: none;"><a href="{% url 'login' %}"><button>Iniciar Sesion</button></a></li>
+                    <li style="display: none;"><a href="{% url 'registro' %}"><button>Registrarse</button></a></li>
                 </ul>
             </div>
             <!--Mostrar esto si el usuario esta logeado-->
@@ -78,4 +78,4 @@
         </ul>
     </div>
 </header>
-<div class="scrol"></div>
+<!-- <div class="scrol"></div> -->

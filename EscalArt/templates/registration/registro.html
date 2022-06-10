@@ -31,22 +31,7 @@
 
 <body>
     <!--Menu/Header de la pagina-->
-    <header>
-        <nav class="nav">
-            <div class="logo">EscalArt</div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscando...">
-                <a href="##" class="icon">
-                    <i class="fas fa-search"></i>
-                </a>
-            </div>
-            <ul class="menu">
-                <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-comment-dots"></i></a></li>
-                <li><a href="#"><i class="fa-solid fa-question"></i></a></li>
-            </ul>
-        </nav>
-    </header>
+    {% include 'escalArt/includes/menu.html' %}
     <!--Registro Usuario-->
     {% load crispy_forms_tags %}
     <div class="content_registro">

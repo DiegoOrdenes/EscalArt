@@ -26,10 +26,10 @@
 <body>
     <!--Header-->
     {% include 'escalArt/includes/menu.html' %}
-    <div class="scrol"></div>
+
 
     <!--Configuracion-->
-    <div class="configuracion">
+    <div class="Config-Detalles">
         <div class="config-left">
             <div class="config-lista">
                 <nav>
@@ -303,6 +303,12 @@
                     <h1>Selecciona una Categoría</h1>
                     <p>Puedes cambiar la categoria que se te adapta mejor a tu estilo de trabajo, Tendras opcion para poder mostrar o no esta informacion en tu perfil.</p>
                 </div>
+                <form method="GET" class="buscar-categoria" action=" {% url 'buscar-categoria' %}">
+                    <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
+                    <button type="submit" class="icon">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
                 <form action="" method="post">
                     {% csrf_token %}
                     <div class="mostrar-categoria">
@@ -316,33 +322,26 @@
 
                         <span>Mostrar Categoría en el perfil</span>
                     </div>
-                    <div class="buscar-categoria">
+                    <!-- <div class="buscar-categoria">
                         <input type="text" placeholder="Buscar..."></input>
-                    </div>
+                    </div> -->
+
                     <div class="title-categoria">
                         <h1>Sugerencias</h1>
                         <ul>
-                            {% for tags in perfil.tags.all %} 
-                            {% for tag in common_tags %}
-                            {% if tags == tag %}
+                            {% for tags in perfil.tags.all %} {% for tag in common_tags %} {% if tags == tag %}
                             <li>
                                 <span>{{tag}}</span>
                                 <input type="checkbox" name="tags" value="{{tag}}" checked></input>
-                            </li>                          
-                            {%endif%}
-                            
-                            {% endfor %}                            
-
-                            
-                            {%endfor%}
-                            {% for Notag in Notags%} 
+                            </li>
+                            {%endif%} {% endfor %} {%endfor%} {% for Notag in Notags%}
                             <li>
                                 <span>{{Notag}}</span>
-                                <input type="checkbox" name="tags" value="{{Notag}}" ></input>
-                            </li> 
+                                <input type="checkbox" name="tags" value="{{Notag}}"></input>
+                            </li>
                             {%endfor%}
-                           
-                            
+
+
 
                             <input type="hidden" name="next" value="{{request.path}}">
 
