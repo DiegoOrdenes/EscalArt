@@ -148,6 +148,7 @@ body {
 }
 
 .post {
+    box-shadow: 0 1px 6px 1 px rgba(0, 0, 0, .1);
     padding-bottom: 10px;
 }
 
@@ -511,8 +512,8 @@ body {
     width: 90%;
     margin: 0 auto;
     overflow: hidden;
-    padding: 80px 0;
-    max-width: 1200px;
+    padding: 40px 0;
+    max-width: 1400px;
     /* background-color: #f7f7f7; */
 }
 
@@ -539,7 +540,7 @@ body {
 }
 
 .about__picture {
-    max-width: 95%;
+    max-width: 97%;
     border-radius: 20px;
 }
 

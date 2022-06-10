@@ -2,8 +2,10 @@ var clicked = false;
 window.addEventListener("scroll", function() {
         var nav = document.querySelector(".nav");
         var config = document.querySelector("#Configuracion");
+        var menu_logearse = document.querySelector(".menu-logearse");
         nav.classList.toggle("active", window.scrollY > 0);
         config.classList.toggle("active", window.scrollY > 0);
+        menu_logearse.classList.toggle("active", window.scrollY > 0);
     })
     //----------------------Perfil--------------------------//
 function mostrarConfig() {
