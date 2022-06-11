@@ -247,7 +247,8 @@
     </div>
     <!--Anuncios-->
     <section class="about container-anuncio">
-        <div class="about__texts">
+        <!--Mostrar si  hay cuenta conectadas-->
+        <div class="about__texts" style="display: none;">
             <h2 class="subtitle">¿Te gustaria ser Artista/Profesional?</h2>
             <p class="about__paragraph">Si ya tienes una cuenta creada de usuario en nuestro sitio web, Puedes convertirla en una cuenta profesional de una forma muy facil y rapida.</p>
             <p class="about__paragraph">Todas las personas que tienen una cuenta de artista tienen beneficios en nuestro sitio web, en donde ellos podran publicar sus contenidos, Poder hace comisiones a sus clientes y ademas si eres bastante conocido en nuestro sitio, apareceras
@@ -257,13 +258,13 @@
                 <button src="#">Ser Artista</button>
             </div>
         </div>
-        <figure class="about__img">
+        <figure class="about__img" style="display: none;">
             <img src="{% static 'EscalArt/img/perfil_artista.gif' %}" class="about__picture ">
         </figure>
-        <figure class="about__img about__img--left ">
+        <figure class="about__img about__img--left " style="display: none;">
             <img src="{% static 'EscalArt/img/tags.gif' %}" class="about__picture ">
         </figure>
-        <div class="about__texts ">
+        <div class="about__texts " style="display: none;">
             <h2 class="subtitle ">¿Ya Seleccionaste tus tipos de tags?</h2>
             <p class="about__paragraph ">Si ya tienes una cuenta de artista creada en nuestro sitio web, podras personalizar tus tags desde la configuracion de tu perfil.</p>
             <p class="about__paragraph ">Esto servira para que cuando un usuario quiera buscar por tag "# " se mostrara todo tipo de publicacion y perfil con ese dicho tag, para que asi los usuarios puedan visualizar tu perfil e publicaciones y asi podras ser mas conocido en nuestro
@@ -272,6 +273,20 @@
                 <i class="fa-solid fa-gear "></i>
             </div>
         </div>
+        <!--Mostrar si no hay cuenta conectadas-->
+        <div class="about__texts">
+            <h2 class="subtitle">¡Create una cuenta!</h2>
+            <p class="about__paragraph">Podras crearte una cuenta en nuestro web cuando gustes, podras crearte de 2 tipos diferentes "Usuario" o "Artista" ¿Cual tienes pensado en crearte?.</p>
+            <p class="about__paragraph">¿Para que sirve crearse una cuenta? si eres un usuario podras pedirle a los artistas que te creen un diseño para poder comprarlo. Si eres Artista tendras varios beneficios en nuestro sistema web, ademas de poder estar entre los tops y vender
+                tus diseños a los usuarios.<span> ¡Creala ya!</span>
+            </p>
+            <div class="btn-anuncio">
+                <button src="{% url 'registro' %}">Crear Cuenta</button>
+            </div>
+        </div>
+        <figure class="about__img">
+            <img src="{% static 'EscalArt/img/crear_cuenta.gif' %}" class="about__picture ">
+        </figure>
     </section>
 
 
