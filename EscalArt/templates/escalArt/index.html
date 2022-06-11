@@ -17,6 +17,7 @@
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/home.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300&family=Open+Sans:wght@700&family=Poppins:wght@300;400;500;600;700&family=Roboto+Condensed:wght@300;400&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
 
     <!--Iconos-->
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
@@ -116,27 +117,78 @@
 
     </section>
     <!--Imagenes Diseño-->
-    <section class="sector-imagenes">
-        <div class="contenido-img">
-            <img src="{% static 'EscalArt/img/personas-pensando.jpg' %}" alt="">
+    <!-- <section class="sector-imagenes">
+        <div class="contenido-img c-img">
+            <img src="{% static 'EscalArt/img/escribir-laptop.gif' %}" alt="">
+            <div class="txt">
+                <h1>Conoce nuestra Historia</h1>
+                <p>¿Quieres saber como iniciamos todo desde el inicio hasta la actualidad?</p>
+            </div>
             <div class="contenido-icono">
                 <i src="#" class="fa-solid fa-circle-arrow-right"></i>
             </div>
         </div>
-        <div class="contenido-img">
+        <div class="contenido-img c-img">
             <img src="{% static 'EscalArt/img/personas-pensando.jpg' %}" alt="">
+            <div class="txt">
+                <h1>Nuestro Equipo de Trabajo</h1>
+                <p>lorem10</p>
+            </div>
             <div class="contenido-icono">
                 <i src="#" class="fa-solid fa-circle-arrow-right"></i>
             </div>
         </div>
+    </section>-->
+    <!-- <section class="questions container">
+        <h2 class="subtitle">¡Conocenos!</h2>
+        <p class="questions__paragraph">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea, porro doloribus neque perspiciatis sapiente fuga.</p>
+
+        <section class="questions__container">
+            <article class="questions__padding">
+                <div class="questions__answer">
+                    <h3 class="questions__title">¿Te gustaria conocer nuesta historia?
+                        <span class="questions__arrow">
+                                <img src="{% static 'EscalArt/img/flecha_pequeña.jpg' %}" class="questions__img">
+                            </span>
+                    </h3>
+                    <p class="questions__show">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque? Lorem ipsum,
+                        dolor sit amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque?</p>
+                </div>
+            </article>
+            <article class="questions__padding">
+                <div class="questions__answer">
+                    <h3 class="questions__title">¡Conoce a nuestro Equipo!
+                        <span class="questions__arrow">
+                                <img src="{% static 'EscalArt/img/flecha_pequeña.jpg' %}" class="questions__img">
+                            </span>
+                    </h3>
+                    <p class="questions__show">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque? Lorem ipsum,
+                        dolor sit amet consectetur adipisicing elit. Quos facere, quidem eum id excepturi assumenda explicabo nam accusamus veritatis voluptates eveniet adipisci, dicta nihil nemo modi possimus officiis quam atque?</p>
+                </div>
+            </article>
+        </section>
+    </section> -->
+
+    <!--  Conoce a nuestro Equipo  -->
+    <section class="questions contenedor-CNE">
+        <section class="textos-questions">
+            <h1>Lorem ipsum dolor sit amet.</h1>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam, corporis?</p>
+            <a href="#">Conocenos</a>
+        </section>
+        <img src="{% static 'EscalArt/img/equipo-nosotros.jpg' %}" alt="">
+
     </section>
+
+
+
     <!--Cartas de presentacion-->
-    <div class="color-cards" style="background: #FFFFFF; margin-top: 15px;">
+    <div class="color-cards" style="background: #F5F5F5; margin-top: 15px;">
         <div class="title-artistas">
             <h1>Artistas mas <span>¡Seguidos!</span></h1>
         </div>
         <section class="body-cards">
-            <div class="card">
+            <div class="card-presentacion">
                 <div class="card-content">
                     <span></span>
                     <div class="card-img">
@@ -162,7 +214,7 @@
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="card" style="border-radius: 10px;">
+            <div class="card-presentacion" style="border-radius: 10px;">
                 <div class="card-content">
                     <span></span>
                     <div class="card-img">
@@ -188,7 +240,7 @@
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="card">
+            <div class="card-presentacion">
                 <div class="card-content">
                     <span></span>
                     <div class="card-img">
@@ -214,7 +266,7 @@
                     <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 </div>
             </div>
-            <div class="card">
+            <div class="card-presentacion">
                 <div class="card-content">
                     <span></span>
                     <div class="card-img">
@@ -292,6 +344,7 @@
     <script src="https://cdn.jsdelivr.net/gh/stevenschobert/instafeed.js@2.0.0rc1/src/instafeed.min.js"></script>
     <script src="{% static 'escalArt/js/Slider.js' %}"></script>
     <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
+    <script type="text/javascript" src="{% static 'EscalArt/js/question.js' %}"></script>
 </body>
 
 </html>
