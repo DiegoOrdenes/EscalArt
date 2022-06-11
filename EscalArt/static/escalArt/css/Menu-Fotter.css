@@ -210,6 +210,14 @@ header {
     background: #86C332;
 }
 
+.search-box button {
+    margin-top: -40px;
+}
+
+.form-control {
+    height: 0;
+}
+
 
 /* .icon:hover {
     transform: rotate(360deg) scale(0.8);
@@ -405,12 +413,12 @@ ul {
     .search-box {
         position: relative;
         /* transform: translate(-70%, -50%); */
-        height: 38px;
+        height: 35px;
         text-align: center;
-        left: 20%;
+        left: 18%;
     }
     .search-box:hover>input {
-        width: 85px;
+        width: 125px;
         padding: 0 10px;
     }
     .search-box:hover>.icon {
@@ -426,6 +434,9 @@ ul {
         transition: 0.5s ease;
         line-height: 40px;
         color: #fff;
+    }
+    .search-box button {
+        margin-top: -35px;
     }
     .icon {
         color: #fff;
