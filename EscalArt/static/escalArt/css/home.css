@@ -362,7 +362,6 @@ body {
 }
 
 .questions {
-    width: 100%;
     height: 600px;
     display: flex;
     justify-content: space-between;
@@ -421,12 +420,30 @@ body {
 }
 
 .linea-separadora {
-    width: 50%;
     height: 4px;
     background: #86C332;
     display: block;
-    margin: 5px 0;
-    text-align: center;
+    margin: 5px 20%;
+}
+
+@media (max-width:800px) {
+    .questions {
+        height: 720px;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+    .questions>img {
+        width: 400px;
+    }
+}
+
+@media (max-width:600px) {
+    .textos-questions h1 {
+        font-size: 35px;
+    }
+    .questions>img {
+        width: 200px;
+    }
 }
 
 
