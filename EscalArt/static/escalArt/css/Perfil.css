@@ -31,8 +31,13 @@ body {
 }
 
 .Configuracion-settings {
-    margin: 10px;
+    padding: 10px;
     list-style: none;
+}
+
+.Configuracion-settings ul li {
+    float: left;
+    padding: 15px 0;
 }
 
 #settings-artista .Configuracion-settings li i {
@@ -245,18 +250,26 @@ body {
 .btn-Crear-Publicacion {
     top: 0;
     left: 0;
-    background-color: #86C332;
-    color: #fff;
-    border-radius: 20px;
-    border: none;
-    padding: 5px 10px 10px 10px;
+    padding: 5px 5px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
     position: absolute;
     margin-top: 3.2%;
     margin-left: 3.2%;
+    transition: 0.5s;
+}
+
+.btn-Crear-Publicacion:hover {
+    color: #fff;
+    background: #86C332;
 }
 
 .btn-Crear-Publicacion i {
-    color: #fff;
+    color: #1a1919;
     font-size: 18px;
     padding: 10px 5px;
 }
@@ -264,20 +277,87 @@ body {
 .btn-Editar-Bio {
     top: 0;
     right: 0;
-    background-color: #86C332;
-    color: #fff;
-    border-radius: 20px;
-    border: none;
-    padding: 5px 10px 10px 10px;
+    padding: 5px 5px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
     position: absolute;
     margin-top: 3.2%;
     margin-right: 3.2%;
+    transition: 0.5s;
+}
+
+.btn-Editar-Bio:hover {
+    color: #fff;
+    background: #86C332;
 }
 
 .btn-Editar-Bio i {
-    color: #fff;
+    color: #1a1919;
     font-size: 18px;
     padding: 10px 5px;
+}
+
+@media(max-width:550px) {
+    /* Bio Usuario + Botones */
+    .seccion-perfil-usuario .perfil-usuario-bio {
+        margin-bottom: 1.25rem;
+        text-align: center;
+        height: 30vh;
+    }
+    .lista-info {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .linea_2 {
+        margin-top: 100px;
+    }
+    .settings-container {
+        top: 5px;
+        right: 20px;
+    }
+    .btn-Editar-Bio {
+        top: 30%;
+        right: 0;
+        padding: 5px 5px;
+        border: #bfc0c2 solid 2px;
+        color: #1a1919;
+        background: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        position: absolute;
+        margin-top: 3.2%;
+        margin-right: 3.2%;
+        transition: 0.5s;
+    }
+    .btn-Crear-Publicacion {
+        top: 30%;
+        left: 0;
+        padding: 5px 5px;
+        border: #bfc0c2 solid 2px;
+        color: #1a1919;
+        background: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        position: absolute;
+        margin-top: 3.2%;
+        margin-left: 3.2%;
+        transition: 0.5s;
+    }
+    /* Settings  perfil*/
+    .settings {
+        font-size: 35px;
+    }
+    #settings-artista {
+        right: 1%;
+        bottom: 25px;
+    }
 }
 
 
@@ -335,7 +415,8 @@ body {
     position: relative;
 }
 
-.bio-centro {
+
+/* .bio-centro {
     text-align: center;
     position: absolute;
     top: 50px;
@@ -349,6 +430,26 @@ body {
     color: #fff;
     cursor: pointer;
     margin: 0 50px 0 0;
+} */
+
+.bio-centro {
+    text-align: center;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    padding: 5px 15px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin: 0 50px 0 0;
+}
+
+.bio-centro:hover {
+    background: #86C332;
+    color: #fff;
 }
 
 .form-group label {
@@ -371,15 +472,19 @@ body {
 }
 
 .bio-bottom input {
-    width: 100px;
-    font-size: 15px;
-    padding: 5px 10px;
-    background-color: #86C332;
-    border: none;
-    border-radius: 10px;
-    color: #fff;
+    padding: 5px 15px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    margin: 0 10px;
     cursor: pointer;
-    margin: 0 15px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.bio-bottom input:hover {
+    background: #86C332;
+    color: #fff;
 }
 
 .bio-bottom {
@@ -446,7 +551,7 @@ body {
 }
 
 .publicacion-centro input {
-    padding: 5px 10px;
+    padding: 15px 10px;
     position: absolute;
     margin: 15px 0px 5px 0px;
     width: 50%;
@@ -486,7 +591,7 @@ body {
 
 .publicacion-bottom button img {
     width: 100%;
-    height: 350px;
+    height: 270px;
     padding: 20px 40px;
     border-radius: 20px;
 }
@@ -526,7 +631,8 @@ body {
     padding: 20px 0;
 }
 
-.publicacion-bottom_2 input {
+
+/* .publicacion-bottom_2 input {
     width: 100px;
     font-size: 15px;
     padding: 5px 10px;
@@ -536,12 +642,29 @@ body {
     color: #fff;
     cursor: pointer;
     margin: 0 25px;
+} */
+
+.publicacion-bottom_2 input {
+    padding: 5px 15px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
 }
 
-@media (max-width:800px) {
+.publicacion-bottom_2 input:hover {
+    background: #86C332;
+    color: #fff;
+}
+
+@media (max-width:750px) {
     .publicacion-fondo {
         width: 100%;
         position: fixed;
+        height: 75%;
     }
     .publicacion-centro {
         text-align: center;
@@ -563,6 +686,50 @@ body {
         border-radius: 20px;
         margin-top: 30px;
     }
+    /* Inputs de crear publicacion */
+    .publicacion-centro input {
+        margin: 0;
+    }
+    .config-fondo-bio {
+        height: 60%;
+    }
+    #descripcion-post {
+        position: flex;
+        resize: none !important;
+        height: 6em !important;
+        top: 140px !important;
+        left: 0 !important;
+    }
+    #emoji-post {
+        position: absolute;
+        margin-left: 0 !important;
+        top: 180px !important;
+        left: 13% !important;
+    }
+    .publicacion-centro .form-group {
+        left: -25%;
+    }
+}
+
+@media(max-width:414px) {
+    .bio-centro {
+        text-align: center;
+        position: absolute;
+        top: 150px;
+        right: 85px;
+        padding: 5px 15px;
+        border: #bfc0c2 solid 2px;
+        color: #1a1919;
+        background: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin: 0 50px 0 0;
+    }
+    .form-group label {
+        right: 110px;
+        top: -10px;
+    }
 }
 
 
@@ -570,9 +737,10 @@ body {
 
 .ver-publi_1 {
     height: 100%;
-    border: #000 1px solid;
+    border: #ced0d4 1px solid;
     position: relative;
     background-color: white;
+    box-shadow: 2px 2px 5px #999;
 }
 
 .ver-publi_1 img {
@@ -586,16 +754,17 @@ body {
     text-align: center;
     font-size: 25px;
     color: #000;
-    border: #000 solid 1px;
+    border: #ced0d4 solid 1px;
     padding: 10px;
+    text-transform: uppercase;
 }
 
 .ver-publi_2 {
-    border: #000 1px solid;
+    border: #ced0d4 1px solid;
 }
 
 .ver-publi-superior img {
-    width: 70px;
+    width: 80px;
     height: 70px;
     border: 3px solid #FFFFFF;
     background-color: #DFE5F2;
@@ -604,29 +773,42 @@ body {
     margin: 10px 0px 10px 20px;
 }
 
+.img-publicacion-movil {
+    height: 50vh;
+}
+
 .ver-publi-superior h1 {
     position: relative;
     font-size: 18px;
     color: #000;
     float: right;
+    right: 80px;
     margin: 20px 120px 10px 10px;
+    text-transform: lowercase;
+}
+
+.ver-publi-superior h1:first-letter {
+    text-transform: uppercase;
 }
 
 .ver-publi-superior p {
-    font-size: 15px;
+    font-size: .9375rem;
     color: #000;
     margin: 5px 15px 15px 15px;
+    text-align: left;
 }
 
 .ver-publi-superior span {
-    background-color: #000;
+    background-color: #F3EAF4;
     height: 2px;
-    width: 100%;
     display: block;
+    margin: 0 5%;
 }
 
 .ver-publi-superior .ver-publi-lista .corazon {
     color: #fc0127;
+    font-size: 1.3rem;
+    padding: 10px 35px;
 }
 
 .ver-publi-superior .ver-publi-lista .comentar,
@@ -636,7 +818,11 @@ body {
 
 .ver-publi-lista i {
     padding: 10px 5px;
-    font-size: 15px;
+    font-size: 1rem;
+}
+
+.ver-publi-lista ul {
+    margin-bottom: 0;
 }
 
 .ver-publi-superior ul {
@@ -646,8 +832,14 @@ body {
 .ver-publi-superior li {
     display: inline;
     list-style: none;
-    padding: 10px 15px;
+    padding: 5px;
     font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.ver-publi-superior li:hover {
+    background: #f5f5f5;
 }
 
 
@@ -665,10 +857,11 @@ body {
 
 .ver-testimonials-box {
     padding: 15px;
-    margin: 1.5px;
+    margin: 5px 0;
     height: 115px;
     cursor: pointer;
-    border-bottom: 1px solid #86C332;
+    border-radius: 5px;
+    border: 1px solid #F3EAF4;
 }
 
 .ver-profile-img {
@@ -677,6 +870,7 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin-right: 10px;
+    box-shadow: 0 0 12px rgb(0 0 0 / 20%);
 }
 
 .ver-profile-img img {
@@ -717,7 +911,7 @@ body {
 .ver-client-comment {
     display: grid;
     grid-template-columns: 4fr 0.5fr;
-    margin-top: -15px;
+    margin-top: -17px;
 }
 
 .ver-client-comment p {
@@ -732,11 +926,11 @@ body {
 .ver-client-comment i {
     position: relative;
     float: right;
-    right: 0;
+    right: 5px;
     top: 0;
     color: #ff0000;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 1.2rem;
     text-align: center;
 }
 
@@ -756,6 +950,7 @@ body {
 }
 
 .ver-client-responder ul {
+    margin-bottom: -5px;
     list-style: none;
     text-align: center;
 }
@@ -786,7 +981,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
     position: relative;
-    border-top: 1px #000 solid;
+    border-top: 1px #ced0d4 solid;
     text-align: center;
     justify-content: center;
     bottom: 0;
@@ -797,7 +992,7 @@ body {
     padding: 5px;
     margin-top: 13px;
     font-size: 25px;
-    color: #d4f809;
+    color: #86C332;
     text-align: center;
 }
 
@@ -810,16 +1005,29 @@ body {
 }
 
 .ver-crear-comentario .ver-comentario-btn {
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    margin: 15px 5px;
     padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 13px;
-    background-color: #86C332;
-    color: #fff;
-    margin: 15px;
 }
 
 .ver-crear-comentario .ver-comentario-btn:hover {
-    background-color: #679626;
+    background: #86C332;
+    color: #fff;
+}
+
+#id_comentario {
+    border: 0;
+    background-color: #F2F2F2;
+    border-radius: 12px;
+    padding: 10px;
+    max-height: 50px;
+    max-width: 250px;
+    resize: none;
 }
 
 
@@ -852,20 +1060,55 @@ body {
 @media (max-width: 600px) {
     .contenedor-interno {
         grid-template-columns: 1fr;
-        height: 100%;
+        height: 81, 8%;
         width: 100%;
+        z-index: 1000;
     }
     .ver-publi_1 img {
         position: relative;
         padding: 0;
         margin: 0;
-        object-fit: cover;
         background-color: white;
     }
     .ver-publi_1 {
         width: 100%;
         margin: 0;
         overflow: hidden;
+        height: 40vh;
+    }
+    .ver-crear-comentario {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        width: 100%;
+        position: fixed;
+        border-top: 1px #ced0d4 solid;
+        text-align: center;
+        justify-content: center;
+        bottom: 0;
+        top: 50%;
+        transform: translate(-100%, 80%);
+        background: #fff;
+    }
+    .ver-crear-comentario .ver-comentario-btn {
+        border: #bfc0c2 solid 2px;
+        color: #1a1919;
+        background: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        margin: 15px 5px;
+        padding: 5px 15px;
+        width: 90px;
+        height: 50px;
+    }
+    .ver-publi-titulo {
+        text-align: center;
+        font-size: 25px;
+        color: #000;
+        border: #ced0d4 solid 1px;
+        padding: 10px;
+        text-transform: uppercase;
+        margin: 0;
     }
 }
 
@@ -891,9 +1134,9 @@ button {
     background: transparent;
     border: none;
     color: #AB3849;
-    font-size: 20px;
+    font-size: 1.5rem;
     float: right;
-    padding: 5px;
+    padding: 0 5px;
 }
 
 #btn-cierra {
@@ -1358,6 +1601,7 @@ body {
     overflow: hidden;
     overflow-y: scroll;
     height: 455px;
+    text-align: center;
 }
 
 #id_comentario {
@@ -1369,8 +1613,8 @@ body {
 }
 
 .child-comment {
-    margin-left: 2rem;
-    padding-right: 50px;
+    /* margin-left: 2rem; */
+    padding-right: 0;
 }
 
 .contenedor-reviews {
