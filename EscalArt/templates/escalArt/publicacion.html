@@ -42,8 +42,9 @@
                     <h2 class="ver-publi-titulo"> {{publi.titulo}} </h2>
 
                     <!-- <img id="img-activa" src="{% static 'EscalArt/img/foto_1.jpg' %}" alt="Galeria de imagenes"> -->
-                    <img src="/{{publi.imagen}}" alt="Galeria de imagenes">
-
+                    <div class="img-publicacion-movil">
+                        <img src="/{{publi.imagen}}" alt="Galeria de imagenes">
+                    </div>
 
                 </div>
                 <div class="ver-publi_2">
@@ -243,7 +244,7 @@
 
                                 <!--  -->
                                 {%empty%}
-                                <p>Aun no hay comentarios</p>
+                                <p class="no-coment">Se el primero en comentar.</p>
                                 <!--  -->
                                 {% endfor %}
                             </div>
