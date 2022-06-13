@@ -72,8 +72,7 @@ body {
 }
 
 .lista-info .lista-li {
-    float: left;
-    display: block;
+    display: inline-block;
     padding: 5px 70px;
     text-align: center;
     margin-top: 20px;
@@ -174,6 +173,8 @@ body {
     width: 100%;
     position: relative;
     border-radius: 50%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
@@ -210,10 +211,12 @@ body {
 }
 
 .seccion-perfil-usuario .perfil-usuario-body .texto {
-    padding: 30px 0px 30px 0px;
+    padding: 0 0 25px 0;
     color: #848484;
     font-size: 0.95em;
     text-align: center;
+    margin-top: 60px;
+    max-height: 10vh;
 }
 
 .seccion-perfil-usuario .perfil-usuario-footer,
@@ -312,16 +315,16 @@ body {
         list-style: none;
         margin: 0;
         padding: 0;
-    }
-    .linea_2 {
-        margin-top: 100px;
+        position: absolute;
+        bottom: 30px;
+        width: 80%;
     }
     .settings-container {
         top: 5px;
         right: 20px;
     }
     .btn-Editar-Bio {
-        top: 30%;
+        top: 45%;
         right: 0;
         padding: 5px 5px;
         border: #bfc0c2 solid 2px;
@@ -336,7 +339,7 @@ body {
         transition: 0.5s;
     }
     .btn-Crear-Publicacion {
-        top: 30%;
+        top: 45%;
         left: 0;
         padding: 5px 5px;
         border: #bfc0c2 solid 2px;
@@ -357,6 +360,13 @@ body {
     #settings-artista {
         right: 1%;
         bottom: 25px;
+    }
+    .seccion-perfil-usuario .perfil-usuario-body .texto {
+        padding: 0 0 25px 0;
+        color: #848484;
+        font-size: 0.95em;
+        text-align: center;
+        max-height: 10vh;
     }
 }
 
@@ -445,6 +455,7 @@ body {
     border-radius: 5px;
     font-size: 1rem;
     margin: 0 50px 0 0;
+    transition: 0.5s;
 }
 
 .bio-centro:hover {
@@ -480,6 +491,7 @@ body {
     cursor: pointer;
     border-radius: 5px;
     font-size: 1rem;
+    transition: 0.5s;
 }
 
 .bio-bottom input:hover {
@@ -653,6 +665,7 @@ body {
     cursor: pointer;
     border-radius: 5px;
     font-size: 1rem;
+    transition: 0.5s;
 }
 
 .publicacion-bottom_2 input:hover {
@@ -660,7 +673,7 @@ body {
     color: #fff;
 }
 
-@media (max-width:750px) {
+@media (max-width:600px) {
     .publicacion-fondo {
         width: 100%;
         position: fixed;
@@ -989,11 +1002,17 @@ body {
 }
 
 .ver-crear-comentario i {
-    padding: 5px;
+    padding: 10px;
     margin-top: 13px;
-    font-size: 25px;
+    /* font-size: 25px; */
     color: #86C332;
+    background-color: #E3E3E3;
+    border-radius: 50%;
     text-align: center;
+    height: 35px;
+    width: 35px;
+    margin-left: 10px;
+    color: #000;
 }
 
 .ver-crear-comentario .ver-comentario-añadir {
@@ -1303,7 +1322,7 @@ body {
 #btn-calif-cierra {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 5px;
     font-size: 1.5rem;
 }
 
@@ -1315,12 +1334,12 @@ body {
 /*------*/
 
 .testimonials-background {
-    border: 5px #f3f3f3 solid;
+    /* border: 5px #f3f3f3 solid; */
     position: relative;
-    background-color: #f3f3f3;
+    background-color: #fff;
     justify-content: center;
-    width: 35%;
-    height: 100%;
+    /* width: 35%; */
+    height: 75%;
 }
 
 #testimonials {
@@ -1342,19 +1361,20 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #12130F;
+    background-color: #fff;
+    border-bottom: 3px solid #E7E7E7;
 }
 
 .testimonial-heading h1 {
     font-size: 2.2rem;
     font-weight: 500;
-    color: #FFFFFF;
+    color: #7E7E7E;
     padding: 10px 20px;
 }
 
 .testimonial-heading span {
     font-size: 1.3rem;
-    color: #fff;
+    color: #7E7E7E;
     margin-bottom: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -1375,7 +1395,6 @@ body {
     padding: 20px;
     margin: 1.5px;
     margin-bottom: 10px;
-    margin-right: 20px;
     cursor: pointer;
 }
 
@@ -1393,6 +1412,51 @@ body {
     object-fit: cover;
     object-position: center;
 }
+
+.aleta-aceptar-cerrar h1 {
+    text-align: center;
+    font-size: 1rem;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.btn-aceptar-cerrar-img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 10px;
+}
+
+.btn-aceptar-cerrar-img h1 {
+    font-size: 1.5rem;
+}
+
+
+/* .btn-aceptar-cerrar-fondo-img {
+    text-align: center;
+    justify-content: center;
+} */
+
+.title-cambiar-fondo {
+    font-size: 1rem;
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+
+/* .btnHeader {
+    padding: 5px 15px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: 0.5s;
+} */
 
 .profile {
     display: flex;
@@ -1434,45 +1498,75 @@ body {
 .Comentar-Usuarios {
     text-align: center;
     justify-content: center;
-    background-color: #12130F;
+    background-color: #fff;
     overflow: hidden;
-    height: 20%;
+    border-top: 2px solid #E7E7E7;
+    padding: 0 20px;
 }
 
 .Comentar-calificacion {
     float: right;
+    padding-right: 10px;
 }
 
-.Comentar-calificacion span {
-    font-size: 1.3rem;
+.Comentar-Usuarios button {
+    padding: 5px 15px;
+    border: #bfc0c2 solid 3px;
+    color: #1a1919;
+    background: none;
+    margin: 15px 10px 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: 0.5s;
+    float: left;
+}
+
+.Comentar-Usuarios button:hover {
+    background: #86C332;
     color: #fff;
 }
 
+.Comentar-calificacion span {
+    font-size: 1.2rem;
+    color: #7E7E7E;
+}
+
 .Comentar-Usuarios i {
-    color: #86C332;
-    margin: 10px 5px 0 0;
-    width: 25px;
-    height: 25px;
-    font-size: 25px;
+    color: #000;
+    margin: 10px 5px 0 5px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
     padding: 10px 0 0 0;
+    float: left;
+    background-color: #E3E3E3;
+    border-radius: 50%;
 }
 
 .Comentar-Usuarios input {
-    box-shadow: 2px solid #000;
-    border-radius: 10px;
-    width: 300px;
-    padding: 5px 2px;
-    margin: 10px 3px 0px 3px;
-    font-style: #ffff;
+    border: 0;
+    background-color: #F2F2F2;
+    border-radius: 12px;
+    padding: 10px;
+    float: left;
+    margin-top: 13px;
 }
 
 .button-comentar button {
-    background-color: #86C332;
-    width: 120px;
-    border-radius: 10px;
-    padding: 5px 3px;
-    margin: 10px 0px;
-    text-decoration: none;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    margin: 15px 5px;
+    padding: 5px 15px;
+    transition: 0.5s;
+}
+
+.button-comentar button:hover {
+    background: #86C332;
     color: #fff;
 }
 
@@ -1495,17 +1589,31 @@ body {
 
 @media (max-width:1060px) {
     .testimonial-box {
-        width: 45%;
+        width: 80%;
         padding: 10px;
     }
 }
 
-@media(max-width:790px) {
+@media(max-width:650px) {
     .testimonial-box {
         width: 100%;
+        padding: 0 5px;
     }
     .testimonial-heading h1 {
         font-size: 1.4rem;
+    }
+    .testimonials-background {
+        width: 100%;
+        height: 100%;
+        margin-top: 70px;
+    }
+    .Comentar-Usuarios {
+        padding: 0;
+        margin: 0;
+    }
+    .Comentar-Usuarios button {
+        float: none;
+        margin: 5px 35%;
     }
 }
 
@@ -1579,14 +1687,6 @@ body {
         top: 14%;
         font-size: 2.5rem;
     }
-    .testimonials-background {
-        border: 5px #f3f3f3 solid;
-        position: relative;
-        background-color: #f3f3f3;
-        justify-content: center;
-        width: 80%;
-        margin: -100px 0px;
-    }
 }
 
 
@@ -1620,7 +1720,8 @@ body {
 .contenedor-reviews {
     overflow: hidden;
     overflow-y: scroll;
-    height: 60%;
+    height: 67%;
+    background: #fff;
 }
 
 
@@ -1638,6 +1739,7 @@ body {
 
 .rate>label {
     float: right;
+    color: #ebebff;
 }
 
 
