@@ -74,9 +74,14 @@
                             <i class="far fa-image"></i>
                         </button>
 
-                        <div style="width: 100%;height:50px;background-color:white;position:absolute;left:5%;display: none;" id="AlertaOk">
-                            <button onclick="OcultarAlerta();" class="btn-Editar-Bio btnPfp" type="submit" name="fotoPerfil">Aceptar</button>
-                            <button onclick="OcultarAlerta();" class="btnPfp" style="margin-left: 5%;">Cancelar </button>
+                        <div class="aleta-aceptar-cerrar" style=" border-radius:10px; width: 300px;height:200px;background-color:white;position:absolute;top: 30%;
+                        left: -30%;display: none;" id="AlertaOk">
+                            <h1>¿Quieres cambiar la imagen?</h1>
+                            <div class="btn-aceptar-cerrar-img">
+                                <button onclick="OcultarAlerta();" class="btn-Editar-Bio btnPfp" type="submit" name="fotoPerfil">Aceptar</button>
+                                <button onclick="OcultarAlerta();" class="btnPfp" style="margin-left: 5%;">Cancelar </button>
+                            </div>
+
 
                         </div>
                     </form>
@@ -91,8 +96,12 @@
                     </button>
 
                     <div id="AlertaOk2">
-                        <button onclick="OcultarAlerta2();" class="btn-Editar-Bio btnHeader" type="submit" name="EditHeader">Aceptar</button>
-                        <button onclick="OcultarAlerta2();" class="btnHeader" style="margin-left: 5%;">Cancelar </button>
+                        <h1 class="title-cambiar-fondo">¿Quieres cambiar el fondo?</h1>
+                        <div class="btn-aceptar-cerrar-fondo-img">
+                            <button onclick="OcultarAlerta2();" class="btn-Editar-Bio btnHeader" type="submit" name="EditHeader">Aceptar</button>
+                            <button onclick="OcultarAlerta2();" class="btnHeader" style="margin-left: 5%;">Cancelar </button>
+                        </div>
+
 
                     </div>
 
@@ -189,8 +198,9 @@
                     {% endfor %}
 
                 </div>
-                <span class="linea_2"></span>
+
                 <ul class="lista-info">
+                    <span class="linea_2"></span>
                     <!-- 5 Inicio de for para mostrar los datos en perfil segun el usuario conectado -->
                     {% for perfil in perfil %}
                     <!-- 6 inicio if para identificar perfil segun user -->
@@ -354,9 +364,7 @@
                 <i class="fa-solid fa-face-smile"></i>
                 <input hidden="hidden" name="calificacion" value="{{calificacion}}">
                 <input name="review" type="text" placeholder="Escriba su comentario...">
-                <div class="button-comentar">
-                    <button name="enviarReview" type="submit">Comentar...</button>
-                </div>
+                <button name="enviarReview" type="submit">Comentar</button>
             </form>
         </div>
     </section>
@@ -444,26 +452,60 @@
     
     #AlertaOk2,
     #AlertaOk {
-        width: 25%;
-        height: 50px;
+        width: 300px;
+        height: 200px;
         background-color: white;
         position: absolute;
-        bottom: 50%;
-        left: 38%;
+        bottom: 0;
+        right: -3%;
         display: none;
         z-index: 1;
         border-radius: 5px;
         border: 1px solid #86C332;
+        padding: 10px;
     }
     
-    .btnHeader,
-    .btnPfp {
-        background-color: #86C332;
+    .AlertaOk2 h1 {
+        text-align: center;
+        font-size: 1rem;
+        padding: 10px 0;
+        width: 100%;
+    }
+    
+    .btnHeader {
+        padding: 5px 15px;
+        border: #bfc0c2 solid 2px;
+        color: #1a1919;
+        background: none;
+        margin: 0 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: 0.5s;
+        position: absolute;
+        top: 70%;
+    }
+    
+    .btnHeader:hover {
+        background: #86C332;
         color: #fff;
-        border-radius: 20px;
-        border: none;
-        padding: 5px 10px 10px 10px;
-        margin-top: 5px;
+    }
+    
+    .btnPfp {
+        padding: 5px 15px;
+        border: #bfc0c2 solid 2px;
+        color: #1a1919;
+        background: none;
+        margin: 0 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: 0.5s;
+    }
+    
+    .btnPfp:hover {
+        background: #86C332;
+        color: #fff;
     }
     
     #Configuracion {
