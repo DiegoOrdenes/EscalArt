@@ -7,8 +7,8 @@ body {
 
 /* Alertas y botones */
 
-#AlertaOk,
-#AlertaOk2 {
+
+/* #AlertaOk2 {
     width: 25%;
     height: 50px;
     background-color: white;
@@ -19,7 +19,7 @@ body {
     z-index: 1;
     border-radius: 5px;
     border: 1px solid #86C332;
-}
+} */
 
 .btnHeader,
 .btnPfp {
@@ -29,6 +29,96 @@ body {
     border: none;
     padding: 5px 10px 10px 10px;
     margin-top: 5px;
+}
+
+.div-alerta-img-cli {
+    width: 250px;
+    height: 130px;
+    background-color: white;
+    position: absolute;
+    left: 0%;
+    display: none;
+    border-radius: 20px;
+    top: 30%;
+}
+
+.div-alerta-img-cli h1 {
+    font-size: 1rem;
+    color: #252525;
+    text-align: center;
+    padding: 20px 0 30px 0;
+}
+
+.btn-alet-img-cli {
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.btn-imagen-cli {
+    padding: 10px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: 0.5s;
+    margin: 10px;
+}
+
+.btn-imagen-cli:hover {
+    background: #86C332;
+    color: #fff;
+}
+
+@media(max-width:450px) {
+    .div-alerta-img-cli {
+        left: -20%;
+    }
+}
+
+.div-alerta-fondoimg-cli {
+    width: 250px;
+    height: 130px;
+    background-color: white;
+    position: absolute;
+    right: 0;
+    display: none;
+    border-radius: 20px;
+    top: 25%;
+    z-index: 1;
+    border-radius: 5px;
+    border: 1px solid #86C332;
+}
+
+.div-alerta-fondoimg-cli h1 {
+    font-size: 1rem;
+    padding: 20px 0;
+    text-align: center;
+    color: #252525;
+}
+
+.btn-alert-fondoimg-cli {
+    text-align: center;
+}
+
+.btn-fondoimagen-cli {
+    padding: 10px;
+    border: #bfc0c2 solid 2px;
+    color: #1a1919;
+    background: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: 0.5s;
+    margin: 10px;
+}
+
+.btn-fondoimagen-cli:hover {
+    background: #86C332;
+    color: #fff;
 }
 
 
