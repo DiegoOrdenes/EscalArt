@@ -1,0 +1,48 @@
+.empty-saves {
+    text-align: center;
+    width: 100vw;
+}
+
+.no-posts {
+    grid-template-columns: none;
+}
+
+.search-box button {
+    margin-top: 0px;
+}
+
+.users {
+    width: 300px;
+    margin: auto;
+    padding: initial;
+}
+
+#nombre {
+    color: black;
+    margin-bottom: 0px;
+}
+
+.nickname {
+    color: gray;
+    padding: 0px 20px 20px 20px;
+}
+
+.ctn-post {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.galeria-search {
+    justify-content: center;
+    grid-template-columns: none;
+}
+
+.div-empty {
+    text-align: center;
+}
+
+@media (max-width:750px) {
+    .post-search {
+        margin: 0 20px;
+    }
+}
