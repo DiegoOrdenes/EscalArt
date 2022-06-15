@@ -27,9 +27,33 @@
     {% include 'escalArt/includes/menu.html' %}
     <h1 class="titulo">Usuarios</h1>
     <div class="container">
+        <section class="todos-user-search">
+            {% for perfil in lista_perfil %} {% if perfil.idUser.tipoCuenta.tipoCuenta == 'artista' %}
+            <div class="ctn-post">
+                <article class="post users">
+                    <div class="post-body ">
+                        <div class="post-container">
+                            <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                                
+                                {% if perfil.idUser.imagen %}
+                                <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
+                                    {%else%}
+                                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                                {% endif %}
+                                    
+                            </a>
+                            <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                                <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
+                                <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
+                            </a>
+                        </div>
+                        <span class="linea_2"></span>
+                        <p>{{perfil.biografia}}</p>
 
-        {% for perfil in lista_perfil %} {% if perfil.idUser.tipoCuenta.tipoCuenta == 'artista' %}
-        <div class="ctn-post">
+                    </div>
+                </article>
+            </div>
+            {% endif %} {%empty%} {% for perfil in lista_perfil_tag %}
             <article class="post users">
                 <div class="post-body ">
                     <div class="post-container">
@@ -52,34 +76,11 @@
 
                 </div>
             </article>
-        </div>
-        {% endif %} {%empty%} {% for perfil in lista_perfil_tag %}
-        <article class="post users">
-            <div class="post-body ">
-                <div class="post-container">
-                    <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
-                        
-                        {% if perfil.idUser.imagen %}
-                        <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
-                            {%else%}
-                            <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
-                        {% endif %}
-                            
-                    </a>
-                    <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
-                        <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
-                        <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
-                    </a>
-                </div>
-                <span class="linea_2"></span>
-                <p>{{perfil.biografia}}</p>
+            {%empty%}
+            <p class="empty-saves">No se han encontrado Usuarios</p>
 
-            </div>
-        </article>
-        {%empty%}
-        <p class="empty-saves">No se han encontrado Usuarios</p>
-
-        {% endfor %} {% endfor %}
+            {% endfor %} {% endfor %}
+        </section>
 
         <h1 class="titulo">Publicaciones</h1>
         <section class="galeria galeria-search">
