@@ -13,12 +13,12 @@
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Slider.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/home.css' %}">
     <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
     <!--Iconos-->
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/search.css' %}">
 
 
 </head>
@@ -28,42 +28,70 @@
     <h1 class="titulo">Usuarios</h1>
     <div class="container">
 
-        {% for perfil in lista_perfil %}
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-5 col-sm-12 border-bottom position-relative">
-                <p>
-                    <a style="text-decoration: none;" href=" {% url 'perfil' perfil.idUser.username %}">
-                        @{{perfil.idUser.username}}
-                    </a>
-                </p>
-            </div>
+        {% for perfil in lista_perfil %} {% if perfil.idUser.tipoCuenta.tipoCuenta == 'artista' %}
+        <div class="ctn-post">
+            <article class="post users">
+                <div class="post-body ">
+                    <div class="post-container">
+                        <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                            
+                            {% if perfil.idUser.imagen %}
+                            <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
+                                {%else%}
+                                <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                            {% endif %}
+                                
+                        </a>
+                        <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                            <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
+                            <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
+                        </a>
+                    </div>
+                    <span class="linea_2"></span>
+                    <p>{{perfil.biografia}}</p>
+
+                </div>
+            </article>
         </div>
-        {%empty%} {% for perfil in lista_perfil_tag %}
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-5 col-sm-12 border-bottom position-relative">
-                <p>
-                    <a style="text-decoration: none;" href=" {% url 'perfil' perfil.idUser.username %}">
-                        @{{perfil.idUser.username}}
+        {% endif %} {%empty%} {% for perfil in lista_perfil_tag %}
+        <article class="post users">
+            <div class="post-body ">
+                <div class="post-container">
+                    <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                        
+                        {% if perfil.idUser.imagen %}
+                        <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
+                            {%else%}
+                            <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                        {% endif %}
+                            
                     </a>
-                </p>
+                    <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                        <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
+                        <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
+                    </a>
+                </div>
+                <span class="linea_2"></span>
+                <p>{{perfil.biografia}}</p>
+
             </div>
-        </div>
+        </article>
         {%empty%}
-        <p>No se han encontrado Usuarios</p>
+        <p class="empty-saves">No se han encontrado Usuarios</p>
 
         {% endfor %} {% endfor %}
 
         <h1 class="titulo">Publicaciones</h1>
-        <section class="galeria">
+        <section class="galeria galeria-search">
             {% for post in lista_post %}
 
-            <article class="post ">
+            <article class="post post-search">
 
                 <div class="post-body ">
                     <div class="post-container">
                         <a class="column" href="{% url 'perfil' post.idUser.username %}">
                         
-                        {% if p.idUser.imagen %}
+                        {% if post.idUser.imagen %}
                         <img id="foto-perfil" src="/{{ post.idUser.imagen}}" alt="Galeria de imagenes">
                             {%else%}
                             <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
@@ -104,8 +132,12 @@
                 </div>
             </article>
             {%empty%}
-            <p>No se han encontrado publicaciones</p>
-            {% endfor %}
+            <div class="empty-saves no-posts">
+                <div class="div-empty">
+                    <p>No se han encontrado publicaciones</p>
+                </div>
+            </div>
+            <br><br><br> {% endfor %}
         </section>
 
 
