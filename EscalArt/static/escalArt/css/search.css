@@ -12,8 +12,8 @@
 }
 
 .users {
-    width: 300px;
-    margin: auto;
+    height: 200px;
+    margin: 5px 20px;
     padding: initial;
 }
 
@@ -34,15 +34,30 @@
 
 .galeria-search {
     justify-content: center;
-    grid-template-columns: none;
 }
 
 .div-empty {
     text-align: center;
 }
 
+.todos-user-search {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 25% 25% 25% 25%);
+    margin: auto;
+}
+
 @media (max-width:750px) {
     .post-search {
         margin: 0 20px;
+    }
+    .todos-user-search {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, 100%);
+        width: 100%;
+        margin: auto;
+    }
+    .ctn-post {
+        text-align: center;
+        margin: 0;
     }
 }
