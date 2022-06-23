@@ -1,4 +1,5 @@
 {% extends 'escalArt/Configuracion.html' %} {% load static%} {%block content%}
+
 <div class="Editar-perfil Editar-perfil-Artista" id="Editar-perfil" style="display: none;">
     <div class="title-U">
 
@@ -29,7 +30,7 @@
 
 
         <div class="editar-perfil-btn">
-            <button type="submit" class="btn-form" name="editarPerfil">Guardar cambios</button>
+            <a href="{% url 'configuracion' %}"><button disabled type="submit" class="btn-form" name="editarPerfil">Guardar cambios</button></a>
         </div>
     </form>
     {% if usuario.tipoCuenta.tipoCuenta == "artista" %}
@@ -44,7 +45,8 @@
 
 
         <div class="editar-perfil-btn">
-            <button type="submit" class="btn-form" name="editarBio">Guardar cambios</button>
+            <a href="{% url 'configuracion' %}"><button disabled type="submit" class="btn-form" name="editarBio">Guardar cambios</button></a>
+
         </div>
     </form>
     {% endif %}
@@ -116,15 +118,15 @@
         {% csrf_token %}
         <p>
             <label>Contraseña Antigua</label>
-            <input type="password" name="old_password"></input>
+            <input type="password" name="old_password" required></input>
         </p>
         <p>
             <label>Nueva Contraseña</label>
-            <input type="password" name="new_password1"></input>
+            <input type="password" name="new_password1" required></input>
         </p>
         <p>
             <label>Repetir nueva contraseña</label>
-            <input type="password" name="new_password2"></input>
+            <input type="password" name="new_password2" required></input>
         </p>
         <ul style="color: white;">
             <li>
@@ -256,52 +258,77 @@
         <h1>Selecciona una Categoría</h1>
         <p>Puedes cambiar la categoria que se te adapta mejor a tu estilo de trabajo, Tendras opcion para poder mostrar o no esta informacion en tu perfil.</p>
     </div>
-    <div class="mostrar-categoria">
-        <input type="checkbox"></input>
-        <span>Mostrar Categoría en el perfil</span>
-    </div>
-    <div class="buscar-categoria">
-        <input type="text" placeholder="Buscar..."></input>
-    </div>
-    <div class="title-categoria">
-        <h1>Sugerencias</h1>
-        <ul>
-            <li>
-                <span>Anime</span>
-                <input type="checkbox"></input>
-            </li>
-            <li>
-                <span>Ilustracion</span>
-                <input type="checkbox"></input>
-            </li>
-            <li>
-                <span>Esculturas</span>
-                <input type="checkbox"></input>
-            </li>
-            <li>
-                <span>Realismo</span>
-                <input type="checkbox"></input>
-            </li>
-            <li>
-                <span>Fotografia</span>
-                <input type="checkbox"></input>
-            </li>
-            <li>
-                <span>Animacion 3D</span>
-                <input type="checkbox"></input>
-            </li>
-            <li>
-                <span>Otro</span>
-                <input type="checkbox"></input>
-            </li>
-        </ul>
-        <span class="linea--"></span>
-        <div class="editar-perfil-btn">
-            <button type="submit" class="btn-form"><a href="#"></a>Guardar cambios</button>
+    <form method="GET" class="buscar-categoria" action=" {% url 'buscar-categoria' %}">
+        <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
+        <button type="submit" class="icon searchCategoria">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="mostrar-categoria">
+
+            {% if perfil.showTags == True %}
+            <input type="checkbox" name="showTags" checked></input>
+            {% else %}
+            <input type="checkbox" name="showTags"></input>
+
+            {% endif %}
+
+            <span>Mostrar Categoría en el perfil</span>
         </div>
-    </div>
+        <!-- <div class="buscar-categoria">
+            <input type="text" placeholder="Buscar..."></input>
+        </div> -->
+
+        <div class="title-categoria">
+            <h1>Sugerencias</h1>
+            <ul>
+                {% for tags in perfil.tags.all %} {% for tag in common_tags %} {% if tags == tag %}
+                <li>
+                    <span>{{tag}}</span>
+                    <input type="checkbox" name="tags" value="{{tag}}" checked></input>
+                </li>
+                {%endif%} {% endfor %} {%endfor%} {% for Notag in Notags%}
+                <li>
+                    <span>{{Notag}}</span>
+                    <input type="checkbox" name="tags" value="{{Notag}}"></input>
+                </li>
+                {%endfor%}
+
+
+                <input type="hidden" name="next" value="{{request.path}}">
+
+            </ul>
+            <span class="linea--"></span>
+            <div class="editar-perfil-btn">
+                <a href="{% url 'configuracion' %}"><button  type="button" class="btn-form" name="editTags">Guardar cambios</button></a>
+            </div>
+        </div>
+    </form>
+
 </div>
 
+<div class="Categoria-Artista cambiar-cuenta" id="cambiar-cuenta" style="display: none;">
+    <div class="title-select">
+        <h1>Cambiar a cuenta profesional</h1>
+        <p>Al cambiar a una cuenta profesional podrás disfrutar de todas las funcionalidades que les ofrecemos a nuestros emprendedores! Podrás compartir tu trabajo mediante publicaciones y tu perfil será público para todos los usuarios de nuestra página
+            web. Tambien podrás disfrutar de funcionalidades que te ayudarán a organizar mejor tu trabajo y conexion con tus clientes en un solo lugar!
+        </p>
+    </div>
+    <span class="linea--"></span>
 
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name="tipoCuenta" value="2" hidden>
+        <input type="hidden" name="next" value="{{request.path}}">
+
+        <div class="editar-perfil-btn">
+            <button type="submit" class="btn-form" name="profesional">Cambiar a Cuenta profesional</button>
+        </div>
+
+    </form>
+
+</div>
 
 {%endblock%}

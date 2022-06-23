@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
     <title>EscalArt</title>
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Ayuda-Cliente.css' %}">
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
@@ -47,11 +49,13 @@
             <div class="ver-publi_2">
                 <a href="{% url 'home' %}"><button type="button" class="button-cierra" >X</button></a>
                 <div class="ver-publi-superior">
-                    {% for la in listArt %}
+                    {% for la in listaUsuarios %}
                     <!-- 16 Inicio if para verificar user conectado -->
                     {% if list.username == la.username %}{% if la.imagen %}
                     <img src="/{{la.imagen}}" class="foto_perfil" alt=""> {% else %}
-                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt=""> {% endif %} {%endif%} {%endfor%}
+                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" class="foto_perfil" alt=""> {% endif %} {%endif%}
+                    <!--  -->
+                    {%endfor%}
 
                     <a href="{% url 'perfil' list.username %}">
                         <h1>{{list.username}}</h1>
@@ -108,7 +112,6 @@
                                 {% endif %}
                             </li>
                             <li><button><i class="fa-solid fa-flag"></i>Reportar</button></li>
-                            <span class="linea_2"></span>
                         </ul>
                     </div>
                     <span></span>

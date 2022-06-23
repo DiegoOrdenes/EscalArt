@@ -9,6 +9,9 @@
     <title>Datos cliente</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Perfil.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/datosCliente.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,8 +65,9 @@
     <div class="cliente-opt">
         <ul>
             <li onclick="mostrarReferencias();"><i class="fa-solid fa-border-all"></i>Referencias</li>
-            <li onclick="mostrarTareas();"><i class="fa-solid fa-pen-to-square"></i>Tareas</li>
             <li onclick="mostrarEsComision();"><i class="fa-solid fa-calendar-check"></i>Estado Comision</li>
+            <li onclick="mostrarTareas();"><i class="fa-solid fa-pen-to-square"></i>Tareas</li>
+            <li onclick="mostrarReviews();"><i style="color:#86C332;" class="fa-regular fa-star-half-stroke"></i>Reviews</li>
         </ul>
     </div>
     <!--Referencias-->
@@ -89,7 +93,7 @@
         </section>
     </section>
     <!--Creacion de Tareas-->
-    <div id="tareas--">
+    <div id="tareas--" style="display: none;">
         <div id="crear-tarea" class="list roundBorder">
             <div class="title-tarea">
                 <h1>Crear Tarea</h1>
@@ -133,7 +137,7 @@
         </div>
     </div>
     <!--Estado Comision-->
-    <div class="estado-comision" id="es-comision" style="display: none;">
+    <div class="estado-comision" id="es-comision" style="display: block;">
 
         <div class="left">
             <div class="titulo-art">
@@ -181,6 +185,88 @@
                 </ul>
             </div>
             {% endblock %}
+        </div>
+    </div>
+    <!-- Reviews clientes -->
+    <div id="reviews" style="display: none;">
+        <!--Mostrar la tarea-->
+        <div class="fondo-mostrar-tarea">
+            <div class="btn-mostrar-tarea">
+                <h1>Reviews</h1>
+                <!-- <button onclick="ver_tareas();">Crear una tarea</button> -->
+            </div>
+            <div class="scroll-bg">
+                <div class="scroll-div">
+                    <div class="scroll-object">
+                        <div id="tasksContainer">
+                            {% for review in reviews %}
+                            <div class="testimonial-box-container">
+                                <div class="testimonials-box">
+                                    <div class="box-top">
+                                        <div class="profile">
+                                            <div class="profile-img">
+
+                                                {% if review.idUser.imagen %}
+                                                <img src="/{{review.idUser.imagen}}" alt=""> {% else %}
+                                                <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt=""> {% endif %}
+
+                                            </div>
+                                            <div class="name-user">
+                                                <strong>{{review.idUser.nombre}}</strong>
+                                                <span>@{{review.idUser.username}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="reviews">
+                                            <i class="fa fa-star{% if review.rating == 1 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                                            <i class="fa fa-star{% if review.rating == 3 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                                            <i class="fa fa-star{% if review.rating == 5 %}-half-o{% elif review.rating < 6 %}-o {% endif %}" aria-hidden="true"></i>
+                                            <i class="fa fa-star{% if review.rating == 7 %}-half-o{% elif review.rating < 8 %}-o {% endif %}" aria-hidden="true"></i>
+                                            <i class="fa fa-star{% if review.rating == 9 %}-half-o{% elif review.rating < 10 %}-o {% endif %}" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="client-comment">
+                                        <p>{{review.review}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {%empty%}
+                            <h1 class="empty-saves">Aun no hay reviews. Se el primero!</h1>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="crear-tarea" class="list roundBorder">
+            <div class="title-tarea">
+                <h1>Danos tu opinion</h1>
+            </div>
+
+            <form class="Comentar-Usuarios" style="display: block;" method="POST">
+                {%csrf_token %}
+                <div class="Comentar-calificacion">
+                    <span style="margin-right: 10px;">Calificar</span><br>
+                    <div class="Comentar-iconos rate" style="background-color: white;">
+
+                        <input type="radio" name="rating" id="rating10" value="10" required /><label for="rating10" title="10"></label>
+                        <input type="radio" name="rating" id="rating9" value="9" required /><label for="rating9" title="9" class="half"></label>
+                        <input type="radio" name="rating" id="rating8" value="8" required /><label for="rating8" title="8"></label>
+                        <input type="radio" name="rating" id="rating7" value="7" required /><label for="rating7" title="7" class="half"></label>
+                        <input type="radio" name="rating" id="rating6" value="6" required /><label for="rating6" title="6"></label>
+                        <input type="radio" name="rating" id="rating5" value="5" required /><label for="rating5" title="5" class="half"></label>
+                        <input type="radio" name="rating" id="rating4" value="4" required /><label for="rating4" title="4"></label>
+                        <input type="radio" name="rating" id="rating3" value="3" required /><label for="rating3" title="3" class="half"></label>
+                        <input type="radio" name="rating" id="rating2" value="2" required /><label for="rating2" title="2"></label>
+                        <input type="radio" name="rating" id="rating1" value="1" required /><label for="rating1" title="1" class="half"></label>
+
+
+                    </div>
+                </div>
+                <i class="fa-solid fa-face-smile"></i>
+                <input hidden="hidden" name="calificacion" value="{{calificacion}}">
+                <input name="review" type="text" placeholder="Escriba su comentario...">
+                <button style="margin-left: 170px;" name="enviarReview" type="submit">Comentar</button>
+            </form>
         </div>
     </div>
     <script src="{% static 'EscalArt/js/datosCliente.js' %}"></script>

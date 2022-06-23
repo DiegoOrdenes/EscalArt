@@ -4,7 +4,13 @@
 
     <div class="usuario-seleccionado">
         <div class="avatar">
-            <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img">
+
+            {% if request.user.idUser == cliente.idCliente.idUser %} {% for a in cli %} {% if cliente.usernameArtista == a.username %} {% if a.imagen %}
+            <img src="/{{a.imagen}}" alt="img"> {% else %}
+            <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img"> {% endif %} {% endif %} {% endfor %} {% else %} {% if cliente.idCliente.imagen %}
+            <img src="/{{cliente.idCliente.imagen}}" alt="img"> {% else %}
+            <img src="{% static 'EscalArt/img/perfil.jpg' %}" alt="img"> {% endif %} {% endif %}
+
         </div>
         <div class="cuerpo">
 
@@ -87,7 +93,7 @@
                         <label for="file"></label>
                         <input type="submit" id="file" name="comision">
                     </button> {% csrf_token %} {{comCli.as_hidden}}{{comArt.as_hidden}}
-                    <input style="display: none;" type="text" name="cliente" value="{{cliente.idCliente}}">
+                    <input style="display: none;" type="text" name="cliente" value="{{cliente.idCliente.username}}">
                     <input type="hidden" name="next" value="{{request.path}}">
 
                 </form>

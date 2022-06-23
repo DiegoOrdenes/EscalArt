@@ -8,17 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
     <title>Buscando</title>
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Ayuda-Cliente.css' %}">
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Slider.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/home.css' %}">
     <script type="text/javascript" src="{% static 'EscalArt/js/menu.js' %}"></script>
     <!--Iconos-->
     <script src="https://kit.fontawesome.com/943e4f11a2.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/search.css' %}">
 
 
 </head>
@@ -27,50 +29,104 @@
     {% include 'escalArt/includes/menu.html' %}
     <h1 class="titulo">Usuarios</h1>
     <div class="container">
+        <section class="todos-user-search">
+            {% for perfil in lista_perfil %}
+            <div class="ctn-post">
+                <article class="post users">
+                    <div class="post-body ">
+                        <div class="post-container">
+                            <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                                
+                                {% if perfil.idUser.imagen %}
+                                <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
+                                    {%else%}
+                                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                                {% endif %}
+                                    
+                            </a>
+                            <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                                <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
+                                <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
+                            </a>
+                        </div>
+                        <span class="linea_2"></span>
+                        <p>{{perfil.biografia}}</p>
 
-        {% for perfil in lista_perfil %}
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-5 col-sm-12 border-bottom position-relative">
-                <p>
-                    <a style="text-decoration: none;" href=" {% url 'perfil' perfil.idUser.username %}">
-                        @{{perfil.idUser.username}}
-                    </a>
-                </p>
+                    </div>
+                </article>
             </div>
-        </div>
-        {%empty%} {% for perfil in lista_perfil_tag %}
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-5 col-sm-12 border-bottom position-relative">
-                <p>
-                    <a style="text-decoration: none;" href=" {% url 'perfil' perfil.idUser.username %}">
-                        @{{perfil.idUser.username}}
-                    </a>
-                </p>
-            </div>
-        </div>
-        {%empty%}
-        <p>No se han encontrado Usuarios</p>
+            {%empty%} {% for perfil in lista_perfilUsername %} {% if perfil.idUser.tipoCuenta.tipoCuenta == 'artista' %}
+            <div class="ctn-post">
+                <article class="post users">
+                    <div class="post-body ">
+                        <div class="post-container">
+                            <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                                
+                                {% if perfil.idUser.imagen %}
+                                <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
+                                    {%else%}
+                                    <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                                {% endif %}
+                                    
+                            </a>
+                            <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                                <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
+                                <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
+                            </a>
+                        </div>
+                        <span class="linea_2"></span>
+                        <p>{{perfil.biografia}}</p>
 
-        {% endfor %} {% endfor %}
+                    </div>
+                </article>
+            </div>
+            {% endif %} {%empty%} {% for perfil in lista_perfil_tag %}
+            <article class="post users">
+                <div class="post-body ">
+                    <div class="post-container">
+                        <a class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                            
+                            {% if perfil.idUser.imagen %}
+                            <img id="foto-perfil" src="/{{ perfil.idUser.imagen}}" alt="Galeria de imagenes">
+                                {%else%}
+                                <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
+                            {% endif %}
+                                
+                        </a>
+                        <a style="text-decoration: none;" class="column" href="{% url 'perfil' perfil.idUser.username %}">
+                            <h2 id="nombre">{{perfil.idUser.nombre}}</h2>
+                            <h3 class="username nickname">@{{perfil.idUser.username}}</h3>
+                        </a>
+                    </div>
+                    <span class="linea_2"></span>
+                    <p>{{perfil.biografia}}</p>
+
+                </div>
+            </article>
+            {%empty%}
+            <p class="empty-saves">No se han encontrado Usuarios</p>
+
+            {% endfor %} {% endfor %} {% endfor %}
+        </section>
 
         <h1 class="titulo">Publicaciones</h1>
-        <section class="galeria">
+        <section class="galeria galeria-search">
             {% for post in lista_post %}
 
-            <article class="post ">
+            <article class="post post-search">
 
                 <div class="post-body ">
                     <div class="post-container">
                         <a class="column" href="{% url 'perfil' post.idUser.username %}">
                         
-                        {% if p.idUser.imagen %}
+                        {% if post.idUser.imagen %}
                         <img id="foto-perfil" src="/{{ post.idUser.imagen}}" alt="Galeria de imagenes">
                             {%else%}
                             <img src="{% static 'EscalArt/img/perfil.jpg' %}" id="foto-perfil" alt="">
                         {% endif %}
                             
                     </a>
-                        <a class="column" href="{% url 'perfil' post.idUser.username %}">
+                        <a class="column" id="no-decoration-a" href="{% url 'perfil' post.idUser.username %}">
                             <h3 class="username">{{post.idUser.username}}</h3>
                         </a>
                         <h2 class="titulo-post column">{{post.titulo}}</h2>
@@ -104,8 +160,12 @@
                 </div>
             </article>
             {%empty%}
-            <p>No se han encontrado publicaciones</p>
-            {% endfor %}
+            <div class="empty-saves">
+
+                <p class=" no-posts">No se han encontrado publicaciones</p>
+
+            </div>
+            <br><br><br> {% endfor %}
         </section>
 
 

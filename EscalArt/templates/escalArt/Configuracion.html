@@ -9,8 +9,11 @@
     <title>Configuracion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
-    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/configuracion.css' %}">
+    <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,9 +52,11 @@
 
                         {% if usuario.tipoCuenta.tipoCuenta == "artista" %}
                         <li onclick="Categoria_Artista();">Categoria</li>
+                        {% endif %} {% if usuario.tipoCuenta.tipoCuenta == "cliente" %}
+
+                        <li onclick="cambiar_cuenta();" class="li-profesional">Cambiar una cuenta Profesional</li>
                         {% endif %}
 
-                        <li class="li-profesional">Cambiar una cuenta Profesional</li>
                     </ul>
                 </nav>
             </div>
@@ -305,7 +310,7 @@
                 </div>
                 <form method="GET" class="buscar-categoria" action=" {% url 'buscar-categoria' %}">
                     <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
-                    <button type="submit" class="icon">
+                    <button type="submit" class="icon searchCategoria">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>
@@ -369,14 +374,41 @@
                                 <span>Otro</span>
                                 <input type="checkbox"></input>
                             </li> -->
+
+
+
+
+
+
                         </ul>
                         <span class="linea--"></span>
                         <div class="editar-perfil-btn">
                             <button type="submit" class="btn-form" name="editTags">Guardar cambios</button>
                         </div>
+                    </div>
                 </form>
 
+            </div>
+            <div class="Categoria-Artista cambiar-cuenta" id="cambiar-cuenta" style="display: none;">
+                <div class="title-select">
+                    <h1>Cambiar a cuenta profesional</h1>
+                    <p>Al cambiar a una cuenta profesional podrás disfrutar de todas las funcionalidades que les ofrecemos a nuestros emprendedores! Podrás compartir tu trabajo mediante publicaciones y tu perfil será público para todos los usuarios de nuestra
+                        página web. Tambien podrás disfrutar de funcionalidades que te ayudarán a organizar mejor tu trabajo y conexion con tus clientes en un solo lugar!
+                    </p>
                 </div>
+                <span class="linea--"></span>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="tipoCuenta" value="2" hidden>
+                    <input type="hidden" name="next" value="{{request.path}}">
+
+                    <div class="editar-perfil-btn">
+                        <button type="submit" class="btn-form" name="profesional">Cambiar a Cuenta profesional</button>
+                    </div>
+
+                </form>
+
             </div>
             {% endblock %}
 

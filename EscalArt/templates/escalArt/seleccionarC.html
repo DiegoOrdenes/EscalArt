@@ -9,6 +9,8 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Ayuda-Cliente.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/seleccionarC.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -30,7 +32,7 @@
 
     <div class="scrol"></div>
     <!--Seleccionar Categoria-->
-    <section class="select-cuenta" style="display:none ;">
+    <section class="select-cuenta" style="display:block ;">
         <h1 class="title-select">¿Cual de estas opciones te describe mejor?</h1>
         <div class="div-tipo-cuenta">
             <i class="fa-solid fa-laptop"></i>
@@ -46,7 +48,7 @@
         </div>
     </section>
     <!--Seleccionar categorias 2 (siguiente) -->
-    <section class="selec-categoria-fondo">
+    <section class="selec-categoria-fondo" style="display:none;">
         <div class="categoria-titulo">
             <h1>Selecciona una categoria</h1>
             <p>Elige la categoria que mejor se adapta a tu estilo de trabajo. Tendras la opcion de mostrar o esconder esta informacion en tu perfil</p>

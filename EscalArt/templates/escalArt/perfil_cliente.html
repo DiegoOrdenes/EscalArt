@@ -9,6 +9,8 @@
     <title>Perfil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil_cliente.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -64,11 +66,12 @@
                             <i class="far fa-image"></i>
                         </button>
 
-                        <div style="width: 100%;height:50px;background-color:white;position:absolute;left:5%;display: none;" id="AlertaOk">
-                            <button onclick="OcultarAlerta();" class="btnPfp" style="margin-left: 5%;">Cancelar </button>
-
-                            <button onclick="OcultarAlerta();" class="btn-Editar-Bio btnPfp" type="submit" name="fotoPerfil">Aceptar</button>
-
+                        <div class="div-alerta-img-cli" id="AlertaOk">
+                            <h1>¿Quieres cambiar la imagen?</h1>
+                            <div class="btn-alet-img-cli">
+                                <button onclick="OcultarAlerta();" class="btn-imagen-cli" style="margin-left: 5%;">Cancelar </button>
+                                <button onclick="OcultarAlerta();" class="btn-imagen-cli" type="submit" name="fotoPerfil">Aceptar</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -79,10 +82,12 @@
                         <i class="far fa-image"></i> Cambiar fondo
                     </button>
 
-                    <div id="AlertaOk2">
-                        <button onclick="OcultarAlerta2();" class="btn-Editar-Bio btnHeader" type="submit" name="EditHeader">Aceptar</button>
-                        <button onclick="OcultarAlerta2();" class="btnHeader" style="margin-left: 5%;">Cancelar </button>
-
+                    <div class="div-alerta-fondoimg-cli" id="AlertaOk2">
+                        <h1>¿Quieres cambiar el fondo?</h1>
+                        <div class="btn-alert-fondoimg-cli">
+                            <button onclick="OcultarAlerta2();" class="btn-fondoimagen-cli" type="submit" name="EditHeader">Aceptar</button>
+                            <button onclick="OcultarAlerta2();" class="btn-fondoimagen-cli" style="margin-left: 5%;">Cancelar </button>
+                        </div>
                     </div>
 
                 </form>
@@ -106,8 +111,8 @@
     <!--Galeria de fotos-->
     <section class="galeria_guardados" id="gl-guardados" style="display: none;">
         <section id="galeria">
-            {% for g in guardados %} {% if g.idUser == user %}
-            <img src="/{{g.idPublicacion.imagen}}" alt="Galeria de imagenes"> {%endif%} {%empty%}
+            {% for g in guardados %}
+            <img src="/{{g.idPublicacion.imagen}}" alt="Galeria de imagenes"> {%empty%}
             <h3 class="empty-saves">No hay publicaciones guardadas</h3>
             {%endfor%}
 
@@ -133,7 +138,10 @@
                     {% for c in comCli %}
 
                     <li>
-                        <a href="{% url 'estadoComisionCli' request.user.username c.idComision.idComision %}"> Comision {{c.idComision.idComision}} | {{c.idComision.idArtista.username}}</a></li>
+                        <a href="{% url 'estadoComisionCli' request.user.username c.idComision.idComision %}"> Comision {{c.idComision.idComision}} | {{c.idComision.idArtista.username}}</a>
+                    </li>
+                    {%empty%}
+                    <p class="empty-saves">No tienes ninguna comision de momento</p>
 
 
                     <!-- 13 FIN for para listar comisiones -->

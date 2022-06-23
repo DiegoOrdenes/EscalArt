@@ -1,8 +1,9 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import  AddFollower, AddLike, AddLikeComment, CategoriaSearch, RemoveFollower, ResponderComentarioView, Room, UserSearch, cambiar_pass, chats, configuracion, delete_comision, estadoComisionArt, estadoComisionCli, home , ayudacliente,  perfil_cliente, presentacion, publicacion, publicacionHome, seleccionarC, tagged
-from .views import perfil
-from .views import RegistrarUsuario,ayudacliente,delete_publicacion,datosCliente
+# from .views import  AddFollower, AddLike, AddLikeComment, CategoriaSearch, RemoveFollower, ResponderComentarioView, Room, UserSearch, cambiar_pass, chats, configuracion, delete_comision, estadoComisionArt, estadoComisionCli, home , ayudacliente,  perfil_cliente, presentacion, publicacion, publicacionHome, seleccionarC, tagged
+# from .views import perfil
+# from .views import RegistrarUsuario,ayudacliente,delete_publicacion,datosCliente
+from .views import *
 
 
 urlpatterns =[
@@ -26,7 +27,8 @@ urlpatterns =[
     path('datosCliente/<id>',datosCliente,name="datosCliente"),
     path('datosCliente/<idCliente>/comision/<idComision>',estadoComisionArt,name='estadoComisionArt'),
     path('borrar-comision/<id>',delete_comision,name='delete_comision'),
-    path('perfilCli/<id>/comision/<idComision>',estadoComisionCli,name='estadoComisionCli'),
+    path('perfilCli/<id>/comision/<idComision>',estadoComisionCli,name='estadoComisionCli'), 
+    path('sobre_nosotros',sobre_nosotros,name="sobre_nosotros"),
 
     path('configuracion',configuracion.as_view(),name="configuracion"),
     path('buscarcategoria/',CategoriaSearch.as_view(),name='buscar-categoria'),

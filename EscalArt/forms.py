@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from requests import RequestException, request
-from .models import Chat, Review,Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Usuario,Solicitud
+from .models import Chat, Review,Comentarios, Comision, Comision_Cliente, EstadoComision, Guardado, Perfil, Publicacion, Referencia, Review_cliente, Usuario,Solicitud
 
 # class CustomUserCreationForm(UserCreationForm):
 #     pass
@@ -19,7 +19,8 @@ class FormularioUsuario(forms.ModelForm):
     #     -password1: contrasenna
     #     -password2: verificacion de la contrasenna
 
-    password1 = forms.CharField(label = 'Contrasenna',widget = forms.PasswordInput(
+    password1 = forms.CharField(max_length = 50,
+        min_length = 8,label = 'Contrasenna',widget = forms.PasswordInput(
         attrs={
             'class':'form-control',
             'placeholder': 'Ingrese su contrasenna',
@@ -27,7 +28,8 @@ class FormularioUsuario(forms.ModelForm):
             'required':'required',
         }
     ))
-    password2 = forms.CharField(label = 'Contrasenna de confirmacion',widget = forms.PasswordInput(
+    password2 = forms.CharField(max_length = 50,
+        min_length = 8,label = 'Contrasenna de confirmacion',widget = forms.PasswordInput(
         attrs={
             'class':'form-control',
             'placeholder': 'Confirme contrasenna',
@@ -35,18 +37,22 @@ class FormularioUsuario(forms.ModelForm):
             'required':'required',
         }
     ))
-
+    username = forms.CharField(
+        max_length = 50,
+        min_length = 6,
+        widget=forms.TextInput(
+            attrs={
+                'class':'form-control',
+                'placeholder':'Ingrese su usuario',
+            }
+        )
+    )
 
     class Meta:
         model= Usuario
         fields = ('username','email','nombre','tipoCuenta')
         widgets = {
-            'username':forms.TextInput(
-                attrs={
-                    'class':'form-control',
-                    'placeholder':'Ingrese su usuario',
-                }
-            ),
+            
             'email':forms.EmailInput(
                 attrs={
                     'class':'form-control',
@@ -227,6 +233,11 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['review', 'rating']
 
+class ReviewClienteForm(forms.ModelForm):
+    class Meta:
+        model = Review_cliente
+        fields = ['review', 'rating']
+
 
 class ChatForm(forms.ModelForm):
     class Meta:
@@ -241,10 +252,31 @@ class EditUsuarioForm(forms.ModelForm):
         fields = ['nombre','email','username']
         exclude = ['idUser','imagen','tipoCuenta','email','username']
 
+class TipoUsuarioForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['tipoCuenta']
+        exclude = ['idUser','imagen','nombre','email','username']
+
 # editar tags perfil
 class editTagsPerfil(forms.ModelForm):
     class Meta:
         model = Perfil
         fields = ['showTags','tags']
+        widgets = {
+            'tags':forms.TextInput(
+                attrs={
+                    'class':'form-control',
+                    'placeholder':'separe las categorias con comas',
+                    'id':'inputCategorias'
+                }
+            )
+
+        }
         exclude = ['showTags','tags','idPerfil','idUser']
+class agregarTagsForm(forms.ModelForm):
+    class Meta:
+        model = Perfil
+        fields = ['tags']
+        
 # fin editar tags perfil

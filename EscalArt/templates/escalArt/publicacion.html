@@ -9,6 +9,8 @@
     <title>Perfil Artista</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer"
     />
+    <link rel="shortcut icon" type="image/png" href="{% static 'EscalArt/img/favicon.ico' %}" />
+
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/perfil.css' %}">
     <link type="text/css" rel="stylesheet" href="{% static 'EscalArt/css/Menu-Fotter.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -42,8 +44,9 @@
                     <h2 class="ver-publi-titulo"> {{publi.titulo}} </h2>
 
                     <!-- <img id="img-activa" src="{% static 'EscalArt/img/foto_1.jpg' %}" alt="Galeria de imagenes"> -->
-                    <img src="/{{publi.imagen}}" alt="Galeria de imagenes">
-
+                    <div class="img-publicacion-movil">
+                        <img src="/{{publi.imagen}}" alt="Galeria de imagenes">
+                    </div>
 
                 </div>
                 <div class="ver-publi_2">
@@ -117,7 +120,6 @@
                                 {% if publi.idUser == user %}
                                 <li><a href="{%url 'delete_publicacion' publi.idPublicacion %}"><button><i class="fa-solid fa-trash-can"></i>Eliminar</button></a></li>
                                 {%endif%}
-                                <span class="linea_2"></span>
                             </ul>
                         </div>
                         <span></span>
@@ -243,7 +245,7 @@
 
                                 <!--  -->
                                 {%empty%}
-                                <p>Aun no hay comentarios</p>
+                                <p class="no-coment">Se el primero en comentar.</p>
                                 <!--  -->
                                 {% endfor %}
                             </div>
@@ -301,7 +303,7 @@
     #settings-post {
         position: absolute;
         width: 210px;
-        height: 216px;
+        height: fit-content;
         background-color: rgba(255, 255, 255, 0.779);
         z-index: 40;
         display: none;

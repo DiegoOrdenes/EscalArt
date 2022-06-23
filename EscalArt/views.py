@@ -12,25 +12,48 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render,redirect,HttpResponse
 # from .forms import CustomUserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, update_session_auth_hash
 from django.contrib.auth.views import PasswordChangeView
+
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import CreateView
+from django.contrib.auth.forms import PasswordChangeForm
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 
-from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, EditComArtForm, EditUsuarioForm, ReferenciasForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, calificacionForm, editFotoPerfilForm, editPerfilForm, editTagsPerfil, perfilForm, publicacionForm, GuardarPostForm
-from .models import Chat, ChatRoom, Comentarios, Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Solicitud, Usuario, Guardado, Review
+from EscalArt.forms import ChatForm, ComisionArtistaForm, ComisionClienteForm, EditComArtForm, EditUsuarioForm, ReferenciasForm, ReviewClienteForm, ReviewForm,ComentarioForm, FormularioUsuario, SolicitudForm, TipoUsuarioForm, agregarTagsForm, calificacionForm, editFotoPerfilForm, editPerfilForm, editTagsPerfil, perfilForm, publicacionForm, GuardarPostForm
+from .models import Chat, ChatRoom, Comentarios, Comision, Comision_Cliente, EstadoComision, Perfil, Publicacion, Referencia, Review_cliente, Solicitud, TipoCuenta, Usuario, Guardado, Review
 
 
 
 
 # Create your views here.
 def ayudacliente(request):
-    return render(request,'escalArt/ayudacliente.html')
+    if(request.user.is_authenticated):
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+        data = {
+            'menuPfp':menuPfp
+        }
+    else:
+        data = {
+            
+        }
 
+    return render(request,'escalArt/ayudacliente.html',data)
+def sobre_nosotros(request):
+    if(request.user.is_authenticated):
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+        data = {
+            'menuPfp':menuPfp
+        }
+    else:
+        data = {
+
+        }
+
+    return render(request,'escalArt/sobre_nosotros.html',data)
 
 def perfil_cliente(request,id):
     try:
@@ -39,8 +62,9 @@ def perfil_cliente(request,id):
         return redirect(to='perfil_cliente', id=request.user.username )
     list = Perfil.objects.all()
     algo = Perfil.objects.get(idUser = request.user)
-    guardados = Guardado.objects.all()
+    guardados = Guardado.objects.filter(idUser = user)
     comisionCli = Comision_Cliente.objects.filter(idCliente = request.user)
+    menuPfp = Usuario.objects.get(idUser = request.user.idUser)
 
     data = {
         'userInfo':user,
@@ -49,6 +73,7 @@ def perfil_cliente(request,id):
         'edit': editPerfilForm(instance = algo),
         'guardados':guardados,
         "comCli":comisionCli,
+        'menuPfp':menuPfp,
     }
     if(request.user != user):
         return redirect(to='perfil_cliente', id=request.user.username )
@@ -108,6 +133,7 @@ def perfil(request,id):
 
     following = Perfil.objects.filter(seguidores= artista.idUser )
     following_count = len(following)
+    print(f'cuenta de siguiendo = {following_count}')
 
     if len(followers) ==0:
         is_following = False
@@ -152,6 +178,7 @@ def perfil(request,id):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
 
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
         
         
 
@@ -173,6 +200,7 @@ def perfil(request,id):
             'perfilform':calificacionForm(instance = usuario),
             'reviews':reviews,
             'solicitudForm': SolicitudForm(),
+            'menuPfp':menuPfp,
 
         }
     else:
@@ -191,6 +219,7 @@ def perfil(request,id):
             'perfilform':calificacionForm(instance = usuario),
 
             'reviews':reviews,
+            'following_count':following_count,
 
 
             # "publi":publi
@@ -261,56 +290,62 @@ def perfil(request,id):
                 else:
                     print(foto.errors)
         elif 'enviarReview' in request.POST:
-            review = ReviewForm(request.POST)
-            perfil = calificacionForm(request.POST, instance = usuario)
-            
+            if (request.user.is_authenticated):
+                review = ReviewForm(request.POST)
+                perfil = calificacionForm(request.POST, instance = usuario)
+                
 
-            if review.is_valid():
-                obj = review.save(commit=False)
-                obj.idPerfil = usuario
-                obj.idUser = request.user
-                obj.review = request.POST['review']
-                obj.rating = request.POST['rating']
-                obj.save()
+                if review.is_valid():
+                    obj = review.save(commit=False)
+                    obj.idPerfil = usuario
+                    obj.idUser = request.user
+                    obj.review = request.POST['review']
+                    obj.rating = request.POST['rating']
+                    obj.save()
 
-                reviews = Review.objects.filter(idPerfil = usuario)
-                rating= reviews.values("rating")
-                # print(f'ayuda: {rating}')
-                cant_datos = len(reviews)
-                # print(cant_datos)
-                suma = 0
-                for i in rating:
-                    # print(f'i es: {i}')
-                    i = i.get('rating')
-                    suma = suma + i
-                    # print(f'suma for = {suma}')
-                print(f'post suma = {suma}')   
-                promedio = suma/cant_datos
-                    
-                data['calificacion'] =round(promedio)
-                if perfil.is_valid():  
-                    profile = perfil.save(commit=False)                    
-                    
-                    profile.calificacion = request.POST['calificacion']
-                    profile.calificacion = round(promedio)
-                    profile.save()
-                    data['reviews'] = Review.objects.filter(idPerfil = usuario).order_by('-fechaCreacion')
+                    reviews = Review.objects.filter(idPerfil = usuario)
+                    rating= reviews.values("rating")
+                    # print(f'ayuda: {rating}')
+                    cant_datos = len(reviews)
+                    # print(cant_datos)
+                    suma = 0
+                    for i in rating:
+                        # print(f'i es: {i}')
+                        i = i.get('rating')
+                        suma = suma + i
+                        # print(f'suma for = {suma}')
+                    print(f'post suma = {suma}')   
+                    promedio = suma/cant_datos
+                        
+                    data['calificacion'] =round(promedio)
+                    if perfil.is_valid():  
+                        profile = perfil.save(commit=False)                    
+                        
+                        profile.calificacion = request.POST['calificacion']
+                        profile.calificacion = round(promedio)
+                        profile.save()
+                        data['reviews'] = Review.objects.filter(idPerfil = usuario).order_by('-fechaCreacion')
+                    else:
+                        print(perfil.errors)                
                 else:
-                    print(perfil.errors)                
+                    print(review.errors)
             else:
-                print(review.errors)
+                messages.error('Tienes que estar loggeado para hacer esto')
         elif 'solicitud' in request.POST:
-            form = SolicitudForm(request.POST)
-        
-            if form.is_valid():
-                obj = form.save(commit = False)
-                obj.idSolicitud = f"{request.user}{artista.username}"
-                obj.idCliente = request.user
-                obj.usernameArtista = artista.username
-                obj.save()
-                # return render(request,'escalArt/mensajes.html',data)
+            if (request.user.is_authenticated):
+                form = SolicitudForm(request.POST)
+            
+                if form.is_valid():
+                    obj = form.save(commit = False)
+                    obj.idSolicitud = f"{request.user}{artista.username}"
+                    obj.idCliente = request.user
+                    obj.usernameArtista = artista.username
+                    obj.save()
+                    # return render(request,'escalArt/mensajes.html',data)
+                else:
+                    print(form.errors)
             else:
-                print(form.errors)
+                data['message'] = 'Error. Debes estar loggeado con una cuenta para realizar esta accion'
         else:
             print('no se hizo ni un post')        
     
@@ -325,7 +360,8 @@ def publicacion(request,artista,post):
     list = Perfil.objects.all()
     listArtista = Usuario.objects.all()
     try:
-        guardado = Guardado.objects.get(idPublicacion = post)
+        guardado = Guardado.objects.get(idPublicacion = post, idUser = request.user)
+
         
     except:
         guardado = None
@@ -335,6 +371,8 @@ def publicacion(request,artista,post):
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+
         if guardado is None:
             data = {
                 "list":Artista,
@@ -349,6 +387,7 @@ def publicacion(request,artista,post):
                 'guardarPost':GuardarPostForm(),
                 'commentForm':commentForm,
                 'comentarios':comentarios,
+                'menuPfp':menuPfp,
 
             }
         else:
@@ -366,6 +405,7 @@ def publicacion(request,artista,post):
                 'guardado':guardado,
                 'commentForm':commentForm,
                 'comentarios':comentarios,
+                'menuPfp':menuPfp,
 
             }
     else:
@@ -395,12 +435,12 @@ def publicacion(request,artista,post):
                 obj.idPublicacion = Publicacion.objects.get(idPublicacion = request.POST["idPost"])
                 print(obj.idPublicacion)
                 obj.save()
-                data['guardado'] = Guardado.objects.get(idPublicacion = obj.idPublicacion)
+                data['guardado'] = Guardado.objects.get(idPublicacion = obj.idPublicacion, idUser = request.user)
             else:
                 print(guardarPost.errors)
         
         elif 'eliminarPostGuardado' in request.POST:
-            guardado = Guardado.objects.get(idPublicacion=post)
+            guardado = Guardado.objects.get(idPublicacion=post, idUser = request.user)
             guardado.delete()
             data['guardado'] = None
         elif 'comentar' in request.POST:
@@ -427,11 +467,15 @@ def publicacionHome(request,artista,post):
     guardados = Guardado.objects.all()
     comentarios = Comentarios.objects.filter(idPublicacion = post).order_by('-fechaCreacion')
     commentForm = ComentarioForm()
+    listArtista = Perfil.objects.all().annotate(followers=Count('seguidores')).order_by('-followers')[:4]
+
         
 
+   
 
     try:
-        guardado = Guardado.objects.get(idPublicacion = post)
+        guardado = Guardado.objects.get(idPublicacion = post, idUser = request.user)
+
         
     except:
         guardado = None
@@ -439,11 +483,13 @@ def publicacionHome(request,artista,post):
 
     Post = Publicacion.objects.all()
     list = Perfil.objects.all()
-    listArtista = Usuario.objects.all()
-    
+    listaUsuarios = Usuario.objects.all()
+    print(f'guardado 2 = {guardado}')
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+
         if guardado is None:
             data = {
                 "list":Artista,
@@ -454,11 +500,13 @@ def publicacionHome(request,artista,post):
                 'edit': editPerfilForm(instance = algo),
                 'foto':editFotoPerfilForm(instance = user),
                 "listArt":listArtista,
+                'listaUsuarios':listaUsuarios,
                 "publi":publi,
                 'guardarPost':GuardarPostForm(),
                 'guardados':guardados,
                 'comentarios':comentarios,
                 'commentForm':commentForm,
+                'menuPfp':menuPfp,
 
 
             }
@@ -477,7 +525,9 @@ def publicacionHome(request,artista,post):
                 'guardados':guardados,
                 'guardado':guardado,    
                 'comentarios':comentarios,
+                'listaUsuarios':listaUsuarios,
                 'commentForm':commentForm,
+                'menuPfp':menuPfp,
                           
             }
             
@@ -493,6 +543,7 @@ def publicacionHome(request,artista,post):
 
             "publi":publi,
             'comentarios':comentarios,
+            'listaUsuarios':listaUsuarios,
             'commentForm':commentForm,
            
         }
@@ -507,12 +558,13 @@ def publicacionHome(request,artista,post):
                 obj.idPublicacion = Publicacion.objects.get(idPublicacion = request.POST["idPost"])
                 print(obj.idPublicacion)
                 obj.save()
-                data['guardado'] = Guardado.objects.get(idPublicacion = obj.idPublicacion)
+                data['guardado'] = Guardado.objects.get(idPublicacion = obj.idPublicacion, idUser = request.user)
             else:
                 print(guardarPost.errors)
         
         elif 'eliminarPostGuardado' in request.POST:
-            guardado = Guardado.objects.get(idPublicacion=post)
+            guardado = Guardado.objects.get(idPublicacion = post, idUser = request.user)
+
             guardado.delete()
             data['guardado'] = None
 
@@ -554,16 +606,17 @@ def tagged(request, slug):
 
     tag = get_object_or_404(Tag, slug=slug)
     
+    listArtista = Perfil.objects.all().annotate(followers=Count('seguidores')).order_by('-followers')[:4]
 
     list = Perfil.objects.all()
     post = Publicacion.objects.filter(tags=tag)
-    listArtista = Usuario.objects.all()
     common_tags = Tag.objects.all()[:10]
 
     # print(request.user)
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
 
         data = {
         "perfil":list,
@@ -576,6 +629,7 @@ def tagged(request, slug):
         "listArt":listArtista,
         'common_tags':common_tags,
         'tag':tag,
+        'menuPfp':menuPfp,
 
     }
     else:
@@ -594,26 +648,29 @@ def tagged(request, slug):
 from django.db.models import Count
 def home (request):
     list = Perfil.objects.all()
-    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')).order_by('-likes')
-    listArtista = Usuario.objects.all()
+    post = Publicacion.objects.all().annotate(likes=Count('cantLikes')).order_by('-likes')[:6]
+    listArtista = Perfil.objects.all().annotate(followers=Count('seguidores')).order_by('-followers')[:4]
     common_tags = Tag.objects.all()[:10]
+    artistas = Usuario.objects.filter(tipoCuenta = 2)
+    print(artistas)
     # print(request.user)
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
 
         data = {
-        "perfil":list,
-        "posts":post,
-        'form':publicacionForm(),
-        
-        'edit': editPerfilForm(instance = algo),
-        'foto':editFotoPerfilForm(instance = user),
+            "perfil":list,
+            "posts":post,
+            'form':publicacionForm(),
+            
+            'edit': editPerfilForm(instance = algo),
+            'foto':editFotoPerfilForm(instance = user),
 
-        "listArt":listArtista,
-        'common_tags':common_tags,
-
-    }
+            "listArt":listArtista,
+            'common_tags':common_tags,
+            'menuPfp':menuPfp,
+        }
     else:
         data = {
         "perfil":list,
@@ -663,12 +720,14 @@ def home (request):
 def RegistrarUsuario (request):
     list = Perfil.objects.all()
     post = Publicacion.objects.all().annotate(likes=Count('cantLikes')).order_by('-likes')
-    listArtista = Usuario.objects.all()
+    listArtista = Perfil.objects.all().annotate(followers=Count('seguidores')).order_by('-followers')[:4]
+
     common_tags = Tag.objects.all()[:10]
     # print(request.user)
     if (request.user.is_authenticated):
         algo = Perfil.objects.get(idUser = request.user)
         user = Usuario.objects.get(idUser =  request.user.idUser)
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
 
         data = {
         "perfil":list,
@@ -682,6 +741,7 @@ def RegistrarUsuario (request):
         'common_tags':common_tags,
         "perfil":perfilForm(),
         'form':FormularioUsuario(),
+        'menuPfp':menuPfp,
 
     }
     else:
@@ -708,7 +768,7 @@ def RegistrarUsuario (request):
                 obj.save()
 
                 obj2 = perfil.save(commit=False)
-                obj2.idUser = Usuario.objects.get(nombre = obj.nombre)
+                obj2.idUser = Usuario.objects.get(username = obj.username)
                 print(f'quesesto: {obj2.idUser}')
 
                 obj2.save()
@@ -721,6 +781,8 @@ def RegistrarUsuario (request):
         else:
             print('algo paso wn matate')
             print(formulario.errors)
+            data['error'] =formulario.errors
+
             print(perfil.errors)
     return render(request,'registration/registro.html',data)
 
@@ -728,7 +790,6 @@ def RegistrarUsuario (request):
 class AddLike(View):
     def post(self, request, pk, *args, **kwargs):
         post = Publicacion.objects.get(idPublicacion = pk)
-        comment = Comentarios.objects.get(pk = pk)
         is_liked = False
 
         for like in post.cantLikes.all():
@@ -742,18 +803,7 @@ class AddLike(View):
         if is_liked:
             post.cantLikes.remove(request.user)
 
-        comment_liked = False
-
-        for like in comment.cantLikes.all():
-            if like == request.user:
-                comment_liked = True
-                break
-            
-        if not comment_liked:
-            comment.cantLikes.add(request.user)
-
-        if comment_liked:
-            comment.cantLikes.remove(request.user)    
+          
         
         next = request.POST.get('next','/')
 
@@ -799,34 +849,88 @@ class RemoveFollower(View):
 class UserSearch(View):
     def get(self,request,*args,**kwargs):
         try:
+            usuarios = Usuario.objects.all()
             query = self.request.GET.get('query')
             
             if Q(idUser__username__icontains = query):
-                lista_perfil = Perfil.objects.filter(
+                lista_perfilUsername = Perfil.objects.filter(
                     Q(idUser__username__icontains = query)
                 )
+                print(f'perfiles segun username: {lista_perfilUsername}')
+                
             
             if Q(idUser__nombre__icontains = query):
                 lista_perfil = Perfil.objects.filter(
                     Q(idUser__nombre__icontains = query)
                 )
+                print(f'perfiles segun nombre: {lista_perfil}')
+
             if Q(tags__name__icontains = query):
                 lista_post = Publicacion.objects.filter(
                     Q(tags__name__icontains = query)
                 )
                 lista_perfil_tag = Perfil.objects.filter(
                     Q(tags__name__icontains = query)
-                )           
+                )
+            post_list = []
+            for post in lista_post:
+                if post in post_list:
+                    pass
+                else:
+                    post_list.append(post)
+            lista_post = post_list
+            print(f'lista posts: {lista_post}')
+
+            lista_perfilNombre = []
+            for perfil in lista_perfil:
+                print(perfil)
+                print(perfil.idUser.tipoCuenta)
+                if (str(perfil.idUser.tipoCuenta) == 'artista'):
+                    lista_perfilNombre.append(perfil)
+                else:
+                    print('no ingreso al if ???')
+                print(lista_perfilNombre)
+            lista_perfil = lista_perfilNombre
+
+            lista_perfil_usernames = []
+            for perfil in lista_perfilUsername:
+                print(perfil)
+                print(perfil.idUser.tipoCuenta)
+                if (str(perfil.idUser.tipoCuenta) == 'artista'):
+                    lista_perfil_usernames.append(perfil)
+                else:
+                    print('no ingreso al if ??? usernames')
+                print(lista_perfilUsername)
+            lista_perfilUsername = lista_perfil_usernames
+
+            
         except:
             lista_perfil = None
             lista_post = None
             lista_perfil_tag = None
+            lista_perfilUsername = None
         
-        data = {
-            'lista_perfil':lista_perfil,
-            'lista_post':lista_post,
-            'lista_perfil_tag':lista_perfil_tag,
-        }
+        print(f'perfiles-username: {lista_perfilUsername}')
+        print(f'perfiles-nombre: {lista_perfil}')
+        if(request.user.is_authenticated):
+            menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+
+            
+            data = {
+                'lista_perfil':lista_perfil,
+                'lista_post':lista_post,
+                'lista_perfil_tag':lista_perfil_tag,
+                'lista_perfilUsername':lista_perfilUsername,
+                'menuPfp':menuPfp,
+            }
+        else:
+            data = {
+                'lista_perfil':lista_perfil,
+                'lista_post':lista_post,
+                'lista_perfil_tag':lista_perfil_tag,
+                'lista_perfilUsername':lista_perfilUsername,
+
+            }
         return render(request, 'escalArt/search.html',data)
 class CategoriaSearch(View):
     def get(self,request,*args,**kwargs):
@@ -860,7 +964,7 @@ class CategoriaSearch(View):
                 i = i.get('name')
                 print(i)
                 lista_tag.append(i)
-
+            
         except:
             lista_tag = []
         
@@ -877,6 +981,7 @@ class CategoriaSearch(View):
                 exists = True
             else:
                 exists = False
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
         
         data = {
             'lista_tag':lista_tag,
@@ -885,6 +990,7 @@ class CategoriaSearch(View):
             'perfil':perfilUser,
             'Notags':Notags,
             'existe':exists,
+            'menuPfp':menuPfp,
         }
         return render(request, 'escalArt/searchCategorias.html',data)
     def post(self,request,*args,**kwargs):
@@ -996,6 +1102,8 @@ class chats(LoginRequiredMixin,View):
         # estadoCom = EstadoComision.objects.get(idEstado = 1)
         solicitud = Solicitud.objects.all()
         referencias = Referencia.objects.all()
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+
         data ={
             'list': artista,
             'sol':solicitud,
@@ -1003,7 +1111,8 @@ class chats(LoginRequiredMixin,View):
             'comArt':ComisionArtistaForm,
             'comCli':ComisionClienteForm,
             'ref':ReferenciasForm(),
-            'refAll': referencias
+            'refAll': referencias,
+            'menuPfp':menuPfp,
 
         }
         return render(request, 'escalArt/chats.html',data)
@@ -1036,6 +1145,7 @@ class Room(LoginRequiredMixin,View):
         #     else:
         #         cli = user
         #         break
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
         
 
         data ={
@@ -1051,6 +1161,7 @@ class Room(LoginRequiredMixin,View):
             'sala':room,
             'cliente':soliCli,
             'refAll':referencias,
+            'menuPfp':menuPfp,
             # 'users':users
         }
         return render(request,'escalArt/pruebaRoom.html',data)
@@ -1087,7 +1198,7 @@ class Room(LoginRequiredMixin,View):
                     obj2= comCli.save(commit=False)
                     obj2.idComision = obj
                     
-                    obj2.idCliente = Usuario.objects.get(nombre = request.POST['cliente'])
+                    obj2.idCliente = Usuario.objects.get(username = request.POST['cliente'])
                     obj2.save()
                 else:
                     print(comCli.errors)
@@ -1103,20 +1214,61 @@ class Room(LoginRequiredMixin,View):
 # Fin chats
 
 # Datos cliente
-def datosCliente(request,id):    
+def datosCliente(request,id):
+    if (id == request.user.username):
+        return redirect(to='perfil_cliente', id=request.user.username )
+
     user = Usuario.objects.get(username = id)
     comCli = Comision_Cliente.objects.filter(idCliente = user)
     listaPerfiles = Perfil.objects.all()
     perfil = Perfil.objects.get(idUser = user.idUser)
     referencias = Referencia.objects.all()
+    menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+    reviews = Review_cliente.objects.filter(idPerfil = perfil.idPerfil)
+
     data = {
         'userInfo':user,
         "perfiles":listaPerfiles,
         'perfil':perfil,
         'referencias':referencias,
         'comCli':comCli,
-        
+        'menuPfp':menuPfp,
+        'reviews':reviews,
     }
+
+    if (request.method=='POST'):
+        if 'enviarReview' in request.POST:
+           
+            review = ReviewClienteForm(request.POST)
+            
+
+            if review.is_valid():
+                obj = review.save(commit=False)
+                obj.idPerfil = perfil
+                obj.idUser = request.user
+                obj.review = request.POST['review']
+                obj.rating = request.POST['rating']
+                obj.save()
+
+                # reviews = Review.objects.filter(idPerfil = usuario)
+                # rating= reviews.values("rating")
+                # # print(f'ayuda: {rating}')
+                # cant_datos = len(reviews)
+                # # print(cant_datos)
+                # suma = 0
+                # for i in rating:
+                #     # print(f'i es: {i}')
+                #     i = i.get('rating')
+                #     suma = suma + i
+                #     # print(f'suma for = {suma}')
+                # print(f'post suma = {suma}')   
+                # promedio = suma/cant_datos
+                    
+                # data['calificacion'] =round(promedio)
+                              
+            else:
+                print(review.errors)
+            
     return render(request, 'escalArt/datosCliente.html',data)
 # Fin datos cliente
 
@@ -1129,6 +1281,9 @@ def estadoComisionArt(request,idCliente,idComision):
     listaPerfiles = Perfil.objects.all()
     perfil = Perfil.objects.get(idUser = user.idUser)
     referencias = Referencia.objects.all()
+    menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+    reviews = Review_cliente.objects.filter(idPerfil = perfil.idPerfil)
+
     data = {
         'userInfo':user,
         "perfiles":listaPerfiles,
@@ -1136,7 +1291,9 @@ def estadoComisionArt(request,idCliente,idComision):
         'referencias':referencias,
         'comCli':comCli,
         'comision':comision,
-        'form':EditComArtForm()
+        'form':EditComArtForm(),
+        'menuPfp':menuPfp,
+        'reviews':reviews,
 
     }
 
@@ -1162,9 +1319,11 @@ def estadoComisionCli(request,id,idComision):
         return redirect(to='perfil_cliente', id=request.user.username )
     list = Perfil.objects.all()
     algo = Perfil.objects.get(idUser = request.user)
-    guardados = Guardado.objects.all()
+    guardados = Guardado.objects.filter(idUser = user)
+
     comisionCli = Comision_Cliente.objects.filter(idCliente = request.user)
     comision = Comision_Cliente.objects.get(idComision = idComision)
+    menuPfp = Usuario.objects.get(idUser = request.user.idUser)
 
     data = {
         'userInfo':user,
@@ -1174,7 +1333,7 @@ def estadoComisionCli(request,id,idComision):
         'guardados':guardados,
         "comCli":comisionCli,
         'comision':comision,
-
+        'menuPfp':menuPfp,
     }
     if(request.user != user):
         return redirect(to='perfil_cliente', id=request.user.username )
@@ -1196,7 +1355,7 @@ def delete_publicacion(request,id):
     post = Publicacion.objects.get(idPublicacion=id)
     post.delete()
 
-    return redirect(to='home')
+    return redirect(to='perfil', id = request.user.username)
 
 #  Fin delete
 
@@ -1207,6 +1366,7 @@ class configuracion (LoginRequiredMixin,View):
         usuario = Usuario.objects.get(idUser = request.user.idUser)        
         common_tags = Tag.objects.all().order_by('name')[:10]
         perfilUser = Perfil.objects.get(idUser = request.user)
+        
         Notags =[]
         tagPerfil = perfilUser.tags.all()
         # print(tagPerfil)
@@ -1220,12 +1380,15 @@ class configuracion (LoginRequiredMixin,View):
                 Notags.append(ctags)
                 # print(Notags)
 
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
         
         data = {
             'usuario':usuario,
             'common_tags':common_tags,
             'perfil':perfilUser,
             'Notags':Notags,
+            'formTags' : agregarTagsForm(),
+            'menuPfp':menuPfp,
         }       
 
         return render(request,'escalArt/Configuracion.html',data)
@@ -1310,6 +1473,8 @@ class configuracion (LoginRequiredMixin,View):
                             print('ya tienes esta tag')
                         else:
                             perfilUser.tags.add(tagElegida)
+
+                    
                     
                     NotChecked = []
                     tag= common_tags.values("name")                    
@@ -1332,6 +1497,14 @@ class configuracion (LoginRequiredMixin,View):
                 else:
                     print(f'error en editar tags: {tagsForm.errors}')    
                 # if tagsForm
+            elif 'profesional' in request.POST:
+                tipoCuentaFrom = TipoUsuarioForm(request.POST,instance=usuario)
+                if tipoCuentaFrom.is_valid():
+                    obj = tipoCuentaFrom.save(commit=False)
+                    obj.tipoCuenta = TipoCuenta.objects.get(idTipoCuenta=request.POST['tipoCuenta'])
+                    obj.save()
+                else:
+                    print(tipoCuentaFrom.errors)
                 
             next = request.POST.get('next','/')
         return HttpResponseRedirect(next)
@@ -1341,12 +1514,17 @@ def seleccionarC(request):
 # Cambiar contrasenna
 class cambiar_pass(PasswordChangeView,LoginRequiredMixin,View):
     def get(self,request):
-        usuario = Usuario.objects.get(idUser = request.user.idUser)        
+        usuario = Usuario.objects.get(idUser = request.user.idUser) 
+        menuPfp = Usuario.objects.get(idUser = request.user.idUser)
+        
+           
         data = {
-            'usuario':usuario
-        }       
+            'usuario':usuario,
+            'menuPfp':menuPfp,
+        }      
 
         return render(request,'registration/cambiar_contra_form.html',data)
+        
 # Fin cambair contrasenna
 
 # presentacion?

@@ -12,13 +12,30 @@
 
 
         <ul class="menu">
+            {% if user.is_authenticated %}
+            <!--Mostrar esto si el usuario esta logeado-->
+
             <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
             <li><a href="{% url 'chats' %}"><i class="fa-solid fa-comment-dots"></i></a></li>
-            <li>
-                <a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a>
-            </li>
-            {% if user.is_authenticated %}
-            <li onclick="mostrarConfig();"> <a><i class="fa-solid fa-circle-user"></i></a></li> {%endif%}
+            <li><a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a></li>
+            <li onclick="mostrarConfig();"><a>
+                {% if menuPfp.imagen %}
+                    <img src="/{{menuPfp.imagen}}" alt="" style="width: 42px;height:42px;border-radius: 50px;"> <span  style="color:white;font-size: 1rem;">{{request.user.username}}</span>
+                {% else %}
+                <i style="color: white;" class="fa-solid fa-circle-user"></i><span>   </span><span style="color:white;font-size: 1rem;">{{request.user.username}}</span>
+                {% endif %}
+                </a></li>
+            {%else%}
+            <!--Mostrar si el Usuario no esta logeado-->
+
+            <li class="home-not-loged"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
+            <div class="menu-logearse">
+                <ul>
+                    <li><a href="{% url 'login' %}"><button>Iniciar Sesion</button></a></li>
+                    <li><a href="{% url 'registro' %}"><button>Registrarse</button></a></li>
+                </ul>
+            </div>
+            {%endif%}
         </ul>
     </nav>
     {% if user.is_authenticated %}
@@ -27,6 +44,8 @@
 
             {% if user.tipoCuenta.tipoCuenta == 'artista' %}
             <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' user.username %}">Perfil</a></li>
+            <li> <i class="fa-solid fa-bookmark"></i><a href="{% url 'perfil_cliente' user.username %}">Guardados</a></li>
+
             {% else %}
             <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil_cliente' user.username %}">Perfil</a></li>
             {% endif %}
@@ -38,3 +57,55 @@
     </div>
     {%endif%}
 </header>
+
+
+{% comment %}
+<header>
+    <nav class="nav">
+        <div class="logo">EscalArt</div>
+        <form method="GET" class="search-box" action=" {% url 'buscar-perfil' %}">
+            <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
+            <button type="submit" class="icon">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        <ul class="menu">
+            {% if user.is_authenticated %}
+            <!--Mostrar esto si el usuario esta logeado-->
+
+            <li><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
+            <li><a href="{% url 'chats' %}"><i class="fa-solid fa-comment-dots"></i></a></li>
+            <li><a href="{% url 'ayudacliente' %}"><i class="fa-solid fa-question"></i></a></li>
+            <li onclick="mostrarConfig();"> <a><i class="fa-solid fa-circle-user"></i></a></li>
+            {%else%}
+            <!--Mostrar si el Usuario no esta logeado-->
+
+            <li class="home-not-loged"><a href="{% url 'home' %}"><i class="fa-solid fa-house-chimney"></i></a></li>
+            <div class="menu-logearse">
+                <ul>
+                    <li><a href="{% url 'login' %}"><button>Iniciar Sesion</button></a></li>
+                    <li><a href="{% url 'registro' %}"><button>Registrarse</button></a></li>
+                </ul>
+            </div>
+            {%endif%}
+        </ul>
+    </nav>
+    <!--Mostrar si hace click en el perfil(Logeado)-->
+    <div id="Configuracion">
+        <ul class="Configuracion-menu">
+            {% if user.tipoCuenta.tipoCuenta == 'artista' %}
+            <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil' user.username %}">Perfil</a></li>
+
+            {% else %}
+            <li><i class="fa-solid fa-circle-user"></i><a href="{% url 'perfil_cliente' user.username %}">Perfil</a></li>
+            {% endif %}
+
+
+            <li><i class="fa-solid fa-gear"></i><a href="{% url 'configuracion' %}">Configuracion</a></li>
+            <span class="linea_2"></span>
+            <li class="Cerrar-Sesion"><a href="{% url 'logout' %}">Cerrar Sesion</a></li>
+
+        </ul>
+    </div>
+</header>
+{% endcomment %}

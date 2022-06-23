@@ -245,7 +245,7 @@
     </div>
     <form method="GET" class="buscar-categoria" action=" {% url 'buscar-categoria' %}">
         <input name="query" value="{{request.GET.query}}" type="text" placeholder="Buscando..." class="form-control" aria-describedby="basic-addon1">
-        <button type="submit" class="icon">
+        <button type="submit" class="icon searchCategoria">
             <i class="fas fa-search"></i>
         </button>
     </form>
@@ -315,8 +315,9 @@
             <div class="editar-perfil-btn">
                 <button type="submit" class="btn-form" name="editTags">Guardar cambios</button>
             </div>
+        </div>
+
     </form>
 
-    </div>
 </div>
 {% endblock %}
