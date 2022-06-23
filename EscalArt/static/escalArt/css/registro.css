@@ -221,6 +221,9 @@ body {
     margin-bottom: -20px;
 }
 
+
+/* Diseño Defaul boton */
+
 .contact-form form button {
     background: #86C332;
     border: 0;
@@ -235,6 +238,26 @@ body {
     transition: background-color 1s ease-out;
     outline: 0;
 }
+
+
+/* Diseño de boton 2 */
+
+
+/* .contact-form form button {
+    margin: 10px 0;
+    background: none;
+    border: 2px solid #fff;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+    border-radius: 0;
+    transition: 0.5s;
+}
+
+.contact-form form button:hover {
+    background: #86C332;
+    color: #fff;
+} */
 
 
 /*
@@ -279,4 +302,8 @@ body {
         padding: 1em;
         text-align: left;
     }
+}
+
+.search-box button {
+    margin-top: -40px;
 }

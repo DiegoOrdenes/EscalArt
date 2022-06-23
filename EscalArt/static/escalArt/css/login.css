@@ -75,18 +75,22 @@ body {
 }
 
 .container__form .boton-form {
-    width: 200px;
-    border-radius: 10px;
-    background-color: #86C332;
-    color: white;
-    margin-top: 30px;
-    border: none;
-    border-bottom: 1px solid #000000;
+    margin: 10px 0;
+    background: none;
+    border: 2px solid #fff;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+    transition: 0.5s;
 }
 
-.container__form .boton-form:active {
-    background-color: #0b5a1c;
-    width: 190px;
+.container__form .boton-form:hover {
+    background-color: #86C332;
+    color: #fff;
+}
+
+.btn-inicio-sesion {
+    text-align: center;
 }
 
 .btn-guardar {
@@ -118,4 +122,12 @@ body {
         padding: 20px;
         opacity: 0.9;
     }
+}
+
+.alert-error {
+    color: #fff;
+}
+
+.search-box button {
+    margin-top: -40px;
 }

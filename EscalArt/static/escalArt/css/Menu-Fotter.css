@@ -19,18 +19,17 @@
 }
 
 #Configuracion {
-    position: absolute;
+    position: fixed;
     width: 210px;
-    height: 216px;
+    height: fit-content;
     background-color: #fff;
     z-index: 40;
     display: none;
     border-radius: 20px;
     margin: 5px 20px;
-    float: right;
-    right: 0;
+    float: left;
     box-shadow: 2px solid #000;
-    position: fixed;
+    right: 0;
 }
 
 #Configuracion .Configuracion-menu {
@@ -45,6 +44,7 @@
 
 #Configuracion .Configuracion-menu li a {
     text-decoration: none;
+    color: #2f3640;
 }
 
 #Configuracion .Configuracion-menu span {
@@ -60,7 +60,8 @@
 .Configuracion.active {
     background: #12130F;
     position: fixed;
-    z-index: 1;
+    z-index: 20;
+    display: block;
 }
 
 
@@ -82,13 +83,20 @@ header {
     padding: 1px;
     margin: 0;
     position: relative;
-    z-index: inherit;
+}
+
+.nav ul {
+    margin-bottom: 0;
 }
 
 .nav.active {
     background: #12130F;
     position: fixed;
-    z-index: 10;
+    z-index: 200;
+}
+
+#Configuracion.active {
+    margin-top: 105px;
 }
 
 .nav.active .logo,
@@ -97,7 +105,7 @@ header {
 }
 
 .nav.active a:hover {
-    background: #86C332;
+    /* background: #86C332; */
     color: #fff;
 }
 
@@ -132,8 +140,54 @@ header {
     border-radius: 15px;
 }
 
+
+/* Otro diseño de boton */
+
+.menu-logearse button {
+    padding: 10px 15px;
+    width: 180px;
+    margin: 0 10px;
+    background: none;
+    border: 2px solid #fff;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;
+    transition: 0.5s;
+}
+
+
+/* .menu-logearse {
+    padding: 0 15px;
+    position: relative;
+} */
+
+.menu-logearse ul {
+    margin-top: 10px;
+}
+
+.menu-logearse ul li {
+    display: inline;
+    margin: 0 5px 10px 5px;
+}
+
+.menu-logearse ul li a:hover {
+    padding: 0;
+    border-radius: 0px;
+    background: none;
+}
+
+.menu-logearse.active ul li a:hover {
+    background: none;
+    padding: 0;
+    border-radius: 0px;
+}
+
+.menu-logearse button:hover {
+    background: #659523;
+}
+
 .scrol {
-    height: 1px;
+    height: 0px;
 }
 
 .search-box {
@@ -158,9 +212,15 @@ header {
     background: #86C332;
 }
 
-.icon:hover {
+
+/* .search-box button {
+    margin-top: -40px;
+} */
+
+
+/* .icon:hover {
     transform: rotate(360deg) scale(0.8);
-}
+} */
 
 .search-box input {
     width: 0;
@@ -262,32 +322,106 @@ header {
     font-size: 15px;
 }
 
+dl,
+ol,
+ul {
+    margin-bottom: 0;
+}
+
 @media screen and (max-width:800px) {
+    /*Configuracion  Diseño 1*/
+    #Configuracion {
+        position: fixed;
+        width: 150px;
+        height: fit-content;
+        background-color: #fff;
+        z-index: 40;
+        display: none;
+        margin: 5px 0;
+    }
+    #Configuracion .Configuracion-menu {
+        margin: 10px;
+        list-style: none;
+    }
+    #Configuracion .Configuracion-menu li i {
+        font-size: 25px;
+        padding: 5px;
+    }
+    #Configuracion .Configuracion-menu li a {
+        text-decoration: none;
+        font-size: 0.8rem;
+    }
+    #Configuracion .Configuracion-menu span {
+        height: 2px;
+        width: 100%;
+        color: #659523;
+    }
+    .Cerrar-Sesion {
+        margin-top: 20px;
+    }
+    #Configuracion.active {
+        position: fixed;
+        margin-top: 85px;
+        z-index: 40;
+    }
     /* Menu  pagina*/
     .logo {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
     .nav ul li {
-        font-size: 30px;
-        padding: 0 10px;
+        font-size: 25px;
+        padding: 0 6px;
         margin: 0;
+    }
+    /* ------ */
+    .menu-logearse {
+        padding: 0;
+        position: relative;
+    }
+    .menu-logearse ul {
+        padding-bottom: 0;
+    }
+    .menu-logearse ul li {
+        list-style-type: none;
+        display: flex;
+    }
+    .menu-logearse ul {
+        margin-top: -5px;
+    }
+    /* Segundo diseño de boton :D */
+    .menu-logearse button {
+        padding: 5px 5px;
+        width: 110px;
+        margin: 0 5px;
+        background: none;
+        border: 2px solid #fff;
+        cursor: pointer;
+        color: #fff;
+        font-size: 10px;
+    }
+    .menu-logearse button:hover {
+        background: #659523;
+    }
+    .menu .home-not-loged {
+        padding: 0;
+        margin-top: 18px;
+    }
+    .menu i {
+        font-size: 25px;
     }
     .search-box {
         position: relative;
-        transform: translate(-50%, -50%);
-        height: 38px;
+        /* transform: translate(-70%, -50%); */
+        height: 35px;
         text-align: center;
-        left: 20%;
+        left: 18%;
     }
     .search-box:hover>input {
-        width: 120px;
+        width: 125px;
         padding: 0 10px;
     }
     .search-box:hover>.icon {
         background: #86C332;
-    }
-    .icon:hover {
-        transform: rotate(360deg) scale(0.8);
     }
     .search-box input {
         width: 0;
@@ -300,6 +434,9 @@ header {
         line-height: 40px;
         color: #fff;
     }
+    /* .search-box button {
+        margin-top: -35px;
+    } */
     .icon {
         color: #fff;
         float: right;

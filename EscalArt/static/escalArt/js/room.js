@@ -1,8 +1,13 @@
 const chatLog = document.querySelector('#chat-log')
 const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-
-if (chatLog.childNodes.length <= 1) {
+function updateScroll() {
+    var element = document.getElementById("chat-log");
+    element.scrollTop = element.scrollHeight;
+}
+updateScroll()
+console.log(chatLog.childNodes.length)
+if (chatLog.childNodes.length <= 3) {
     const emptyText = document.createElement('h3')
     emptyText.id = 'emptyText'
     emptyText.innerText = 'Este es el inicio de su conversacion, di algo!'
@@ -16,6 +21,7 @@ const chatSocket = new WebSocket(
     '/ws/chat/' +
     roomName +
     '/'
+
 );
 
 chatSocket.onmessage = function(e) {
@@ -40,7 +46,7 @@ chatSocket.onmessage = function(e) {
     cuerpo.appendChild(texto)
     divMensaje.appendChild(cuerpo)
     chatLog.appendChild(divMensaje)
-
+    updateScroll()
     if (document.querySelector('#emptyText')) {
         document.querySelector('#emptyText').remove()
     }

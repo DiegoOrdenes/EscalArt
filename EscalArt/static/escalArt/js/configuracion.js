@@ -7,6 +7,8 @@ function Editarperfil() {
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
+    cambiar - cuenta
 }
 
 function Cambiarpass() {
@@ -16,6 +18,7 @@ function Cambiarpass() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -26,6 +29,7 @@ function seguridad() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -36,6 +40,7 @@ function privacidad() {
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -46,6 +51,7 @@ function Notificaciones() {
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -56,6 +62,7 @@ function accesibilidad() {
     document.getElementById('Cambiar-pass').style.display = 'none';
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('privacidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -71,6 +78,7 @@ function Editar_perfil_Artista() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -83,6 +91,7 @@ function Cambiar_pass_Artista() {
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
     document.getElementById('accesibilidad').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
     document.getElementById('Categoria-Artista').style.display = 'none';
 }
 
@@ -93,5 +102,17 @@ function Categoria_Artista() {
     document.getElementById('seguridad').style.display = 'none';
     document.getElementById('privacidad').style.display = 'none';
     document.getElementById('Notificaciones').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'none';
+    document.getElementById('accesibilidad').style.display = 'none';
+}
+
+function cambiar_cuenta() {
+    document.getElementById('Categoria-Artista').style.display = 'none';
+    document.getElementById('Editar-perfil').style.display = 'none';
+    document.getElementById('Cambiar-pass').style.display = 'none';
+    document.getElementById('seguridad').style.display = 'none';
+    document.getElementById('privacidad').style.display = 'none';
+    document.getElementById('Notificaciones').style.display = 'none';
+    document.getElementById('cambiar-cuenta').style.display = 'block';
     document.getElementById('accesibilidad').style.display = 'none';
 }

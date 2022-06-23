@@ -3,8 +3,7 @@
     grid-template-columns: 0.2fr 1fr;
     justify-content: center;
     width: 100%;
-    margin: 30px 0px;
-    padding: 0 18%;
+    padding: 30px 18%;
 }
 
 
@@ -157,6 +156,7 @@
     padding: 10px 30px;
     color: #fff;
     margin: 15px 0 0 0;
+    z-index: auto;
 }
 
 .btn-form::after {
@@ -321,6 +321,20 @@
     outline: none;
     border-bottom: 1px solid #fff;
     color: #fff;
+}
+
+#inputCategorias {
+    width: 100%;
+    padding: .7em;
+    border: none;
+    background: none;
+    outline: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
+
+#inputCategorias label {
+    display: none;
 }
 
 .title-categoria {
@@ -1010,4 +1024,10 @@ p {
         margin: 0;
         color: #fff;
     }
+}
+
+.searchCategoria {
+    position: absolute;
+    left: 75%;
+    margin-top: -40px;
 }

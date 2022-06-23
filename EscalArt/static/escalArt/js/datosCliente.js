@@ -75,15 +75,24 @@ function OcultarAlerta2() {
 
 
 /* perfil cliente Vista artista*/
+function mostrarReviews() {
+    document.getElementById('es-comision').style.display = 'none';
+    document.getElementById('gl-referencias').style.display = 'none';
+    document.getElementById('tareas--').style.display = 'none';
+    document.getElementById('reviews').style.display = 'block';
+}
+
 function mostrarReferencias() {
     document.getElementById('es-comision').style.display = 'none';
     document.getElementById('gl-referencias').style.display = 'block';
+    document.getElementById('reviews').style.display = 'none';
     document.getElementById('tareas--').style.display = 'none';
 }
 
 function mostrarEsComision() {
     document.getElementById('es-comision').style.display = 'block';
     document.getElementById('gl-referencias').style.display = 'none';
+    document.getElementById('reviews').style.display = 'none';
     document.getElementById('tareas--').style.display = 'none';
 
 }
@@ -91,6 +100,7 @@ function mostrarEsComision() {
 function mostrarTareas() {
     document.getElementById('tareas--').style.display = 'block';
     document.getElementById('gl-referencias').style.display = 'none';
+    document.getElementById('reviews').style.display = 'none';
     document.getElementById('es-comision').style.display = 'none';
 
 }

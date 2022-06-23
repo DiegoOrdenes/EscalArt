@@ -1,9 +1,9 @@
 #settings-post {
     position: absolute;
     width: 210px;
-    height: 216px;
+    height: fit-content;
     background-color: rgba(255, 255, 255, 0.779);
-    z-index: 40;
+    z-index: 100;
     display: none;
     border-radius: 20px;
     right: 125px;

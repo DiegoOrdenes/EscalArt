@@ -1200,3 +1200,8 @@ input:focus {
         margin-left: 50px;
     }
 }
+
+.empty-saves {
+    color: gray;
+    text-align: center;
+}
